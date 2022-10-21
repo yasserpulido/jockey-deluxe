@@ -1,10 +1,10 @@
-import { Races } from "./Races";
+import { Races as RacesPage } from "./Races";
 import { Provider } from "./providers";
 
-export const index = () => {
+export const Races = () => {
   return (
     <Provider>
-      <Races />
+      <RacesPage />
     </Provider>
   );
 };
