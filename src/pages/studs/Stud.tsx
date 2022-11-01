@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Detail } from "./components/Detail";
 import { List } from "./components/List";
 
-export const Jockeys = observer(() => {
+export const Studs = observer(() => {
   return (
     <React.Fragment>
       <Detail />

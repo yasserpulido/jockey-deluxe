@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { StoreType } from "../../models";
 import { JockeyContext } from "../../providers/Jockey";
+import { JockeyType } from "./types";
 
-export const Detail = () => {
+function Detail() {
   const context = React.useContext(JockeyContext) as StoreType;
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const onSubmit: SubmitHandler<any> = (data) => {
-    console.log("Submit: ", data);
-    context.create(data);
+    reset,
+  } = useForm<JockeyType>({
+    defaultValues: context.jockey,
+  });
+
+  useEffect(() => {
+    reset(context.jockey);
+  }, [reset, context.jockey]);
+
+  const onSubmit: SubmitHandler<JockeyType> = (data) => {
+    if (context.jockey.id) data = { ...data, id: context.jockey.id };
+    context.save(data);
   };
 
   return (
@@ -32,4 +41,6 @@ export const Detail = () => {
       <button type="submit">Save</button>
     </form>
   );
-};
+}
+
+export default observer(Detail);
