@@ -1,5 +1,13 @@
+import React from "react";
+import { observer } from "mobx-react-lite";
 import { Detail } from "./components/detail";
 
-export const Horses = () => {
-  return <Detail />;
+const Horses = () => {
+  return (
+    <React.Fragment>
+      <Detail />
+    </React.Fragment>
+  );
 };
+
+export default observer(Horses);

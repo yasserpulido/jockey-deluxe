@@ -20,11 +20,11 @@ export const studs = [
     fullName: "M.K.B.C",
   },
   {
-    id: "s05",
+    id: "s06",
     fullName: "El Manantial",
   },
   {
-    id: "s06",
+    id: "s07",
     fullName: "Libanes",
   },
 ];

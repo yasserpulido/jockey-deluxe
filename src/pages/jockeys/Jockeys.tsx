@@ -1,13 +1,15 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Detail } from "./components/Detail";
-import { List } from "./components/List";
+import { Detail } from "./components/detail";
+import { List } from "./components/list";
 
-export const Jockeys = observer(() => {
+const Jockeys = () => {
   return (
     <React.Fragment>
       <Detail />
       <List />
     </React.Fragment>
   );
-});
+};
+
+export default observer(Jockeys);

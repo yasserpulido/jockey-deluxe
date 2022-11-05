@@ -1,11 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 
 export const Detail = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
   const onSubmit: SubmitHandler<any> = (data) => console.log(data);
 
   return (

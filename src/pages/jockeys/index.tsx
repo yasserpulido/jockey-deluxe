@@ -1,10 +1,12 @@
-import { Jockeys as JockeysPage } from "./Jockeys";
+import { default as JockeysPage } from "./Jockeys";
 import { Provider } from "./providers";
 
-export const Jockeys = () => {
+const Jockeys = () => {
   return (
     <Provider>
       <JockeysPage />
     </Provider>
   );
 };
+
+export default Jockeys;
