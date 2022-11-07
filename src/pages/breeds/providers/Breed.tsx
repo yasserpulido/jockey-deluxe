@@ -1,9 +1,14 @@
 import React, { useState } from "react";
-import { breeds as breedsMock } from "../../../mocks/breeds";
+import { breeds as breedsMock } from "../../../mocks";
 import { BreedType } from "../types";
 
+const breedDefaultValues = {
+  id: "",
+  name: "",
+};
+
 export type BreedContextType = {
-  breed: BreedType;
+  breed?: BreedType;
   breeds: Array<BreedType>;
   save: (breed: BreedType) => void;
   remove: (id: string) => void;
@@ -11,7 +16,6 @@ export type BreedContextType = {
 };
 
 export const BreedContext = React.createContext<BreedContextType>({
-  breed: { id: "", name: "" },
   breeds: [],
   save() {},
   remove() {},
@@ -23,7 +27,7 @@ type Props = {
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {
-  const [breed, setBreed] = useState<BreedType>({ id: "", name: "" });
+  const [breed, setBreed] = useState<BreedType>();
   const [breeds, setBreeds] = useState(breedsMock);
 
   const saveHandler = (breed: BreedType) => {
@@ -45,7 +49,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
         return b;
       });
       setBreeds(updatedBreeds);
-      setBreed({ id: "", name: "" });
+      setBreed(breedDefaultValues);
     }
   };
 

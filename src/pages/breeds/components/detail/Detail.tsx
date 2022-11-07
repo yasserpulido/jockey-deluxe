@@ -6,9 +6,7 @@ import { BreedType } from "../../types";
 const Detail = () => {
   const context = useContext<BreedContextType>(BreedContext);
 
-  const { register, handleSubmit, reset } = useForm<BreedType>({
-    defaultValues: context.breed,
-  });
+  const { register, handleSubmit, reset } = useForm<BreedType>();
 
   const onSubmit: SubmitHandler<BreedType> = (data) => {
     context.save(data);

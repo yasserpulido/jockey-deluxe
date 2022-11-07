@@ -1,5 +1,5 @@
 import { destroy, Instance, types } from "mobx-state-tree";
-import { jockeys } from "../../../mocks/jockeys";
+import { jockeys } from "../../../mocks";
 import { Jockey, JockeyType } from "./Jockey";
 
 export const Store = types
