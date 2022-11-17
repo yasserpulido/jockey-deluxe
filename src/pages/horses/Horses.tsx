@@ -1,13 +1,13 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
 import { Detail } from "./components/detail";
+import { Provider } from "./providers";
 
 const Horses = () => {
   return (
-    <React.Fragment>
+    <Provider>
       <Detail />
-    </React.Fragment>
+    </Provider>
   );
 };
 
-export default observer(Horses);
+export default Horses;

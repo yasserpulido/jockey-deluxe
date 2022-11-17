@@ -23,7 +23,8 @@ const Detail = () => {
       <label>Country:</label>
       <select {...register("country")}>
         {context.countries.map((country) => (
-          <option key={country.id} value={country.id}>
+          <option key={country.id} value={country.name}>
+            {/** TODO: option value should be id and not name */}
             {country.name}
           </option>
         ))}

@@ -23,7 +23,7 @@ export const BreedContext = React.createContext<BreedContextType>({
 });
 
 type Props = {
-  children: import("react").ReactNode;
+  children: React.ReactNode;
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {

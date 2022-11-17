@@ -1,1 +1,1 @@
-export { default as Tracks } from "./Tracks";
+export { default as TracksPage } from "./Tracks";

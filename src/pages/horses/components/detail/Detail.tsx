@@ -1,8 +1,15 @@
+import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { HorseContext, HorseContextType } from "../../providers";
+import { HorseType } from "../../types";
 
-export const Detail = () => {
-  const { register, handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<any> = (data) => console.log(data);
+const Detail = () => {
+  const context = useContext<HorseContextType>(HorseContext);
+  const { register, handleSubmit } = useForm<HorseType>();
+
+  const onSubmit: SubmitHandler<HorseType> = (data) => {
+    context.save(data);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -12,14 +19,16 @@ export const Detail = () => {
       <input {...register("birth")} type="date" />
       <label>Genre:</label>
       <select {...register("gender")}>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        <option value="g01">Male</option>
+        <option value="g02">Female</option>
       </select>
       <label>Father:</label>
-      <input {...register("father")} />
+      <input {...register("fatherId")} />
       <label>Mother:</label>
-      <input {...register("mother")} />
+      <input {...register("motherId")} />
       <button type="submit">Save</button>
     </form>
   );
 };
+
+export default Detail;

@@ -1,5 +1,12 @@
 import { Detail } from "./components/detail";
+import { Provider } from "./providers";
 
-export const Races = () => {
-  return <Detail />;
+const Races = () => {
+  return (
+    <Provider>
+      <Detail />
+    </Provider>
+  );
 };
+
+export default Races;

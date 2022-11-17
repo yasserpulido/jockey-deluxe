@@ -6,9 +6,9 @@ const List = () => {
 
   return (
     <ul>
-      {context.tracks.map((track) => (
+      {context.getTracks().map((track) => (
         <li key={track.id}>
-          {track.name}
+          {`${track.id} ${track.name} ${track.country} ${track.state} ${track.city}`}
           <button type="button" onClick={() => context.trackSelected(track)}>
             Edit
           </button>
