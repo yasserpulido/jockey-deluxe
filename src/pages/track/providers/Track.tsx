@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import {
-  countries as countriesMock,
-  tracks as tracksMock,
-} from "../../../mocks";
-import { CountryType, TrackType } from "../types";
+import { useCountry } from "../../../hooks/country";
+import { tracks as tracksMock } from "../../../mocks";
+import { TrackType } from "../types";
 
 const trackDefaultValues = {
   id: "",
@@ -15,7 +13,6 @@ const trackDefaultValues = {
 
 export type TrackContextType = {
   track?: TrackType;
-  countries: Array<CountryType>;
   save: (track: TrackType) => void;
   remove: (id: string) => void;
   trackSelected: (track: TrackType) => void;
@@ -23,7 +20,6 @@ export type TrackContextType = {
 };
 
 export const TrackContext = React.createContext<TrackContextType>({
-  countries: [],
   save(track: TrackType) {},
   remove(id: string) {},
   trackSelected(track: TrackType) {},
@@ -37,17 +33,18 @@ type Props = {
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {
+  const { data: countries } = useCountry();
   const [track, setTrack] = useState<TrackType>();
   const [tracks, setTracks] = useState(tracksMock);
 
   const getHandler = () => {
     let tracksArray: Array<TrackType> = [];
     tracks.forEach((e) => {
-      countriesMock.forEach((c) => {
+      countries.forEach((c) => {
         if (c.id === e.country) {
           tracksArray.push({ ...e, country: c.name });
           return;
-        } 
+        }
       });
     });
     return tracksArray;
@@ -72,7 +69,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
         return t;
       });
       setTracks(updatedTracks);
-      setTrack({ ...trackDefaultValues, country: countriesMock[0].id });
+      setTrack({ ...trackDefaultValues });
     }
   };
 
@@ -88,7 +85,6 @@ export const Provider: React.FC<Props> = ({ children }) => {
     <TrackContext.Provider
       value={{
         track,
-        countries: countriesMock,
         save: saveHandler,
         remove: removeHandler,
         trackSelected: trackHandler,

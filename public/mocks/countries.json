@@ -1,0 +1,54 @@
+{
+  "countries": [
+    {
+      "id": "1",
+      "code": "AR",
+      "name": "Argentina"
+    },
+    {
+      "id": "2",
+      "code": "BO",
+      "name": "Bolivia"
+    },
+    {
+      "id": "3",
+      "code": "BR",
+      "name": "Brazil"
+    },
+    {
+      "id": "4",
+      "code": "CL",
+      "name": "Chile"
+    },
+    {
+      "id": "5",
+      "code": "CO",
+      "name": "Colombia"
+    },
+    {
+      "id": "6",
+      "code": "EC",
+      "name": "Ecuador"
+    },
+    {
+      "id": "7",
+      "code": "PY",
+      "name": "Paraguay"
+    },
+    {
+      "id": "8",
+      "code": "PE",
+      "name": "Peru"
+    },
+    {
+      "id": "9",
+      "code": "UY",
+      "name": "Uruguay"
+    },
+    {
+      "id": "10",
+      "code": "VE",
+      "name": "Venezuela"
+    }
+  ]
+}

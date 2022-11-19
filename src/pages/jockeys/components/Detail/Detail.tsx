@@ -1,29 +1,24 @@
 import React, { useEffect } from "react";
-import { observer } from "mobx-react-lite";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { StoreType } from "../../models";
+import { useCountry, useGender } from "../../../../hooks";
 import { JockeyContext } from "../../providers/Jockey";
-import { JockeyType } from "./types";
+import { JockeyType } from "../../types";
 
 function Detail() {
-  const context = React.useContext(JockeyContext) as StoreType;
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-  } = useForm<JockeyType>({
+  const { data: countries } = useCountry();
+  const { data: genders } = useGender();
+  const context = React.useContext(JockeyContext);
+  const { register, handleSubmit, reset } = useForm<JockeyType>({
     defaultValues: context.jockey,
   });
+
+  const onSubmit: SubmitHandler<JockeyType> = (data) => {
+    context.save(data);
+  };
 
   useEffect(() => {
     reset(context.jockey);
   }, [reset, context.jockey]);
-
-  const onSubmit: SubmitHandler<JockeyType> = (data) => {
-    if (context.jockey.id) data = { ...data, id: context.jockey.id };
-    context.save(data);
-  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -35,12 +30,23 @@ function Detail() {
       <input {...register("birth")} type="date" />
       <label>Gender:</label>
       <select {...register("gender")}>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
+        {genders?.map((gender) => (
+          <option key={gender.id} value={gender.id}>
+            {gender.gender}
+          </option>
+        ))}
+      </select>
+      <label>Nationality:</label>
+      <select {...register("nationality")}>
+        {countries?.map((country) => (
+          <option key={country.id} value={country.id}>
+            {country.name}
+          </option>
+        ))}
       </select>
       <button type="submit">Save</button>
     </form>
   );
 }
 
-export default observer(Detail);
+export default Detail;

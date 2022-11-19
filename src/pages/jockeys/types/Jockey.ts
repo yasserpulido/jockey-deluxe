@@ -4,4 +4,5 @@ export type JockeyType = {
   lastName: string;
   birth: string;
   gender: string;
+  nationality: string;
 };

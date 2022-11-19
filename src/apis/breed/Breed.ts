@@ -1,4 +1,4 @@
-export const get = async () => {
+export const getBreeds = async () => {
   try {
     const response = await fetch("/mocks/breeds.json");
     if (!response.ok) {

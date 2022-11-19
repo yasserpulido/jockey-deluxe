@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { BreedType } from "../types";
-import { get } from "../../../apis/breed";
+import { getBreeds } from "../../../apis/breed";
 
 const breedDefaultValues = {
   id: "",
@@ -32,7 +32,7 @@ type Props = {
 export const Provider: React.FC<Props> = ({ children }) => {
   const [breed, setBreed] = useState<BreedType>();
   const [breeds, setBreeds] = useState<Array<BreedType>>([]);
-  const { data, status, isLoading } = useQuery(["breeds"], get);
+  const { data, status, isLoading } = useQuery(["breeds"], getBreeds);
 
   useEffect(() => {
     if (status === "success") {
