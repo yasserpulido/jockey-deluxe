@@ -1,0 +1,20 @@
+{
+  "breeds": [
+    {
+      "id": "r01",
+      "name": "American Quarter Horse"
+    },
+    {
+      "id": "r02",
+      "name": "Thoroughbred"
+    },
+    {
+      "id": "r03",
+      "name": "Standardbred"
+    },
+    {
+      "id": "r04",
+      "name": "Arabian horse"
+    }
+  ]
+}

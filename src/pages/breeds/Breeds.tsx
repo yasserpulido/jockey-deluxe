@@ -1,13 +1,18 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Detail } from "./components/detail";
 import { List } from "./components/list";
 import { Provider } from "./providers";
 
 const Breeds = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <Provider>
-      <Detail />
-      <List />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider>
+        <Detail />
+        <List />
+      </Provider>
+    </QueryClientProvider>
   );
 };
 
