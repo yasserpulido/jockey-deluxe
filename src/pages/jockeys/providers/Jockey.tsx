@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { jockey as jockeyApi } from "../../../apis";
-import { JockeyType } from "../types";
+import { transform } from "../../../utils";
+import { Jockey } from "../../../types";
 
-const jockeyDefaultValues: JockeyType = {
-  id: "",
-  firstName: "",
-  lastName: "",
-  birth: "",
-  gender: "",
-  nationality: "",
-};
+// const jockeyDefaultValues: Jockey = {
+//   id: "",
+//   firstname: "",
+//   lastname: "",
+//   birth: "",
+//   gender: "",
+//   nationality: "",
+// };
 
 export type JockeyContextType = {
   isLoading: boolean;
-  jockey?: JockeyType;
-  jockeys?: Array<JockeyType>;
-  save: (jockey: JockeyType) => void;
+  jockey?: Jockey;
+  jockeys?: Array<Jockey>;
+  save: (jockey: Jockey) => void;
   remove: (id: string) => void;
-  jockeySelected: (jockey: JockeyType) => void;
+  jockeySelected: (jockey: Jockey) => void;
 };
 
 export const JockeyContext = React.createContext<JockeyContextType>({
@@ -34,8 +35,8 @@ type Props = {
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {
-  const [jockey, setJockey] = useState<JockeyType>();
-  const [jockeys, setJockeys] = useState<Array<JockeyType>>([]);
+  const [jockey, setJockey] = useState<Jockey>();
+  const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
   const { data, status, isLoading } = useQuery(
     ["jockeys"],
     jockeyApi.getJockeys
@@ -43,38 +44,19 @@ export const Provider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === "success") {
-      setJockeys(data);
+      setJockeys(data as Array<Jockey>);
     }
   }, [status, data]);
 
-  const saveHandler = (jockey: JockeyType) => {
-    if (!jockey.id) {
-      setJockeys((prevState) => {
-        return [
-          ...prevState,
-          (jockey = {
-            ...jockey,
-            id: Math.floor(Math.random() * 100).toString(),
-          }),
-        ];
-      });
-    } else {
-      const updatedJockeys = jockeys.map((b: JockeyType) => {
-        if (b.id === jockey.id) {
-          return { ...jockey };
-        }
-        return b;
-      });
-      setJockeys(updatedJockeys);
-      setJockey(jockeyDefaultValues);
-    }
+  const saveHandler = (jockey: Jockey) => {
+    jockeyApi.createJockey(jockey);
   };
 
   const removeHandler = (id: string) => {
-    setJockeys(jockeys.filter((b: JockeyType) => b.id !== id));
+    setJockeys(jockeys.filter((b: Jockey) => b.id !== id));
   };
 
-  const jockeyHandler = (jockey: JockeyType) => {
+  const jockeyHandler = (jockey: Jockey) => {
     setJockey(jockey);
   };
 

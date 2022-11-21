@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react";
-import { CountryType } from "../types";
+import { Gender } from "../../types";
 
-const useCountry = () => {
-  const [data, setData] = useState<Array<CountryType>>([]);
+const useGender = () => {
+  const [data, setData] = useState<Array<Gender>>([]);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await fetch("/mocks/countries.json");
+      const response = await fetch("/mocks/genders.json");
       if (!response.ok) {
         throw new Error(response.statusText);
       }
-      const { countries } = await response.json();
-      setData(countries);
+      const { genders } = await response.json();
+      setData(genders);
     } catch (error) {
       setError(error as string);
     } finally {
@@ -29,4 +29,4 @@ const useCountry = () => {
   return { data, error, loading };
 };
 
-export default useCountry;
+export default useGender;

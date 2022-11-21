@@ -1,1 +1,1 @@
-export { default as JockeysPage } from "./Jockeys";
+export { default } from "./jockey";

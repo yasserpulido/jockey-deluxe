@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Detail } from "./components/detail";
-import { List } from "./components/list";
+import Detail from "./components/detail";
+import List from "./components/list";
 import { Provider } from "./providers";
 
 const Jockeys = () => {

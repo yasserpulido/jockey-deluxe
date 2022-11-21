@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCountry, useGender } from "../../../../hooks";
-import { JockeyContext } from "../../providers/Jockey";
-import { JockeyType } from "../../types";
+import { Jockey } from "../../../../types";
+import { JockeyContext } from "../../providers/jockey";
 
-function Detail() {
+const Detail = () => {
   const { data: countries } = useCountry();
   const { data: genders } = useGender();
   const context = React.useContext(JockeyContext);
-  const { register, handleSubmit, reset } = useForm<JockeyType>({
+  const { register, handleSubmit, reset } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
 
-  const onSubmit: SubmitHandler<JockeyType> = (data) => {
+  const onSubmit: SubmitHandler<Jockey> = (data) => {
     context.save(data);
   };
 
@@ -23,9 +23,9 @@ function Detail() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <label>First Name:</label>
-      <input {...register("firstName")} />
+      <input {...register("firstname")} />
       <label>Last Name:</label>
-      <input {...register("lastName")} />
+      <input {...register("lastname")} />
       <label>Birth:</label>
       <input {...register("birth")} type="date" />
       <label>Gender:</label>
@@ -47,6 +47,6 @@ function Detail() {
       <button type="submit">Save</button>
     </form>
   );
-}
+};
 
 export default Detail;

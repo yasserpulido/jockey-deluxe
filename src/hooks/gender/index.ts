@@ -1,1 +1,1 @@
-export { default as useGender } from "./useGender";
+export { default as useGender } from "./gender";

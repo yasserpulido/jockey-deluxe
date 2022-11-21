@@ -1,7 +1,7 @@
-export type JockeyType = {
+export type Jockey = {
   id: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   birth: string;
   gender: string;
   nationality: string;

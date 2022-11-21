@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { JockeysPage } from "./pages/jockeys";
+import Jockeys from "./pages";
 import { routes } from "./Routes";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <JockeysPage />,
+    element: <Jockeys />,
   },
 ]);
 

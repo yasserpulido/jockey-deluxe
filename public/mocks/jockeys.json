@@ -2,16 +2,16 @@
   "jockeys": [
     {
       "id": "1",
-      "firstName": "Yasser",
-      "lastName": "Pulido",
+      "firstname": "Yasser",
+      "lastname": "Pulido",
       "birth": "1991-04-30",
       "gender": "Male",
       "nationality": "1"
     },
     {
       "id": "2",
-      "firstName": "Nabila",
-      "lastName": "Pulido",
+      "firstname": "Nabila",
+      "lastname": "Pulido",
       "birth": "1997-04-09",
       "gender": "Female",
       "nationality": "2"

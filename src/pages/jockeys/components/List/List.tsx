@@ -1,15 +1,14 @@
 import React from "react";
-import { observer } from "mobx-react-lite";
-import { JockeyContext } from "../../providers/Jockey";
+import { JockeyContext } from "../../providers/jockey";
 
-export const List = observer(() => {
+const List = () => {
   const context = React.useContext(JockeyContext);
 
   return (
     <ul>
-      {context.jockeys?.map((jockey) => (
+      {context.jockeys?.map((jockey, index) => (
         <li key={jockey.id}>
-          {`${jockey.id} ${jockey.firstName} ${jockey.lastName} ${jockey.birth} ${jockey.gender}`}{" "}
+          {`${index} ${jockey.firstname} ${jockey.lastname} ${jockey.birth} ${jockey.gender}`}{" "}
           <button type="button" onClick={() => context.jockeySelected(jockey)}>
             Edit
           </button>
@@ -20,4 +19,6 @@ export const List = observer(() => {
       ))}
     </ul>
   );
-});
+};
+
+export default List;
