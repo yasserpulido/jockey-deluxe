@@ -1,5 +1,5 @@
 import { Jockey } from "../../types";
-import { transform } from "../../utils";
+import { Convert } from "../../utils";
 
 export const getJockeys = async () => {
   try {
@@ -9,9 +9,10 @@ export const getJockeys = async () => {
       throw new Error(response.statusText);
     }
 
-    const data = await response.json();
-    
-    return transform(data);
+    const json = await response.json();
+    const result = Convert.toJockey(json);
+
+    return result;
   } catch (error) {
     console.log(error);
   }
@@ -24,6 +25,38 @@ export const createJockey = async (jockey: Jockey) => {
       body: JSON.stringify(jockey),
       headers: { "Content-type": "application/json; charset=UTF-8" },
     });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const editJockey = async (jockey: Jockey) => {
+  try {
+    const response = await fetch(
+      `http://localhost:3000/jockey/${jockey.id}/edit`,
+      {
+        method: "POST",
+        body: JSON.stringify(jockey),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteJockey = async (id: string) => {
+  try {
+    const response = await fetch(`http://localhost:3000/jockey/${id}/delete`, {
+      method: "DELETE",
+    });
+    console.log(response);
     if (!response.ok) {
       throw new Error(response.statusText);
     }
