@@ -27,7 +27,7 @@ const Detail = () => {
       <label>Last Name:</label>
       <input {...register("lastname")} />
       <label>Birth:</label>
-      <input {...register("birth")} type="date" />
+      <input {...register("birth")} />
       <label>Gender:</label>
       <select {...register("gender")}>
         {genders?.map((gender) => (
