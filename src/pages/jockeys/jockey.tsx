@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { colors } from "../../styles/theme/colors";
 import Detail from "./components/detail";
 import List from "./components/list";
 
@@ -12,7 +13,9 @@ const Jockeys = () => {
 };
 
 const Container = styled.div({
-  border: "1px solid black",
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: colors.Black,
 });
 
 export default Jockeys;
