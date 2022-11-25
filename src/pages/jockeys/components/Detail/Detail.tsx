@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 import React, { useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useCountry, useGender } from "../../../../hooks";
-import { colors } from "../../../../styles/theme/colors";
+import { colors } from "../../../../design-system/theme/colors";
 import { Jockey } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
+import { Button } from "../../../../design-system";
 
 const Detail = () => {
   const { data: countries } = useCountry();
@@ -47,7 +48,7 @@ const Detail = () => {
             </option>
           ))}
         </select>
-        <button type="submit">Save</button>
+        <Button label="Save" variant="Success" type="submit" />
       </form>
     </Container>
   );
