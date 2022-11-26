@@ -5,7 +5,7 @@ import { useCountry, useGender } from "../../../../hooks";
 import { colors } from "../../../../design-system/theme/colors";
 import { Jockey } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
-import { Button } from "../../../../design-system";
+import { Button, Dropdown, Input } from "../../../../design-system";
 
 const Detail = () => {
   const { data: countries } = useCountry();
@@ -23,13 +23,25 @@ const Detail = () => {
     reset(context.jockey);
   }, [reset, context.jockey]);
 
+  console.log({ ...register("firstname") });
+
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>First Name:</label>
-        <input {...register("firstname")} />
-        <label>Last Name:</label>
-        <input {...register("lastname")} />
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <fieldset>
+        <legend>Form Jockey</legend>
+        <Input label="First Name" {...register("firstname")} />
+        <Input label="Last Name" {...register("lastname")} />
+        <Input label="Birth" {...register("birth")} type="date" />
+        {/* <Dropdown label="Gender" {...register("gender")}>
+          {genders?.map((gender) => (
+            <option key={gender.id} value={gender.id}>
+              {gender.gender}
+            </option>
+          ))}
+        </Dropdown> */}
+        <Button text="Save" variant="Success" type="submit" />
+      </fieldset>
+      {/* 
         <label>Birth:</label>
         <input {...register("birth")} />
         <label>Gender:</label>
@@ -48,16 +60,18 @@ const Detail = () => {
             </option>
           ))}
         </select>
-        <Button label="Save" variant="Success" type="submit" />
-      </form>
-    </Container>
+        <Button text="Save" variant="Success" type="submit" /> */}
+    </Form>
   );
 };
 
-const Container = styled.div({
-  borderWidth: "1px",
-  borderStyle: "solid",
-  borderColor: colors.Black,
+const Form = styled.form({
+  margin: "1rem",
+
+  "& fieldset": {
+    border: `1px solid ${colors.Gunmetal}`,
+    padding: "1rem",
+  },
 });
 
 export default Detail;

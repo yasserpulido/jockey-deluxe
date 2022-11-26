@@ -18,6 +18,8 @@ import PoppinsExtraBold from "../../fonts/Poppins-ExtraBold.ttf";
 import PoppinsExtraBoldItalic from "../../fonts/Poppins-ExtraBoldItalic.ttf";
 import PoppinsBlack from "../../fonts/Poppins-Black.ttf";
 import PoppinsBlackItalic from "../../fonts/Poppins-BlackItalic.ttf";
+import RobotoMonoRegular from "../../fonts/RobotoMono-Regular.ttf";
+import { colors } from "../../design-system/theme/colors";
 
 const global = css`
   @font-face {
@@ -155,6 +157,14 @@ const global = css`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: "RobotoMonoRegular";
+    src: local("RobotoMono-Regular"),
+      url(${RobotoMonoRegular}) format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+
   html,
   body,
   div,
@@ -280,8 +290,15 @@ const global = css`
     border-spacing: 0;
   }
 
+  #root *,
+  #root *::before,
+  #root *::after {
+    box-sizing: border-box;
+  }
+
   #root {
-    font-family: "Poppins", Arial, sans-serif;
+    font-family: "RobotoMonoRegular", Arial, sans-serif;
+    color: ${colors.Gunmetal};
   }
 `;
 
