@@ -23,8 +23,6 @@ const Detail = () => {
     reset(context.jockey);
   }, [reset, context.jockey]);
 
-  console.log({ ...register("firstname") });
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
@@ -32,6 +30,7 @@ const Detail = () => {
         <Input label="First Name" {...register("firstname")} />
         <Input label="Last Name" {...register("lastname")} />
         <Input label="Birth" {...register("birth")} type="date" />
+        <Dropdown options={genders} label="Gender" onChange={() => {}} />
         {/* <Dropdown label="Gender" {...register("gender")}>
           {genders?.map((gender) => (
             <option key={gender.id} value={gender.id}>

@@ -1,24 +1,24 @@
 import styled from "@emotion/styled";
 
 type Props = {
-  text: string;
+  children: React.ReactNode;
   size: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 };
 
-const Heading = ({ text, size }: Props) => {
+const Heading = ({ children, size }: Props) => {
   switch (size) {
     case "h1":
-      return <Header1>{text}</Header1>;
+      return <Header1>{children}</Header1>;
     case "h2":
-      return <Header2>{text}</Header2>;
+      return <Header2>{children}</Header2>;
     case "h3":
-      return <Header3>{text}</Header3>;
+      return <Header3>{children}</Header3>;
     case "h4":
-      return <Header4>{text}</Header4>;
+      return <Header4>{children}</Header4>;
     case "h5":
-      return <Header5>{text}</Header5>;
+      return <Header5>{children}</Header5>;
     case "h6":
-      return <Header6>{text}</Header6>;
+      return <Header6>{children}</Header6>;
   }
 };
 

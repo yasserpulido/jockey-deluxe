@@ -2,11 +2,11 @@
   "genders": [
     {
       "id": "1",
-      "gender": "Female"
+      "name": "Female"
     },
     {
       "id": "2",
-      "gender": "Male"
+      "name": "Male"
     }
   ]
 }

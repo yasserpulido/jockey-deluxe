@@ -1,14 +1,21 @@
-import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Card } from "../../design-system";
+import React from "react";
+import { Alert } from "../../design-system";
 import { Theme } from "../../providers";
 
 export default {
-  title: "Card",
-  component: Card,
-} as ComponentMeta<typeof Card>;
+  title: "Alert",
+  component: Alert,
+  argTypes: {
+    type: {
+      control: "select",
+      options: ["Danger", "Warning", "Success"],
+      defaultValue: "Success",
+    },
+  },
+} as ComponentMeta<typeof Alert>;
 
-const Template: ComponentStory<typeof Card> = (args) => <Card {...args} />;
+const Template: ComponentStory<typeof Alert> = (args) => <Alert {...args} />;
 
 export const Default = Template.bind({});
 
@@ -25,6 +32,6 @@ const content =
   "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate delectus soluta exercitationem dolorum quaerat porro impedit nam ratione. Porro vitae omnis quod corporis nam molestiae fugit id odit facilis tenetur.";
 
 Default.args = {
-  title: "Card",
+  type: "Success",
   children: content,
 };

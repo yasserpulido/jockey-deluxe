@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 
-const Card = () => {
+type Props = {
+  children: React.ReactNode;
+  title: string;
+};
+
+const Card = ({ children, title }: Props) => {
   return (
     <Container>
-      <Header>Title</Header>
-      <Content>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus
-        quibusdam totam laboriosam consequuntur omnis ex odit, non veritatis
-        modi maiores fuga perferendis numquam nemo dolores distinctio veniam
-        soluta, atque accusamus?
-      </Content>
+      <Header>{title}</Header>
+      <Content>{children}</Content>
     </Container>
   );
 };
@@ -29,4 +29,5 @@ const Header = styled.div({
 const Content = styled.div({
   padding: "1rem",
 });
+
 export default Card;

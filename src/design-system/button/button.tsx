@@ -40,6 +40,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
   fontSize: "1rem",
   padding: "0.5rem 2rem",
   outline: 0,
+  fontFamily: "inherit",
 
   "&:active": {
     backgroundColor:

@@ -1,21 +1,23 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { Heading } from "../../design-system";
 import { Theme } from "../../providers";
-import { Button } from "../../design-system";
 
 export default {
-  title: "Button",
-  component: Button,
+  title: "Heading",
+  component: Heading,
   argTypes: {
-    variant: {
+    size: {
       control: "select",
-      options: ["Primary", "Danger", "Warning", "Success"],
-      defaultValue: "Primary",
+      options: ["h1", "h2", "h3", "h4", "h5", "h6"],
+      defaultValue: "h1",
     },
   },
-} as ComponentMeta<typeof Button>;
+} as ComponentMeta<typeof Heading>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Heading> = (args) => (
+  <Heading {...args} />
+);
 
 export const Default = Template.bind({});
 
@@ -28,8 +30,9 @@ Default.decorators = [
   ),
 ];
 
+const content = "Lorem ipsum dolor";
+
 Default.args = {
-  text: "Primary",
-  variant: "Primary",
-  disabled: false,
+  size: "h1",
+  children: content,
 };
