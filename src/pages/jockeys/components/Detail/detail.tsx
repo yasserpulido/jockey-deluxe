@@ -11,7 +11,7 @@ const Detail = () => {
   const { data: countries } = useCountry();
   const { data: genders } = useGender();
   const context = React.useContext(JockeyContext);
-  const { control, register, handleSubmit, reset } = useForm<Jockey>({
+  const { control, handleSubmit, reset } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
 
@@ -33,10 +33,23 @@ const Detail = () => {
           name="firstname"
           render={({ field }) => <Input label="First Name" {...field} />}
         />
-
-        {/* <Input label="Last Name" {...register("lastname")} />
-        <Input label="Birth" {...register("birth")} type="date" />
-        <Dropdown options={genders} label="Gender" {...register("gender")} /> */}
+        {/* <Controller
+          control={control}
+          name="lastname"
+          render={({ field }) => <Input label="Last Name" {...field} />}
+        />
+        <Controller
+          control={control}
+          name="birth"
+          render={({ field }) => <Input label="Birth" type="date" {...field} />}
+        />
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field }) => (
+            <Dropdown label="Gender" options={genders} {...field} />
+          )}
+        /> */}
         {/* <Dropdown label="Gender" {...register("gender")}>
           {genders?.map((gender) => (
             <option key={gender.id} value={gender.id}>
