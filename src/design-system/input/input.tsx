@@ -6,6 +6,7 @@ type Props = {
   name: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
+  onChange: (e: any) => void;
 };
 
 const Input = ({
@@ -13,11 +14,20 @@ const Input = ({
   name,
   type = "text",
   placeholder = "Type here",
+  onChange,
+  ...field
 }: Props) => {
   return (
     <FormGroup>
       <label htmlFor={name}>{label}:</label>
-      <input id={name} name={name} placeholder={placeholder} type={type} />
+      <input
+        id={name}
+        name={name}
+        placeholder={placeholder}
+        type={type}
+        onChange={(e) => onChange(e.target.value)}
+        {...field}
+      />
     </FormGroup>
   );
 };

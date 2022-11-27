@@ -10,12 +10,14 @@ type Option = {
 type Props<T extends Option> = {
   label: string;
   options: Array<T>;
-  onChange: () => void;
+  onChange: (value: any) => void;
 };
 
 const Dropdown = <T extends Option>({ label, options, onChange }: Props<T>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [option, setOption] = useState<T | null>(null);
+
+  onChange(1);
 
   return (
     <Container>
@@ -30,7 +32,11 @@ const Dropdown = <T extends Option>({ label, options, onChange }: Props<T>) => {
         <TEST_UL>
           {options.length > 0 ? (
             options.map((o) => (
-              <TEST_LI key={o.id} onMouseDown={() => setOption(o)}>
+              <TEST_LI
+                key={o.id}
+                onMouseDown={() => setOption(o)}
+                onChange={() => onChange(o.id)}
+              >
                 {o.name}
               </TEST_LI>
             ))

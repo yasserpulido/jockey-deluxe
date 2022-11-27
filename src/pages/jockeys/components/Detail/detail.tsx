@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCountry, useGender } from "../../../../hooks";
 import { colors } from "../../../../design-system/theme/colors";
 import { Jockey } from "../../../../types";
@@ -11,12 +11,13 @@ const Detail = () => {
   const { data: countries } = useCountry();
   const { data: genders } = useGender();
   const context = React.useContext(JockeyContext);
-  const { register, handleSubmit, reset } = useForm<Jockey>({
+  const { control, register, handleSubmit, reset } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    context.save(data);
+    console.log(data);
+    // context.save(data);
   };
 
   useEffect(() => {
@@ -27,10 +28,15 @@ const Detail = () => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
         <legend>Form Jockey</legend>
-        <Input label="First Name" {...register("firstname")} />
-        <Input label="Last Name" {...register("lastname")} />
+        <Controller
+          control={control}
+          name="firstname"
+          render={({ field }) => <Input label="First Name" {...field} />}
+        />
+
+        {/* <Input label="Last Name" {...register("lastname")} />
         <Input label="Birth" {...register("birth")} type="date" />
-        <Dropdown options={genders} label="Gender" onChange={() => {}} />
+        <Dropdown options={genders} label="Gender" {...register("gender")} /> */}
         {/* <Dropdown label="Gender" {...register("gender")}>
           {genders?.map((gender) => (
             <option key={gender.id} value={gender.id}>
