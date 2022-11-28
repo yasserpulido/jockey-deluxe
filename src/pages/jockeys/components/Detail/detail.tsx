@@ -16,13 +16,14 @@ const Detail = () => {
   });
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    console.log(data);
-    // context.save(data);
+    context.save(data);
   };
 
   useEffect(() => {
     reset(context.jockey);
   }, [reset, context.jockey]);
+
+  console.log(context.jockey);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -31,54 +32,39 @@ const Detail = () => {
         <Controller
           control={control}
           name="firstname"
+          defaultValue=""
           render={({ field }) => <Input label="First Name" {...field} />}
         />
-        {/* <Controller
+        <Controller
           control={control}
           name="lastname"
+          defaultValue=""
           render={({ field }) => <Input label="Last Name" {...field} />}
         />
         <Controller
           control={control}
           name="birth"
+          defaultValue=""
           render={({ field }) => <Input label="Birth" type="date" {...field} />}
         />
         <Controller
           control={control}
           name="gender"
+          defaultValue=""
           render={({ field }) => (
             <Dropdown label="Gender" options={genders} {...field} />
           )}
-        /> */}
-        {/* <Dropdown label="Gender" {...register("gender")}>
-          {genders?.map((gender) => (
-            <option key={gender.id} value={gender.id}>
-              {gender.gender}
-            </option>
-          ))}
-        </Dropdown> */}
+        />
+        <Controller
+          control={control}
+          name="nationality"
+          defaultValue=""
+          render={({ field }) => (
+            <Dropdown label="nationality" options={countries} {...field} />
+          )}
+        />
         <Button text="Save" variant="Success" type="submit" />
       </fieldset>
-      {/* 
-        <label>Birth:</label>
-        <input {...register("birth")} />
-        <label>Gender:</label>
-        <select {...register("gender")}>
-          {genders?.map((gender) => (
-            <option key={gender.id} value={gender.id}>
-              {gender.gender}
-            </option>
-          ))}
-        </select>
-        <label>Nationality:</label>
-        <select {...register("nationality")}>
-          {countries?.map((country) => (
-            <option key={country.id} value={country.id}>
-              {country.name}
-            </option>
-          ))}
-        </select>
-        <Button text="Save" variant="Success" type="submit" /> */}
     </Form>
   );
 };

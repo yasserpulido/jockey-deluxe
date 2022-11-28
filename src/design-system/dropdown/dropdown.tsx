@@ -1,53 +1,68 @@
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { useState } from "react";
 import { colors } from "../theme/colors";
-
-type Option = {
-  id: string;
-  name: string;
-};
+import { Option } from "../../types";
 
 type Props<T extends Option> = {
   label: string;
-  options: Array<T>;
-  onChange: (value: any) => void;
+  options: Array<Option>;
+  value: any;
+  placeholder?: string;
+  onChange: (value: T["name"]) => void;
 };
 
-const Dropdown = <T extends Option>({ label, options, onChange }: Props<T>) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [option, setOption] = useState<T | null>(null);
+const Dropdown = React.forwardRef(
+  <T extends Option>(
+    { label, options, value, placeholder = "Select", onChange }: Props<T>,
+    ref: React.ForwardedRef<HTMLUListElement>
+  ) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [option, setOption] = useState<Option>(value);
 
-  onChange(1);
+    console.log("value", value);
 
-  return (
-    <Container>
-      <label>{label}:</label>
-      <input
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
-        placeholder="Select"
-        value={option?.name}
-      />
-      {isOpen && (
-        <TEST_UL>
-          {options.length > 0 ? (
-            options.map((o) => (
-              <TEST_LI
-                key={o.id}
-                onMouseDown={() => setOption(o)}
-                onChange={() => onChange(o.id)}
-              >
-                {o.name}
-              </TEST_LI>
-            ))
-          ) : (
-            <TEST_LI>No options</TEST_LI>
-          )}
-        </TEST_UL>
-      )}
-    </Container>
-  );
-};
+    return (
+      <Container>
+        <label>{label}:</label>
+        <Input
+          onClick={() => setIsOpen(!isOpen)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (["Enter"].includes(e.key)) {
+              if (e.key === "Enter") {
+                setIsOpen(!isOpen);
+              }
+            }
+          }}
+          onBlur={() => setIsOpen(false)}
+        >
+          <Content>{option?.name ?? placeholder}</Content>
+        </Input>
+        {isOpen && (
+          <OptionsList>
+            {options.length > 0 ? (
+              options.map((o) => (
+                <OptionList
+                  key={o.id}
+                  onMouseDown={() => {
+                    onChange(o.id);
+                    setOption(o);
+                    setIsOpen(!isOpen);
+                  }}
+                  {...ref}
+                >
+                  {o.name}
+                </OptionList>
+              ))
+            ) : (
+              <OptionList>No Options</OptionList>
+            )}
+          </OptionsList>
+        )}
+      </Container>
+    );
+  }
+);
 
 const Container = styled.div({
   marginBottom: "1.4rem",
@@ -58,18 +73,25 @@ const Container = styled.div({
     display: "block",
     marginBottom: "0.4rem",
   },
+});
 
-  "& input": {
-    borderRadius: 0,
-    border: `1px solid ${colors.Gunmetal}`,
-    fontSize: "1rem",
-    padding: "0.7rem 0.5rem",
-    outline: 0,
-    width: "100%",
+const Input = styled.div({
+  border: `1px solid ${colors.Gunmetal}`,
+  padding: "0.7rem 0.5rem",
+  width: "100%",
+  outline: 0,
+
+  "&:focus": {
+    border: `2px solid ${colors.BlueDress}`,
   },
 });
 
-const TEST_UL = styled.ul({
+const Content = styled.span({
+  fontSize: "1rem",
+  width: "100%",
+});
+
+const OptionsList = styled.ul({
   backgroundColor: colors.White,
   borderLeft: `1px solid ${colors.DoveGrey}`,
   borderRight: `1px solid ${colors.DoveGrey}`,
@@ -78,9 +100,10 @@ const TEST_UL = styled.ul({
   maxHeight: "200px",
   overflowY: "scroll",
   position: "absolute",
+  zIndex: 1,
 });
 
-const TEST_LI = styled.li({
+const OptionList = styled.li({
   cursor: "pointer",
   padding: "0.25rem 1.5rem",
   width: "100%",

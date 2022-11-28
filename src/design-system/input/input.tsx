@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import React from "react";
 import { colors } from "../theme/colors";
 
 type Props = {
@@ -6,31 +7,25 @@ type Props = {
   name: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
-  onChange: (e: any) => void;
 };
 
-const Input = ({
-  label,
-  name,
-  type = "text",
-  placeholder = "Type here",
-  onChange,
-  ...field
-}: Props) => {
-  return (
-    <FormGroup>
-      <label htmlFor={name}>{label}:</label>
-      <input
-        id={name}
-        name={name}
-        placeholder={placeholder}
-        type={type}
-        onChange={(e) => onChange(e.target.value)}
-        {...field}
-      />
-    </FormGroup>
-  );
-};
+const Input = React.forwardRef(
+  ({ label, name, type, placeholder, ...props }: Props, ref) => {
+    return (
+      <FormGroup>
+        <label htmlFor={name}>{label}:</label>
+        <input
+          id={name}
+          name={name}
+          placeholder={placeholder}
+          type={type}
+          {...props}
+          {...ref}
+        />
+      </FormGroup>
+    );
+  }
+);
 
 const FormGroup = styled.div({
   marginBottom: "1.4rem",
@@ -47,6 +42,10 @@ const FormGroup = styled.div({
     padding: "0.7rem 0.5rem",
     outline: 0,
     width: "100%",
+
+    "&:focus": {
+      border: `2px solid ${colors.BlueDress}`,
+    },
   },
 });
 

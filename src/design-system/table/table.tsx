@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { ReactNode } from "react";
+import { Jockey } from "../../types";
 import { colors } from "../theme/colors";
 
 export type ColumnProp<T> = {
@@ -7,40 +8,47 @@ export type ColumnProp<T> = {
   value: keyof T;
 };
 
-type TableProps<T> = {
+type TableProps<T extends Jockey> = {
   caption?: string;
   columns: Array<ColumnProp<T>>;
   data: Array<T> | undefined;
 };
 
-const Table = <T,>({ caption, columns, data }: TableProps<T>) => {
+const Table = <T extends Jockey>({ caption, columns, data }: TableProps<T>) => {
   return (
     <Container>
-      <Caption>{caption}</Caption>
-      <Thead>
-        <tr>
-          {columns.map((c) => (
-            <Th>{c.heading}</Th>
-          ))}
-        </tr>
-      </Thead>
-      <Tbody>
-        {data?.map((d) => (
+      <TableContainer>
+        <Caption>{caption}</Caption>
+        <Thead>
           <tr>
             {columns.map((c) => (
-              <Td>{d[c.value] as ReactNode}</Td>
+              <Th key={c.heading.toLocaleLowerCase()}>{c.heading}</Th>
             ))}
           </tr>
-        ))}
-      </Tbody>
+        </Thead>
+        <Tbody>
+          {data?.map((d) => (
+            <tr key={`tr-${d.id}`}>
+              {columns.map((c) => (
+                <Td key={`td-${d.id}-${c.heading}`}>
+                  {d[c.value] as ReactNode}
+                </Td>
+              ))}
+            </tr>
+          ))}
+        </Tbody>
+      </TableContainer>
     </Container>
   );
 };
 
-const Container = styled.table({
+const Container = styled.div({
+  margin: "1rem",
+});
+
+const TableContainer = styled.table({
   border: `1px solid ${colors.Black}`,
   borderCollapse: "collapse",
-  margin: "1rem",
   width: "100%",
 });
 
@@ -71,6 +79,8 @@ const Th = styled.th({
 const Td = styled.td({
   border: `1px solid ${colors.Black}`,
   borderCollapse: "collapse",
+  textAlign: "center",
+  padding: "5px",
 });
 
 export default Table;

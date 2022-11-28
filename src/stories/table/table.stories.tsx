@@ -2,6 +2,8 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Table } from "../../design-system";
 import { Theme } from "../../providers";
+import { ColumnProp } from "../../design-system/table/table";
+import { Jockey } from "../../types";
 
 export default {
   title: "Table",
@@ -21,20 +23,28 @@ Default.decorators = [
   ),
 ];
 
-const columns = [
-  { heading: "Rank", value: "rank" },
-  { heading: "Jockey", value: "jockey" },
-  { heading: "Races", value: "races" },
+const columns: Array<ColumnProp<Jockey>> = [
+  { heading: "Id", value: "id" },
+  { heading: "First Name", value: "firstname" },
+  { heading: "Last Name", value: "lastname" },
+  { heading: "Birth", value: "birth" },
+  { heading: "Gender", value: "gender" },
+  { heading: "Nationality", value: "nationality" },
 ];
 
-const data = [
-  { rank: "1", jockey: "Yasser Barzotto", races: "23" },
-  { rank: "2", jockey: "Boris Barzotto", races: "18" },
-  { rank: "3", jockey: "Nabila Barzotto", races: "15" },
+const data: Array<Jockey> = [
+  {
+    id: "1",
+    firstname: "Yasser",
+    lastname: "Pulido",
+    birth: "30-04-1991",
+    gender: "2",
+    nationality: "10",
+  },
 ];
 
 Default.args = {
   caption: "Most Ranked Jockeys on Hipodromo de Palermo, 2022",
-  // columns,
+  columns,
   data,
 };

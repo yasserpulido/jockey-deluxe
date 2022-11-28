@@ -45,6 +45,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
     mutationFn: api.createJockey,
     onSuccess: () => {
       queryClient.invalidateQueries(["Jockey"]);
+
     },
   });
   const editMutation = useMutation({
@@ -67,11 +68,11 @@ export const Provider: React.FC<Props> = ({ children }) => {
   }, [status, data]);
 
   const saveHandler = (jockey: Jockey) => {
-    if (!jockey.id) {
-      createMutation.mutate(jockey);
-    } else {
-      editMutation.mutate(jockey);
-    }
+    // if (!jockey.id) {
+    //   createMutation.mutate(jockey);
+    // } else {
+    //   editMutation.mutate(jockey);
+    // }
     setJockey(jockeyDefaultValues);
   };
 
