@@ -33,13 +33,17 @@ const Detail = () => {
           control={control}
           name="firstname"
           defaultValue=""
-          render={({ field }) => <Input label="First Name" {...field} />}
+          render={({ field }) => (
+            <Input label="First Name" placeholder="Type here" {...field} />
+          )}
         />
         <Controller
           control={control}
           name="lastname"
           defaultValue=""
-          render={({ field }) => <Input label="Last Name" {...field} />}
+          render={({ field }) => (
+            <Input label="Last Name" placeholder="Type here" {...field} />
+          )}
         />
         <Controller
           control={control}

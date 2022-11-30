@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import React from "react";
+import { useRef } from "@storybook/addons";
+import React, { ForwardedRef } from "react";
 import { colors } from "../theme/colors";
 
 type Props = {
@@ -9,44 +10,61 @@ type Props = {
   placeholder?: string;
 };
 
-const Input = React.forwardRef(
-  ({ label, name, type, placeholder, ...props }: Props, ref) => {
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ label, name, type, placeholder, ...props }, ref) => {
+    const test = React.useRef<any>(ref);
+    const hasDate = test.current.value === "";
+
     return (
-      <FormGroup>
+      <FormGroup hasDate={hasDate}>
         <label htmlFor={name}>{label}:</label>
         <input
           id={name}
           name={name}
           placeholder={placeholder}
           type={type}
+          ref={test}
           {...props}
-          {...ref}
         />
       </FormGroup>
     );
   }
 );
 
-const FormGroup = styled.div({
-  marginBottom: "1.4rem",
+type FormGroupProps = {
+  hasDate: boolean;
+};
+
+const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
+  borderBottom: `2px solid ${colors.Black}`,
+  marginBottom: "1rem",
 
   "& label": {
     display: "block",
-    marginBottom: "0.4rem",
+    marginBottom: "0.2rem",
   },
 
   "& input": {
     borderRadius: 0,
     border: `1px solid ${colors.Gunmetal}`,
-    fontSize: "1rem",
-    padding: "0.7rem 0.5rem",
-    outline: 0,
+    fontSize: "1.2em",
+    padding: "0.2rem 0.4rem",
     width: "100%",
 
-    "&:focus": {
-      border: `2px solid ${colors.BlueDress}`,
+    ":focus": {
+      outline: `2px solid ${colors.DenimBlue}`,
+    },
+
+    "::placeholder": {
+      color: colors.Gunmetal,
+      opacity: 0.5,
     },
   },
-});
+
+  "& input[type='date']": {
+    color: !hasDate ? colors.Black : colors.Gunmetal,
+    opacity: !hasDate ? 1 : 0.5,
+  },
+}));
 
 export default Input;

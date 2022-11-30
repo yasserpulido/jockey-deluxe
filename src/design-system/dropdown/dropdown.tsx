@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 import { Option } from "../../types";
@@ -18,8 +18,7 @@ const Dropdown = React.forwardRef(
   ) => {
     const [isOpen, setIsOpen] = useState(false);
     const [option, setOption] = useState<Option>(value);
-
-    console.log("value", value);
+    const hasOption = Object.entries(option).length === 0;
 
     return (
       <Container>
@@ -36,7 +35,7 @@ const Dropdown = React.forwardRef(
           }}
           onBlur={() => setIsOpen(false)}
         >
-          <Content>{option?.name ?? placeholder}</Content>
+          <Content hasOption={hasOption}>{option?.name ?? placeholder}</Content>
         </Input>
         {isOpen && (
           <OptionsList>
@@ -65,9 +64,10 @@ const Dropdown = React.forwardRef(
 );
 
 const Container = styled.div({
-  marginBottom: "1.4rem",
-  width: "100%",
+  borderBottom: `2px solid ${colors.Black}`,
+  marginBottom: "1rem",
   position: "relative",
+  width: "100%",
 
   "& label": {
     display: "block",
@@ -77,19 +77,25 @@ const Container = styled.div({
 
 const Input = styled.div({
   border: `1px solid ${colors.Gunmetal}`,
-  padding: "0.7rem 0.5rem",
+  padding: "0.2rem 0.4rem",
   width: "100%",
   outline: 0,
 
   "&:focus": {
-    border: `2px solid ${colors.BlueDress}`,
+    outline: `2px solid ${colors.DenimBlue}`,
   },
 });
 
-const Content = styled.span({
-  fontSize: "1rem",
+type ContentProps = {
+  hasOption: boolean;
+};
+
+const Content = styled.span<ContentProps>(({ hasOption }) => ({
+  fontSize: "1.2em",
   width: "100%",
-});
+  color: !hasOption ? colors.Black : colors.Gunmetal,
+  opacity: !hasOption ? 1 : 0.5,
+}));
 
 const OptionsList = styled.ul({
   backgroundColor: colors.White,

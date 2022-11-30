@@ -297,8 +297,9 @@ const global = css`
   }
 
   #root {
-    font-family: "RobotoMonoRegular", Arial, sans-serif;
+    font-family: Poppins, Arial, sans-serif;
     color: ${colors.Gunmetal};
+    font-size: 12px;
   }
 `;
 
