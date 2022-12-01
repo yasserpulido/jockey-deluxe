@@ -64,7 +64,7 @@ const Detail = () => {
           name="nationality"
           defaultValue=""
           render={({ field }) => (
-            <Dropdown label="nationality" options={countries} {...field} />
+            <Dropdown label="Nationality" options={countries} {...field} />
           )}
         />
         <Button text="Save" variant="Success" type="submit" />

@@ -1,19 +1,18 @@
+import React from "react";
 import styled from "@emotion/styled";
-import { useRef } from "@storybook/addons";
-import React, { ForwardedRef } from "react";
 import { colors } from "../theme/colors";
 
 type Props = {
   label: string;
   name: string;
+  value: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
 };
 
-const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ label, name, type, placeholder, ...props }, ref) => {
-    const test = React.useRef<any>(ref);
-    const hasDate = test.current.value === "";
+const Input = React.forwardRef(
+  ({ label, name, type, placeholder, ...props }: Props, ref) => {
+    const hasDate = props.value === "";
 
     return (
       <FormGroup hasDate={hasDate}>
@@ -23,7 +22,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
           name={name}
           placeholder={placeholder}
           type={type}
-          ref={test}
+          {...ref}
           {...props}
         />
       </FormGroup>
@@ -64,6 +63,7 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
   "& input[type='date']": {
     color: !hasDate ? colors.Black : colors.Gunmetal,
     opacity: !hasDate ? 1 : 0.5,
+    fontSize: "1.2em",
   },
 }));
 
