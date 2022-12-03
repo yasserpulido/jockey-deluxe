@@ -1,34 +1,48 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
+import { GrStatusWarning } from "react-icons/gr";
 
 type Props = {
   label: string;
   name: string;
   value: string;
+  errors?: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
 };
 
-const Input = React.forwardRef(
-  ({ label, name, type, placeholder, ...props }: Props, ref) => {
-    const hasDate = props.value === "";
+const Input = React.forwardRef<HTMLInputElement, Props>(
+  ({ label, name, value, errors, type, placeholder, ...props }, ref) => {
+    const hasDate = value === "";
 
     return (
-      <FormGroup hasDate={hasDate}>
-        <label htmlFor={name}>{label}:</label>
-        <input
-          id={name}
-          name={name}
-          placeholder={placeholder}
-          type={type}
-          {...ref}
-          {...props}
-        />
-      </FormGroup>
+      <Container>
+        <FormGroup hasDate={hasDate}>
+          <label htmlFor={name}>{label}:</label>
+          <input
+            id={name}
+            name={name}
+            placeholder={placeholder}
+            type={type}
+            ref={ref}
+            {...props}
+          />
+        </FormGroup>
+        {errors && (
+          <Error>
+            <GrStatusWarning />
+            {errors}
+          </Error>
+        )}
+      </Container>
     );
   }
 );
+
+const Container = styled.div({
+  marginBottom: "1rem",
+});
 
 type FormGroupProps = {
   hasDate: boolean;
@@ -36,7 +50,7 @@ type FormGroupProps = {
 
 const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
   borderBottom: `2px solid ${colors.Black}`,
-  marginBottom: "1rem",
+  marginBottom: "0.2rem",
 
   "& label": {
     display: "block",
@@ -48,6 +62,7 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
     border: `1px solid ${colors.Gunmetal}`,
     fontSize: "1.2em",
     padding: "0.2rem 0.4rem",
+    lineHeight: "1.5rem",
     width: "100%",
 
     ":focus": {
@@ -66,5 +81,17 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
     fontSize: "1.2em",
   },
 }));
+
+const Error = styled.small({
+  color: colors.PersianRed,
+  display: "flex",
+  alignItems: "center",
+
+  "& svg, path": {
+    fontSize: "1rem",
+    marginRight: "0.4rem",
+    stroke: colors.PersianRed,
+  },
+});
 
 export default Input;

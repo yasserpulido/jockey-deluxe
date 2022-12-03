@@ -16,14 +16,13 @@ const Detail = () => {
   });
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    context.save(data);
+    console.log(data);
+    // context.save(data);
   };
 
   useEffect(() => {
     reset(context.jockey);
   }, [reset, context.jockey]);
-
-  console.log(context.jockey);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -33,29 +32,66 @@ const Detail = () => {
           control={control}
           name="firstname"
           defaultValue=""
-          render={({ field }) => (
-            <Input label="First Name" placeholder="Type here" {...field} />
+          rules={{
+            required: { value: true, message: "Please enter a first name." },
+            minLength: {
+              value: 3,
+              message: "The first name must have at least 3 letters.",
+            },
+          }}
+          render={({ field, formState: { errors } }) => (
+            <Input
+              label="First Name"
+              placeholder="Type here"
+              errors={errors.firstname?.message}
+              {...field}
+            />
           )}
         />
         <Controller
           control={control}
           name="lastname"
           defaultValue=""
-          render={({ field }) => (
-            <Input label="Last Name" placeholder="Type here" {...field} />
+          rules={{
+            required: { value: true, message: "Please enter a last name." },
+            minLength: {
+              value: 3,
+              message: "The last name must have at least 3 letters.",
+            },
+          }}
+          render={({ field, formState: { errors } }) => (
+            <Input
+              label="Last Name"
+              placeholder="Type here"
+              errors={errors.lastname?.message}
+              {...field}
+            />
           )}
         />
         <Controller
           control={control}
           name="birth"
           defaultValue=""
-          render={({ field }) => <Input label="Birth" type="date" {...field} />}
+          rules={{
+            required: { value: true, message: "Please enter a birth date." },
+          }}
+          render={({ field, formState: { errors } }) => (
+            <Input
+              label="Birth"
+              type="date"
+              errors={errors.birth?.message}
+              {...field}
+            />
+          )}
         />
         <Controller
           control={control}
           name="gender"
           defaultValue=""
-          render={({ field }) => (
+          rules={{
+            required: { value: true, message: "Please select a gender." },
+          }}
+          render={({ field, formState: { errors } }) => (
             <Dropdown label="Gender" options={genders} {...field} />
           )}
         />

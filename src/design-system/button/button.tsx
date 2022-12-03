@@ -37,10 +37,13 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
   border: "none",
   color: variant === "Warning" ? colors.Black : colors.White,
   cursor: "pointer",
-  fontSize: "1rem",
-  padding: "0.5rem 2rem",
-  outline: 0,
   fontFamily: "inherit",
+  fontSize: "1.2em",
+  padding: "0.2rem 0.6rem",
+
+  ":focus": {
+    outline: `2px solid ${colors.DenimBlue}`,
+  },
 
   "&:active": {
     backgroundColor:
@@ -52,6 +55,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
         ? colors.LightTan
         : colors.LightGreenishBlue,
   },
+
   "&:disabled": {
     backgroundColor: colors.FrenchGrey,
     color: colors.White,

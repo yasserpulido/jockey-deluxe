@@ -6,7 +6,7 @@ import { Option } from "../../types";
 type Props<T extends Option> = {
   label: string;
   options: Array<Option>;
-  value: any;
+  value?: string;
   placeholder?: string;
   onChange: (value: T["name"]) => void;
 };
@@ -16,9 +16,22 @@ const Dropdown = React.forwardRef(
     { label, options, value, placeholder = "Select", onChange }: Props<T>,
     ref: React.ForwardedRef<HTMLUListElement>
   ) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [option, setOption] = useState<Option>(value);
-    const hasOption = Object.entries(option).length === 0;
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [option, setOption] = useState<Option>();
+    const [hasOption, setHasOption] = useState<boolean>(false);
+
+    useEffect(() => {
+      if (value !== "" && options.length > 0) {
+        options.forEach((o) => {
+          if (o.id === value) {
+            setOption(o);
+            setHasOption(true);
+          }
+        });
+      }
+    }, [value, options]);
+
+    console.log(option?.name);
 
     return (
       <Container>
@@ -46,7 +59,8 @@ const Dropdown = React.forwardRef(
                   onMouseDown={() => {
                     onChange(o.id);
                     setOption(o);
-                    setIsOpen(!isOpen);
+                    setHasOption(true);
+                    setIsOpen(false);
                   }}
                   {...ref}
                 >
@@ -93,8 +107,9 @@ type ContentProps = {
 const Content = styled.span<ContentProps>(({ hasOption }) => ({
   fontSize: "1.2em",
   width: "100%",
-  color: !hasOption ? colors.Black : colors.Gunmetal,
-  opacity: !hasOption ? 1 : 0.5,
+  color: hasOption ? colors.Black : colors.Gunmetal,
+  opacity: hasOption ? 1 : 0.5,
+  lineHeight: "1.5rem",
 }));
 
 const OptionsList = styled.ul({
@@ -111,7 +126,7 @@ const OptionsList = styled.ul({
 
 const OptionList = styled.li({
   cursor: "pointer",
-  padding: "0.25rem 1.5rem",
+  padding: "0.4rem",
   width: "100%",
 
   "&:hover": {
