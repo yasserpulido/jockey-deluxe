@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 import { Option } from "../../types";
+import { GrStatusWarning } from "react-icons/gr";
 
 type Props<T extends Option> = {
   label: string;
   options: Array<Option>;
+  errors?: string;
   value?: string;
   placeholder?: string;
   onChange: (value: T["name"]) => void;
@@ -13,7 +15,14 @@ type Props<T extends Option> = {
 
 const Dropdown = React.forwardRef(
   <T extends Option>(
-    { label, options, value, placeholder = "Select", onChange }: Props<T>,
+    {
+      label,
+      options,
+      value,
+      errors,
+      placeholder = "Select",
+      onChange,
+    }: Props<T>,
     ref: React.ForwardedRef<HTMLUListElement>
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -31,25 +40,28 @@ const Dropdown = React.forwardRef(
       }
     }, [value, options]);
 
-    console.log(option?.name);
-
     return (
       <Container>
-        <label>{label}:</label>
-        <Input
-          onClick={() => setIsOpen(!isOpen)}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (["Enter"].includes(e.key)) {
-              if (e.key === "Enter") {
-                setIsOpen(!isOpen);
+        <FormGroup>
+          <label>{label}:</label>
+          <Input
+            onClick={() => setIsOpen(!isOpen)}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (["Enter"].includes(e.key)) {
+                if (e.key === "Enter") {
+                  setIsOpen(!isOpen);
+                }
               }
-            }
-          }}
-          onBlur={() => setIsOpen(false)}
-        >
-          <Content hasOption={hasOption}>{option?.name ?? placeholder}</Content>
-        </Input>
+            }}
+            onBlur={() => setIsOpen(false)}
+          >
+            <Content hasOption={hasOption}>
+              {option?.name ?? placeholder}
+            </Content>
+          </Input>
+        </FormGroup>
+
         {isOpen && (
           <OptionsList>
             {options.length > 0 ? (
@@ -72,15 +84,25 @@ const Dropdown = React.forwardRef(
             )}
           </OptionsList>
         )}
+        {errors && (
+          <Error>
+            <GrStatusWarning />
+            {errors}
+          </Error>
+        )}
       </Container>
     );
   }
 );
 
 const Container = styled.div({
-  borderBottom: `2px solid ${colors.Black}`,
   marginBottom: "1rem",
+});
+
+const FormGroup = styled.div({
+  borderBottom: `2px solid ${colors.Black}`,
   position: "relative",
+  marginBottom: "0.2rem",
   width: "100%",
 
   "& label": {
@@ -131,6 +153,18 @@ const OptionList = styled.li({
 
   "&:hover": {
     backgroundColor: colors.Mercury,
+  },
+});
+
+const Error = styled.small({
+  color: colors.PersianRed,
+  display: "flex",
+  alignItems: "center",
+
+  "& svg, path": {
+    fontSize: "1rem",
+    marginRight: "0.4rem",
+    stroke: colors.PersianRed,
   },
 });
 

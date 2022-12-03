@@ -6,7 +6,7 @@ const Jockeys = () => {
   return (
     <React.Fragment>
       <Detail />
-      <List />
+      {/* <List /> */}
     </React.Fragment>
   );
 };

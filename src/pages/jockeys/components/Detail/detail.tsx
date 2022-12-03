@@ -92,15 +92,28 @@ const Detail = () => {
             required: { value: true, message: "Please select a gender." },
           }}
           render={({ field, formState: { errors } }) => (
-            <Dropdown label="Gender" options={genders} {...field} />
+            <Dropdown
+              label="Gender"
+              options={genders}
+              errors={errors.gender?.message}
+              {...field}
+            />
           )}
         />
         <Controller
           control={control}
           name="nationality"
           defaultValue=""
-          render={({ field }) => (
-            <Dropdown label="Nationality" options={countries} {...field} />
+          rules={{
+            required: { value: true, message: "Please select a nationality." },
+          }}
+          render={({ field, formState: { errors } }) => (
+            <Dropdown
+              label="Nationality"
+              options={countries}
+              errors={errors.nationality?.message}
+              {...field}
+            />
           )}
         />
         <Button text="Save" variant="Success" type="submit" />

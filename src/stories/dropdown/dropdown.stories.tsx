@@ -42,19 +42,19 @@ Default.args = {
   onChange: () => {},
 };
 
-// export const NoOptions = Template.bind({});
+export const NoOptions = Template.bind({});
 
-// NoOptions.decorators = [
-//   (Story) => (
-//     <React.Fragment>
-//       <Theme />
-//       <Story />
-//     </React.Fragment>
-//   ),
-// ];
+NoOptions.decorators = [
+  (Story) => (
+    <React.Fragment>
+      <Theme />
+      <Story />
+    </React.Fragment>
+  ),
+];
 
-// NoOptions.args = {
-//   label: "Gender",
-//   options: [],
-//   onChange: () => {},
-// };
+NoOptions.args = {
+  label: "Gender",
+  options: [],
+  onChange: () => {},
+};
