@@ -97,17 +97,17 @@ const Dropdown = React.forwardRef(
 
 const Container = styled.div({
   marginBottom: "1rem",
+  position: "relative",
+  width: "100%",
 });
 
 const FormGroup = styled.div({
   borderBottom: `2px solid ${colors.Black}`,
-  position: "relative",
   marginBottom: "0.2rem",
-  width: "100%",
 
   "& label": {
     display: "block",
-    marginBottom: "0.4rem",
+    marginBottom: "0.2rem",
   },
 });
 
@@ -129,8 +129,7 @@ type ContentProps = {
 const Content = styled.span<ContentProps>(({ hasOption }) => ({
   fontSize: "1.2em",
   width: "100%",
-  color: hasOption ? colors.Black : colors.Gunmetal,
-  opacity: hasOption ? 1 : 0.5,
+  color: hasOption ? colors.Black : colors.FrenchGrey,
   lineHeight: "1.5rem",
 }));
 

@@ -54,6 +54,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
         : variant === "Warning"
         ? colors.LightTan
         : colors.LightGreenishBlue,
+    outline: 0,
   },
 
   "&:disabled": {

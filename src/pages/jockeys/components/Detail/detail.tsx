@@ -128,6 +128,9 @@ const Form = styled.form({
   "& fieldset": {
     border: `1px solid ${colors.Gunmetal}`,
     padding: "1rem",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "1rem",
   },
 });
 

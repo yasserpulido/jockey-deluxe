@@ -14,7 +14,7 @@ type Props = {
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
   ({ label, name, value, errors, type, placeholder, ...props }, ref) => {
-    const hasDate = value === "";
+    const hasDate = value !== "";
 
     return (
       <Container>
@@ -58,8 +58,8 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
   },
 
   "& input": {
+    border: `1px solid ${colors.Black}`,
     borderRadius: 0,
-    border: `1px solid ${colors.Gunmetal}`,
     fontSize: "1.2em",
     padding: "0.2rem 0.4rem",
     lineHeight: "1.5rem",
@@ -70,14 +70,13 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
     },
 
     "::placeholder": {
-      color: colors.Gunmetal,
-      opacity: 0.5,
+      color: colors.FrenchGrey,
+      opacity: 1,
     },
   },
 
   "& input[type='date']": {
-    color: !hasDate ? colors.Black : colors.Gunmetal,
-    opacity: !hasDate ? 1 : 0.5,
+    color: hasDate ? colors.Black : colors.FrenchGrey,
     fontSize: "1.2em",
   },
 }));
