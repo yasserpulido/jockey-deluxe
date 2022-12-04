@@ -30,13 +30,13 @@ const Dropdown = React.forwardRef(
     const [option, setOption] = useState<Option | null>(null);
     const [hasOption, setHasOption] = useState<boolean>(false);
 
-    // Si se abre el dropdown, asiga el primero.
+    // Si se abre el dropdown, asiga el primero o la opcion seleccionada.
     useEffect(() => {
-      if (isOpen && options.length > 0) {
+      if (isOpen && options.length > 0 && option === null) {
         setOption(options[0]);
         setHasOption(true);
       }
-    }, [isOpen, options]);
+    }, [isOpen, options, option]);
 
     // Si viene valor desde value y existe en la lista se asigna esa opcion.
     useEffect(() => {
@@ -89,7 +89,7 @@ const Dropdown = React.forwardRef(
                     setIsOpen(false);
                   }}
                   {...ref}
-                  active={hasOption}
+                  active={option?.id === o.id}
                 >
                   {o.name}
                 </OptionList>
