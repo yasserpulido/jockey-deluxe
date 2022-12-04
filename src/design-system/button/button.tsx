@@ -37,6 +37,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
   border: "none",
   color: variant === "Warning" ? colors.Black : colors.White,
   cursor: "pointer",
+  display: "inline-block",
   fontFamily: "inherit",
   fontSize: "1.2em",
   padding: "0.2rem 0.6rem",

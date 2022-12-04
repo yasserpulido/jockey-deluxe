@@ -40,9 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
   }
 );
 
-const Container = styled.div({
-  marginBottom: "1rem",
-});
+const Container = styled.div({});
 
 type FormGroupProps = {
   hasDate: boolean;

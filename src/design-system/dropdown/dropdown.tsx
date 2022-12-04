@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 import { Option } from "../../types";
 import { GrStatusWarning } from "react-icons/gr";
+import { useKeyPress } from "../../hooks";
 
 type Props<T extends Option> = {
   label: string;
@@ -26,9 +27,18 @@ const Dropdown = React.forwardRef(
     ref: React.ForwardedRef<HTMLUListElement>
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [option, setOption] = useState<Option>();
+    const [option, setOption] = useState<Option | null>(null);
     const [hasOption, setHasOption] = useState<boolean>(false);
 
+    // Si se abre el dropdown, asiga el primero.
+    useEffect(() => {
+      if (isOpen && options.length > 0) {
+        setOption(options[0]);
+        setHasOption(true);
+      }
+    }, [isOpen, options]);
+
+    // Si viene valor desde value y existe en la lista se asigna esa opcion.
     useEffect(() => {
       if (value !== "" && options.length > 0) {
         options.forEach((o) => {
@@ -40,6 +50,14 @@ const Dropdown = React.forwardRef(
       }
     }, [value, options]);
 
+    const handleKey = (e: any) => {
+      if (["Enter"].includes(e.key)) {
+        if (e.key === "Enter") {
+          setIsOpen(!isOpen);
+        }
+      }
+    };
+
     return (
       <Container>
         <FormGroup>
@@ -48,11 +66,7 @@ const Dropdown = React.forwardRef(
             onClick={() => setIsOpen(!isOpen)}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (["Enter"].includes(e.key)) {
-                if (e.key === "Enter") {
-                  setIsOpen(!isOpen);
-                }
-              }
+              handleKey(e);
             }}
             onBlur={() => setIsOpen(false)}
           >
@@ -75,12 +89,13 @@ const Dropdown = React.forwardRef(
                     setIsOpen(false);
                   }}
                   {...ref}
+                  active={hasOption}
                 >
                   {o.name}
                 </OptionList>
               ))
             ) : (
-              <OptionList>No Options</OptionList>
+              <OptionList active={hasOption}>No Options</OptionList>
             )}
           </OptionsList>
         )}
@@ -96,7 +111,6 @@ const Dropdown = React.forwardRef(
 );
 
 const Container = styled.div({
-  marginBottom: "1rem",
   position: "relative",
   width: "100%",
 });
@@ -142,18 +156,24 @@ const OptionsList = styled.ul({
   maxHeight: "200px",
   overflowY: "scroll",
   position: "absolute",
+  top: "49px",
   zIndex: 1,
 });
 
-const OptionList = styled.li({
+type OptionListProps = {
+  active: boolean;
+};
+
+const OptionList = styled.li<OptionListProps>(({ active }) => ({
   cursor: "pointer",
   padding: "0.4rem",
   width: "100%",
+  backgroundColor: active ? colors.Mercury : "none",
 
   "&:hover": {
     backgroundColor: colors.Mercury,
   },
-});
+}));
 
 const Error = styled.small({
   color: colors.PersianRed,
