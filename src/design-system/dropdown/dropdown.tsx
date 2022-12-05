@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 import { Option } from "../../types";
 import { GrStatusWarning } from "react-icons/gr";
-import { useKeyPress } from "../../hooks";
 
 type Props<T extends Option> = {
   label: string;
@@ -14,26 +13,22 @@ type Props<T extends Option> = {
   onChange: (value: T["name"]) => void;
 };
 
-const Dropdown = React.forwardRef(
-  <T extends Option>(
-    {
-      label,
-      options,
-      value,
-      errors,
-      placeholder = "Select",
-      onChange,
-    }: Props<T>,
-    ref: React.ForwardedRef<HTMLUListElement>
+const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
+  (
+    { label, options, value, errors, placeholder = "Select", onChange },
+    ref
   ) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [option, setOption] = useState<Option | null>(null);
     const [hasOption, setHasOption] = useState<boolean>(false);
+    const [cursor, setCursor] = useState<number | null>(null);
+    const test = useRef<any>(null);
 
     // Si se abre el dropdown, asiga el primero o la opcion seleccionada.
     useEffect(() => {
       if (isOpen && options.length > 0 && option === null) {
         setOption(options[0]);
+        setCursor(0);
         setHasOption(true);
       }
     }, [isOpen, options, option]);
@@ -41,19 +36,67 @@ const Dropdown = React.forwardRef(
     // Si viene valor desde value y existe en la lista se asigna esa opcion.
     useEffect(() => {
       if (value !== "" && options.length > 0) {
-        options.forEach((o) => {
+        options.forEach((o, index) => {
           if (o.id === value) {
             setOption(o);
+            setCursor(index);
             setHasOption(true);
           }
         });
       }
     }, [value, options]);
 
+    useEffect(() => {
+      if (cursor !== null) {
+        setOption(options[cursor]);
+        setHasOption(true);
+      }
+    }, [options, cursor]);
+
     const handleKey = (e: any) => {
-      if (["Enter"].includes(e.key)) {
-        if (e.key === "Enter") {
+      switch (e.key) {
+        case "Enter":
           setIsOpen(!isOpen);
+          break;
+        case "ArrowUp":
+          if (isOpen) {
+            setCursor((prevState) => {
+              return prevState !== null && prevState > 0
+                ? prevState - 1
+                : prevState;
+            });
+            scrollHandler();
+          }
+          break;
+        case "ArrowDown":
+          if (isOpen) {
+            setCursor((prevState) => {
+              return prevState !== null && prevState < options.length - 1
+                ? prevState + 1
+                : prevState;
+            });
+            scrollHandler();
+          }
+          break;
+      }
+    };
+
+    const scrollHandler = () => {
+      const listbox = document.getElementById("options-list");
+      const selectedOption = document.getElementById(`${option?.id}-option`);
+
+      if (
+        selectedOption &&
+        listbox !== null &&
+        listbox.scrollHeight > listbox.clientHeight
+      ) {
+        const scrollBottom = listbox.clientHeight + listbox.scrollTop;
+        const elementBottom =
+          selectedOption.offsetTop + selectedOption.offsetHeight;
+        if (elementBottom >= scrollBottom) {
+          listbox.scrollTop = elementBottom - listbox.clientHeight;
+        } else if (selectedOption.offsetTop < listbox.scrollTop) {
+          listbox.scrollTop = selectedOption.offsetTop;
         }
       }
     };
@@ -77,18 +120,19 @@ const Dropdown = React.forwardRef(
         </FormGroup>
 
         {isOpen && (
-          <OptionsList>
+          <OptionsList id="options-list" ref={test}>
             {options.length > 0 ? (
-              options.map((o) => (
+              options.map((o, index) => (
                 <OptionList
+                  id={`${o.id}-option`}
                   key={o.id}
                   onMouseDown={() => {
                     onChange(o.id);
                     setOption(o);
                     setHasOption(true);
                     setIsOpen(false);
+                    setCursor(index);
                   }}
-                  {...ref}
                   active={option?.id === o.id}
                 >
                   {o.name}
