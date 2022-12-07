@@ -28,7 +28,7 @@ const Detail = () => {
     <Form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
         <legend>Form Jockey</legend>
-        <Container>
+        <InputsContainer>
           <Controller
             control={control}
             name="firstname"
@@ -120,7 +120,7 @@ const Detail = () => {
               />
             )}
           />
-        </Container>
+        </InputsContainer>
         <Footer>
           <Button text="Save" variant="Success" type="submit" />
         </Footer>
@@ -138,12 +138,14 @@ const Form = styled.form({
   },
 });
 
-const Container = styled.div({
+const InputsContainer = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: "1rem",
 });
 
-const Footer = styled.footer({});
+const Footer = styled.footer({
+  textAlign: "end",
+});
 
 export default Detail;

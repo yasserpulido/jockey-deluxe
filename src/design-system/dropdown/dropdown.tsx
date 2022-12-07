@@ -22,9 +22,10 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
     const [option, setOption] = useState<Option | null>(null);
     const [hasOption, setHasOption] = useState<boolean>(false);
     const [cursor, setCursor] = useState<number | null>(null);
-    const test = useRef<any>(null);
+    const optionBox = useRef<HTMLUListElement>(null);
+    const optionSelected = useRef<Array<HTMLLIElement>>([]);
 
-    // Si se abre el dropdown, asiga el primero o la opcion seleccionada.
+    // Si se abre el dropdown, asiga el primero si no hay opcion previamente seleccionado.
     useEffect(() => {
       if (isOpen && options.length > 0 && option === null) {
         setOption(options[0]);
@@ -33,7 +34,7 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
       }
     }, [isOpen, options, option]);
 
-    // Si viene valor desde value y existe en la lista se asigna esa opcion.
+    // Si viene valor desde props.value y existe en la lista se asigna esa opcion.
     useEffect(() => {
       if (value !== "" && options.length > 0) {
         options.forEach((o, index) => {
@@ -46,6 +47,7 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
       }
     }, [value, options]);
 
+    // Al setearse el cursor, se actualiza la option.
     useEffect(() => {
       if (cursor !== null) {
         setOption(options[cursor]);
@@ -53,7 +55,36 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
       }
     }, [options, cursor]);
 
-    const handleKey = (e: any) => {
+    // Verifica el comportamiento del scrollbar
+    useEffect(() => {
+      if (
+        cursor !== null &&
+        isOpen &&
+        optionSelected !== null &&
+        optionSelected.current !== null &&
+        optionBox !== null &&
+        optionBox.current !== null &&
+        optionBox.current.scrollHeight > optionBox.current.clientHeight
+      ) {
+        const scrollBottom =
+          optionBox.current.clientHeight + optionBox.current.scrollTop;
+        const elementBottom =
+          optionSelected.current[cursor].offsetTop +
+          optionSelected.current[cursor].offsetHeight;
+
+        if (elementBottom > scrollBottom) {
+          optionBox.current.scrollTop =
+            elementBottom - optionBox.current.clientHeight;
+        } else if (
+          optionSelected.current[cursor].offsetTop < optionBox.current.scrollTop
+        ) {
+          optionBox.current.scrollTop =
+            optionSelected.current[cursor].offsetTop;
+        }
+      }
+    }, [cursor, isOpen]);
+
+    const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
       switch (e.key) {
         case "Enter":
           setIsOpen(!isOpen);
@@ -65,7 +96,6 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
                 ? prevState - 1
                 : prevState;
             });
-            scrollHandler();
           }
           break;
         case "ArrowDown":
@@ -75,29 +105,8 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
                 ? prevState + 1
                 : prevState;
             });
-            scrollHandler();
           }
           break;
-      }
-    };
-
-    const scrollHandler = () => {
-      const listbox = document.getElementById("options-list");
-      const selectedOption = document.getElementById(`${option?.id}-option`);
-
-      if (
-        selectedOption &&
-        listbox !== null &&
-        listbox.scrollHeight > listbox.clientHeight
-      ) {
-        const scrollBottom = listbox.clientHeight + listbox.scrollTop;
-        const elementBottom =
-          selectedOption.offsetTop + selectedOption.offsetHeight;
-        if (elementBottom >= scrollBottom) {
-          listbox.scrollTop = elementBottom - listbox.clientHeight;
-        } else if (selectedOption.offsetTop < listbox.scrollTop) {
-          listbox.scrollTop = selectedOption.offsetTop;
-        }
       }
     };
 
@@ -120,11 +129,10 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
         </FormGroup>
 
         {isOpen && (
-          <OptionsList id="options-list" ref={test}>
+          <OptionsList ref={optionBox}>
             {options.length > 0 ? (
               options.map((o, index) => (
                 <OptionList
-                  id={`${o.id}-option`}
                   key={o.id}
                   onMouseDown={() => {
                     onChange(o.id);
@@ -134,6 +142,11 @@ const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
                     setCursor(index);
                   }}
                   active={option?.id === o.id}
+                  ref={(element) => {
+                    if (element !== null) {
+                      optionSelected.current[index] = element;
+                    }
+                  }}
                 >
                   {o.name}
                 </OptionList>
@@ -193,14 +206,12 @@ const Content = styled.span<ContentProps>(({ hasOption }) => ({
 
 const OptionsList = styled.ul({
   backgroundColor: colors.White,
-  borderLeft: `1px solid ${colors.DoveGrey}`,
-  borderRight: `1px solid ${colors.DoveGrey}`,
-  borderBottom: `1px solid ${colors.DoveGrey}`,
+  border: `1px solid ${colors.DoveGrey}`,
   width: "100%",
   maxHeight: "200px",
   overflowY: "scroll",
   position: "absolute",
-  top: "49px",
+  top: "48px",
   zIndex: 1,
 });
 
