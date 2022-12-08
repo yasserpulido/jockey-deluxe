@@ -131,10 +131,15 @@ const Detail = () => {
 
 const Form = styled.form({
   margin: "1rem",
+  backgroundColor: colors.White,
 
   "& fieldset": {
     border: `1px solid ${colors.Gunmetal}`,
     padding: "1rem",
+  },
+
+  "& legend": {
+    fontWeight: "bold",
   },
 });
 

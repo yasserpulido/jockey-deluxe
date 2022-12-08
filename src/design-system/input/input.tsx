@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 import { GrStatusWarning } from "react-icons/gr";
+import { fontWeight } from "../theme";
 
 type Props = {
   label: string;
@@ -62,6 +63,7 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
     padding: "0.2rem 0.4rem",
     lineHeight: "1.5rem",
     width: "100%",
+    fontWeight: fontWeight.regular,
 
     ":focus": {
       outline: `2px solid ${colors.DenimBlue}`,

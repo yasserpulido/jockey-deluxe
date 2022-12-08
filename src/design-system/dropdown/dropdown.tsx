@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { colors } from "../theme/colors";
-import { Option } from "../../types";
 import { GrStatusWarning } from "react-icons/gr";
+import { colors, fontWeight } from "../theme";
+import { Option } from "../../types";
 
 type Props<T extends Option> = {
   label: string;
@@ -10,7 +10,7 @@ type Props<T extends Option> = {
   errors?: string;
   value?: string;
   placeholder?: string;
-  onChange: (value: T["name"]) => void;
+  onChange: (value: T["id"]) => void;
 };
 
 const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
@@ -202,6 +202,7 @@ const Content = styled.span<ContentProps>(({ hasOption }) => ({
   width: "100%",
   color: hasOption ? colors.Black : colors.FrenchGrey,
   lineHeight: "1.5rem",
+  fontWeight: fontWeight.regular,
 }));
 
 const OptionsList = styled.ul({
