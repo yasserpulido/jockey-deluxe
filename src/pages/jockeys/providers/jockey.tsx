@@ -36,7 +36,7 @@ type Props = {
 export const Provider: React.FC<Props> = ({ children }) => {
   const queryClient = useQueryClient();
   const [jockey, setJockey] = useState<Jockey>();
-  const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
+  const [jockeys, setJockeys] = useState<any>([]);
   const { data, status, isLoading } = useQuery({
     queryKey: ["Jockey"],
     queryFn: api.getJockeys,
@@ -45,7 +45,6 @@ export const Provider: React.FC<Props> = ({ children }) => {
     mutationFn: api.createJockey,
     onSuccess: () => {
       queryClient.invalidateQueries(["Jockey"]);
-
     },
   });
   const editMutation = useMutation({
@@ -63,9 +62,19 @@ export const Provider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === "success") {
-      setJockeys(data!);
+      setJockeys(TEST(data!));
     }
   }, [status, data]);
+
+  const TEST = (data: Array<Jockey>) => {
+    return {
+      page: 1,
+      perPage: 5,
+      total: data.length,
+      totalPage: Math.ceil(data.length / 5),
+      data,
+    };
+  };
 
   const saveHandler = (jockey: Jockey) => {
     // if (!jockey.id) {

@@ -43,7 +43,6 @@ const Detail = () => {
             render={({ field, formState: { errors } }) => (
               <Input
                 label="First Name"
-                placeholder="Type here"
                 errors={errors.firstname?.message}
                 {...field}
               />
@@ -63,7 +62,6 @@ const Detail = () => {
             render={({ field, formState: { errors } }) => (
               <Input
                 label="Last Name"
-                placeholder="Type here"
                 errors={errors.lastname?.message}
                 {...field}
               />

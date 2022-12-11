@@ -7,14 +7,17 @@ import { fontWeight } from "../theme";
 type Props = {
   label: string;
   name: string;
-  value: string;
+  value?: string;
   errors?: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
 };
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
-  ({ label, name, value, errors, type, placeholder, ...props }, ref) => {
+  (
+    { label, name, value, errors, type, placeholder = "Type here", ...props },
+    ref
+  ) => {
     const hasDate = value !== "";
 
     return (
@@ -60,7 +63,8 @@ const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
     border: `1px solid ${colors.Black}`,
     borderRadius: 0,
     fontSize: "1.2em",
-    padding: "0.2rem 0.4rem",
+    padding: "0",
+    paddingLeft: "0.2rem",
     lineHeight: "1.5rem",
     width: "100%",
     fontWeight: fontWeight.regular,

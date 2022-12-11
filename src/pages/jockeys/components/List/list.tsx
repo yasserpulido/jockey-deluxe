@@ -15,7 +15,7 @@ const List = () => {
     { heading: "Nationality", value: "nationality" },
   ];
 
-  return <Table columns={columns} data={context.jockeys} />;
+  return <Table columns={columns} data={context.jockeys} context={context} />;
 };
 
 export default List;

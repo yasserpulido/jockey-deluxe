@@ -6,6 +6,7 @@ interface Props {
   variant: "Primary" | "Danger" | "Warning" | "Success";
   disabled?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  onClick?: () => void;
 }
 
 const Button = ({
@@ -13,9 +14,15 @@ const Button = ({
   variant,
   disabled = false,
   type = "button",
+  onClick,
 }: Props) => {
   return (
-    <BaseButton variant={variant} disabled={disabled} type={type}>
+    <BaseButton
+      variant={variant}
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+    >
       {text}
     </BaseButton>
   );

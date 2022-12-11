@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
-import { maxWidth, mediaQuery } from "../../design-system";
+import { maxWidth, mediaQuery, Workshop } from "../../design-system";
 import Detail from "./components/detail";
 import List from "./components/list";
 
 const Jockeys = () => {
   return (
     <Container>
-      <Detail />
-      {/* <List /> */}
+      <Workshop>
+        {/* <Detail /> */}
+        <List />
+      </Workshop>
     </Container>
   );
 };

@@ -1,6 +1,9 @@
 import styled from "@emotion/styled";
-import { ReactNode } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Jockey } from "../../types";
+import { Button } from "../button";
+import { Dropdown } from "../dropdown";
+import { Input } from "../input";
 import { colors } from "../theme/colors";
 
 export type ColumnProp<T> = {
@@ -9,16 +12,55 @@ export type ColumnProp<T> = {
 };
 
 type TableProps<T extends Jockey> = {
-  caption?: string;
   columns: Array<ColumnProp<T>>;
-  data: Array<T> | undefined;
+  // data: Array<T> | undefined;
+  data: any | undefined;
+  context: any;
 };
 
-const Table = <T extends Jockey>({ caption, columns, data }: TableProps<T>) => {
+const Table = <T extends Jockey>({ columns, data, context }: TableProps<T>) => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(5);
+  const [content, setContent] = useState(data);
+  const prevPage = () => setPage((prevState) => prevState - 1);
+  const nextPage = () => setPage((prevState) => prevState + 1);
+
+  useEffect(() => {
+    setContent({
+      page: page,
+      perPage: perPage,
+      total: data.length,
+      totalPage: Math.ceil(data.length / perPage),
+      data,
+    });
+  }, [data, perPage, page]);
+
+  const ENTRIES = [
+    {
+      id: "1",
+      name: "5",
+    },
+    {
+      id: "2",
+      name: "10",
+    },
+    {
+      id: "3",
+      name: "15",
+    },
+    {
+      id: "4",
+      name: "20",
+    },
+  ];
+
   return (
-    <Container>
+    <React.Fragment>
+      <Header>
+        <Dropdown label="Entries" options={ENTRIES} onChange={() => {}} />
+        <Input label="Search" name="search" />
+      </Header>
       <TableContainer>
-        <Caption>{caption}</Caption>
         <Thead>
           <tr>
             {columns.map((c) => (
@@ -27,7 +69,7 @@ const Table = <T extends Jockey>({ caption, columns, data }: TableProps<T>) => {
           </tr>
         </Thead>
         <Tbody>
-          {data?.map((d) => (
+          {data?.data?.map((d: any) => (
             <tr key={`tr-${d.id}`}>
               {columns.map((c) => (
                 <Td key={`td-${d.id}-${c.heading}`}>
@@ -38,22 +80,34 @@ const Table = <T extends Jockey>({ caption, columns, data }: TableProps<T>) => {
           ))}
         </Tbody>
       </TableContainer>
-    </Container>
+      <Pagination>
+        <Show>
+          <span>Showing 1 to 25 of 57 entries</span>
+        </Show>
+        <Navigation>
+          <Button
+            text="Previous"
+            variant="Primary"
+            onClick={prevPage}
+            disabled={page === 1}
+          />
+          <Button text="Next" variant="Primary" onClick={nextPage} />
+        </Navigation>
+      </Pagination>
+    </React.Fragment>
   );
 };
 
-const Container = styled.div({
-  margin: "1rem",
+const Header = styled.div({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
 });
 
 const TableContainer = styled.table({
   border: `1px solid ${colors.Black}`,
   borderCollapse: "collapse",
   width: "100%",
-});
-
-const Caption = styled.caption({
-  marginBottom: "1rem",
+  marginTop: "1rem",
 });
 
 const Thead = styled.thead({
@@ -80,7 +134,31 @@ const Td = styled.td({
   border: `1px solid ${colors.Black}`,
   borderCollapse: "collapse",
   textAlign: "center",
-  padding: "5px",
+  padding: "0.2rem",
+});
+
+const Pagination = styled.div({
+  display: "grid",
+  gridTemplateColumns: "repeat(2, 1fr)",
+  borderLeft: `1px solid ${colors.Black}`,
+  borderBottom: `1px solid ${colors.Black}`,
+  borderRight: `1px solid ${colors.Black}`,
+  padding: "0.2rem",
+});
+
+const Show = styled.div({
+  display: "flex",
+  alignItems: "center",
+});
+
+const Navigation = styled.div({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "end",
+
+  "& button:first-of-type": {
+    marginRight: "0.2rem",
+  },
 });
 
 export default Table;

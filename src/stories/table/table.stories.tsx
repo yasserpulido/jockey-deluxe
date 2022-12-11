@@ -44,7 +44,6 @@ const data: Array<Jockey> = [
 ];
 
 Default.args = {
-  caption: "Most Ranked Jockeys on Hipodromo de Palermo, 2022",
   columns,
   data,
 };
