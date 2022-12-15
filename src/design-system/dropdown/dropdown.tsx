@@ -184,7 +184,8 @@ const FormGroup = styled.div({
 
 const Input = styled.div({
   border: `1px solid ${colors.Gunmetal}`,
-  padding: "0.2rem 0.4rem",
+  padding: "0",
+  paddingLeft: "0.2rem",
   width: "100%",
   outline: 0,
 
@@ -212,7 +213,7 @@ const OptionsList = styled.ul({
   maxHeight: "200px",
   overflowY: "scroll",
   position: "absolute",
-  top: "48px",
+  top: "42px",
   zIndex: 1,
 });
 

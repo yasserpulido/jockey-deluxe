@@ -13,52 +13,78 @@ export type ColumnProp<T> = {
 
 type TableProps<T extends Jockey> = {
   columns: Array<ColumnProp<T>>;
-  // data: Array<T> | undefined;
-  data: any | undefined;
-  context: any;
+  data: Array<T> | undefined;
 };
 
-const Table = <T extends Jockey>({ columns, data, context }: TableProps<T>) => {
+const ENTRIES = [
+  {
+    id: "1",
+    name: "5",
+  },
+  {
+    id: "2",
+    name: "10",
+  },
+  {
+    id: "3",
+    name: "15",
+  },
+  {
+    id: "4",
+    name: "20",
+  },
+];
+
+const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
   const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(5);
-  const [content, setContent] = useState(data);
-  const prevPage = () => setPage((prevState) => prevState - 1);
-  const nextPage = () => setPage((prevState) => prevState + 1);
+  const [entriesPerPage, setEntriesPerPage] = useState("1");
+  const [totalEntries, setTotalEntries] = useState(0); // Total de entradas en el array.
+  const [totalPage, setTotalPages] = useState(0); // Total de paginas
+  const [content, setContent] = useState<Array<T>>([]);
+  const [test, setTest] = useState([]);
+  const [showMessage, setShowMessage] = useState("");
 
   useEffect(() => {
-    setContent({
-      page: page,
-      perPage: perPage,
-      total: data.length,
-      totalPage: Math.ceil(data.length / perPage),
-      data,
-    });
-  }, [data, perPage, page]);
+    if (data !== undefined) {
+      const perPageSelected = ENTRIES.find((e) => e.id === entriesPerPage);
+      let start = 0;
+      let end = 0;
+      if (perPageSelected?.name) {
+        start = (page - 1) * parseInt(perPageSelected?.name!);
+        end = page * parseInt(perPageSelected?.name!);
+      }
+      const c = data.slice(start, end);
 
-  const ENTRIES = [
-    {
-      id: "1",
-      name: "5",
-    },
-    {
-      id: "2",
-      name: "10",
-    },
-    {
-      id: "3",
-      name: "15",
-    },
-    {
-      id: "4",
-      name: "20",
-    },
-  ];
+      setTotalEntries(data.length);
+      setTotalPages(Math.ceil(data.length / parseInt(perPageSelected?.name!)));
+      setContent(c);
+    }
+  }, [data, entriesPerPage, page]);
+
+  // useEffect(() => {
+  //   if (content?.totalPage) {
+  //     const perPageSelected = ENTRIES.find((e) => e.id === entriesPerPage);
+
+  //     // Showing 1 to {perPageSelected?.name} of {content?.totalPage} entries
+
+  //     const message = `Showing 1 to ${perPageSelected?.name} of ${content?.totalPage}`;
+  //     setShowMessage(message);
+  //   }
+  // }, [content, entriesPerPage]);
+
+  const prevPage = () => setPage((prevState) => prevState - 1);
+  const nextPage = () => setPage((prevState) => prevState + 1);
 
   return (
     <React.Fragment>
       <Header>
-        <Dropdown label="Entries" options={ENTRIES} onChange={() => {}} />
-        <Input label="Search" name="search" />
+        <Dropdown
+          label="Entries"
+          options={ENTRIES}
+          onChange={setEntriesPerPage}
+          value={entriesPerPage}
+        />
+        {/* <Input label="Search" name="search" /> */}
       </Header>
       <TableContainer>
         <Thead>
@@ -69,7 +95,7 @@ const Table = <T extends Jockey>({ columns, data, context }: TableProps<T>) => {
           </tr>
         </Thead>
         <Tbody>
-          {data?.data?.map((d: any) => (
+          {content?.map((d: any) => (
             <tr key={`tr-${d.id}`}>
               {columns.map((c) => (
                 <Td key={`td-${d.id}-${c.heading}`}>
@@ -82,7 +108,7 @@ const Table = <T extends Jockey>({ columns, data, context }: TableProps<T>) => {
       </TableContainer>
       <Pagination>
         <Show>
-          <span>Showing 1 to 25 of 57 entries</span>
+          <span>Showing {totalEntries} entries</span>
         </Show>
         <Navigation>
           <Button
@@ -91,7 +117,12 @@ const Table = <T extends Jockey>({ columns, data, context }: TableProps<T>) => {
             onClick={prevPage}
             disabled={page === 1}
           />
-          <Button text="Next" variant="Primary" onClick={nextPage} />
+          <Button
+            text="Next"
+            variant="Primary"
+            onClick={nextPage}
+            disabled={page === totalPage}
+          />
         </Navigation>
       </Pagination>
     </React.Fragment>
