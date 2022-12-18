@@ -11,11 +11,21 @@ type Props = {
   errors?: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
+  onChange: (value: string) => void;
 };
 
 const Input = React.forwardRef<HTMLInputElement, Props>(
   (
-    { label, name, value, errors, type, placeholder = "Type here", ...props },
+    {
+      label,
+      name,
+      value,
+      errors,
+      type,
+      placeholder = "Type here",
+      onChange,
+      ...props
+    },
     ref
   ) => {
     const hasDate = value !== "";
@@ -30,6 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             placeholder={placeholder}
             type={type}
             ref={ref}
+            onChange={(e) => onChange(e.currentTarget.value)}
             {...props}
           />
         </FormGroup>

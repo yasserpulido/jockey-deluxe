@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { Jockey } from "../../types";
 import { Button } from "../button";
 import { Dropdown } from "../dropdown";
@@ -11,7 +11,7 @@ export type ColumnProp<T> = {
   value: keyof T;
 };
 
-type TableProps<T extends Jockey> = {
+type TableProps<T> = {
   columns: Array<ColumnProp<T>>;
   data: Array<T> | undefined;
 };
@@ -19,58 +19,79 @@ type TableProps<T extends Jockey> = {
 const ENTRIES = [
   {
     id: "1",
-    name: "5",
-  },
-  {
-    id: "2",
     name: "10",
   },
   {
+    id: "2",
+    name: "25",
+  },
+  {
     id: "3",
-    name: "15",
+    name: "50",
   },
   {
     id: "4",
-    name: "20",
+    name: "100",
   },
 ];
 
 const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
-  const [page, setPage] = useState(1);
-  const [entriesPerPage, setEntriesPerPage] = useState("1");
-  const [totalEntries, setTotalEntries] = useState(0); // Total de entradas en el array.
-  const [totalPage, setTotalPages] = useState(0); // Total de paginas
-  const [content, setContent] = useState<Array<T>>([]);
-  const [test, setTest] = useState([]);
+  const [page, setPage] = useState(1); // Pagina seleccionada.
+  const [entriesPerPage, setEntriesPerPage] = useState("1"); // Cantidad de entries a mostrar.
+  const [totalPage, setTotalPages] = useState(0); // Total de paginas.
+  const [content, setContent] = useState<Array<T>>([]); // Entries a mostrar.
   const [showMessage, setShowMessage] = useState("");
+  const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    if (data !== undefined) {
+  const tableStatus = useCallback(
+    (data: Array<T>) => {
       const perPageSelected = ENTRIES.find((e) => e.id === entriesPerPage);
+
       let start = 0;
       let end = 0;
+
       if (perPageSelected?.name) {
-        start = (page - 1) * parseInt(perPageSelected?.name!);
-        end = page * parseInt(perPageSelected?.name!);
+        start = (page - 1) * parseInt(perPageSelected?.name);
+        end = page * parseInt(perPageSelected?.name);
       }
+
       const c = data.slice(start, end);
+      const f = data.findIndex((d) => d.id === c[0].id);
+      const l = data.findIndex((d) => d.id === c[c.length - 1].id);
 
-      setTotalEntries(data.length);
+      const message = `Showing ${f + 1} to ${l + 1} of ${data.length}`;
+
       setTotalPages(Math.ceil(data.length / parseInt(perPageSelected?.name!)));
+      setShowMessage(message);
       setContent(c);
+    },
+    [entriesPerPage, page]
+  );
+
+  useEffect(() => {
+    if (data !== undefined && data.length > 0 && filter === "") {
+      tableStatus(data);
     }
-  }, [data, entriesPerPage, page]);
+  }, [data, filter, tableStatus]);
 
-  // useEffect(() => {
-  //   if (content?.totalPage) {
-  //     const perPageSelected = ENTRIES.find((e) => e.id === entriesPerPage);
+  useEffect(() => {
+    if (data !== undefined && data.length > 0 && filter !== "") {
+      let listEntries: Array<T> = [];
 
-  //     // Showing 1 to {perPageSelected?.name} of {content?.totalPage} entries
+      data.forEach((d, index) => {
+        Object.values(d).forEach((v) => {
+          if (v.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) {
+            const exist = listEntries.some((s) => s.id === data[index].id);
+            if (!exist) {
+              listEntries.push(data[index]);
+            }
+          }
+        });
+      });
 
-  //     const message = `Showing 1 to ${perPageSelected?.name} of ${content?.totalPage}`;
-  //     setShowMessage(message);
-  //   }
-  // }, [content, entriesPerPage]);
+      tableStatus(listEntries);
+    }
+  }, [filter, data, tableStatus]);
 
   const prevPage = () => setPage((prevState) => prevState - 1);
   const nextPage = () => setPage((prevState) => prevState + 1);
@@ -84,7 +105,7 @@ const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
           onChange={setEntriesPerPage}
           value={entriesPerPage}
         />
-        {/* <Input label="Search" name="search" /> */}
+        <Input label="Search" name="search" onChange={setFilter} />
       </Header>
       <TableContainer>
         <Thead>
@@ -95,7 +116,7 @@ const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
           </tr>
         </Thead>
         <Tbody>
-          {content?.map((d: any) => (
+          {content?.map((d) => (
             <tr key={`tr-${d.id}`}>
               {columns.map((c) => (
                 <Td key={`td-${d.id}-${c.heading}`}>
@@ -108,7 +129,7 @@ const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
       </TableContainer>
       <Pagination>
         <Show>
-          <span>Showing {totalEntries} entries</span>
+          <span>{showMessage}</span>
         </Show>
         <Navigation>
           <Button
@@ -132,6 +153,7 @@ const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
 const Header = styled.div({
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
+  gap: "1rem",
 });
 
 const TableContainer = styled.table({

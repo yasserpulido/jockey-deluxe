@@ -128,7 +128,6 @@ const Detail = () => {
 };
 
 const Form = styled.form({
-  margin: "1rem",
   backgroundColor: colors.White,
 
   "& fieldset": {

@@ -7,7 +7,7 @@ const Jockeys = () => {
   return (
     <Container>
       <Workshop>
-        {/* <Detail /> */}
+        <Detail />
         <List />
       </Workshop>
     </Container>
@@ -15,6 +15,10 @@ const Jockeys = () => {
 };
 
 const Container = styled.div({
+  "& form": {
+    marginBottom: "1rem",
+  },
+  
   [mediaQuery.large]: {
     maxWidth: maxWidth.large,
     marginLeft: "auto",
