@@ -1,22 +1,15 @@
 import { Jockey } from "../../types";
-import { Convert } from "../../utils";
 
 export const getJockeys = async () => {
   try {
-    // const response = await fetch("http://localhost:3000/jockeys");
+    const response = await fetch("http://localhost:3001/jockeys");
 
-    // if (!response.ok) {
-    //   throw new Error(response.statusText);
-    // }
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
 
-    // const json = await response.json();
-    // const result = Convert.toJockey(json);
-
-    // return result;
-
-    const response = await fetch("/mocks/jockeys.json");
-    const json = await response.json();
-    return json.jockeys;
+    const result = await response.json();
+    return result;
   } catch (error) {
     console.log(error);
   }

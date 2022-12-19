@@ -16,6 +16,7 @@
     "@types/react-dom": "^18.0.6",
     "date-fns": "^2.29.3",
     "i18next": "^22.0.6",
+    "json-server": "^0.17.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
     "mobx": "^6.6.2",
