@@ -33,7 +33,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const Provider: React.FC<Props> = ({ children }) => {
+export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
   const [jockey, setJockey] = useState<Jockey>();
   const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
@@ -62,6 +62,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === "success") {
+      console.log(data);
       setJockeys(data!);
     }
   }, [status, data]);

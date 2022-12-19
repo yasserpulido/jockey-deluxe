@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCountry, useGender } from "../../../../hooks";
 import { colors } from "../../../../design-system/theme/colors";
@@ -10,17 +10,17 @@ import { Button, Dropdown, Input } from "../../../../design-system";
 const Detail = () => {
   const { data: countries } = useCountry();
   const { data: genders } = useGender();
-  const context = React.useContext(JockeyContext);
+  const context = useContext(JockeyContext);
   const { control, handleSubmit, reset } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    console.log(data);
-    // context.save(data);
+    context.save(data);
   };
 
   useEffect(() => {
+    console.log(context.jockey);
     reset(context.jockey);
   }, [reset, context.jockey]);
 
