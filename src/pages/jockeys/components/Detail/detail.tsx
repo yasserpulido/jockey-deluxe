@@ -119,6 +119,12 @@ const Detail = () => {
           />
         </InputsContainer>
         <Footer>
+          <Button
+            text="Delete"
+            variant="Danger"
+            type="button"
+            disabled={!!!context.jockey?.id}
+          />
           <Button text="Save" variant="Success" type="submit" />
         </Footer>
       </fieldset>
@@ -147,6 +153,10 @@ const InputsContainer = styled.div({
 
 const Footer = styled.footer({
   textAlign: "end",
+
+  "& button:first-of-type": {
+    marginRight: "0.2rem",
+  },
 });
 
 export default Detail;
