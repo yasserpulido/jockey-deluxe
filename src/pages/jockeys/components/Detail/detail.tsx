@@ -20,7 +20,6 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    console.log(context.jockey);
     reset(context.jockey);
   }, [reset, context.jockey]);
 

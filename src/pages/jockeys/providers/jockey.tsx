@@ -24,9 +24,9 @@ export type JockeyContextType = {
 export const JockeyContext = React.createContext<JockeyContextType>({
   isLoading: false,
   jockeys: [],
-  save() {},
-  remove() {},
-  jockeySelected() {},
+  save: () => {},
+  remove: () => {},
+  jockeySelected: () => {},
 });
 
 type Props = {
@@ -68,11 +68,11 @@ export const Provider = ({ children }: Props) => {
   }, [status, data]);
 
   const saveHandler = (jockey: Jockey) => {
-    // if (!jockey.id) {
-    //   createMutation.mutate(jockey);
-    // } else {
-    //   editMutation.mutate(jockey);
-    // }
+    if (!jockey.id) {
+      createMutation.mutate(jockey);
+    } else {
+      editMutation.mutate(jockey);
+    }
     setJockey(jockeyDefaultValues);
   };
 

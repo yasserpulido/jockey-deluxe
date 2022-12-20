@@ -14,6 +14,7 @@ export type ColumnProp<T> = {
 type TableProps<T> = {
   columns: Array<ColumnProp<T>>;
   data: Array<T> | undefined;
+  onSelect: (jockey: Jockey) => void;
 };
 
 const ENTRIES = [
@@ -35,7 +36,11 @@ const ENTRIES = [
   },
 ];
 
-const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
+const Table = <T extends Jockey>({
+  columns,
+  data,
+  onSelect,
+}: TableProps<T>) => {
   const [page, setPage] = useState(1); // Pagina seleccionada.
   const [entriesPerPage, setEntriesPerPage] = useState("1"); // Cantidad de entries a mostrar.
   const [totalPage, setTotalPages] = useState(0); // Total de paginas.
@@ -117,13 +122,13 @@ const Table = <T extends Jockey>({ columns, data }: TableProps<T>) => {
         </Thead>
         <Tbody>
           {content?.map((d) => (
-            <tr key={`tr-${d.id}`}>
+            <Tr key={`tr-${d.id}`}>
               {columns.map((c) => (
-                <Td key={`td-${d.id}-${c.heading}`}>
+                <Td key={`td-${d.id}-${c.heading}`} onClick={() => onSelect(d)}>
                   {d[c.value] as ReactNode}
                 </Td>
               ))}
-            </tr>
+            </Tr>
           ))}
         </Tbody>
       </TableContainer>
@@ -188,6 +193,12 @@ const Td = styled.td({
   borderCollapse: "collapse",
   textAlign: "center",
   padding: "0.2rem",
+});
+
+const Tr = styled.tr({
+  "&:hover": {
+    backgroundColor: colors.DenimBlue,
+  },
 });
 
 const Pagination = styled.div({

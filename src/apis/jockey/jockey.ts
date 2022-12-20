@@ -34,13 +34,14 @@ export const createJockey = async (jockey: Jockey) => {
 export const editJockey = async (jockey: Jockey) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/jockey/${jockey.id}/edit`,
+      `http://localhost:3001/jockeys/${jockey.id}`,
       {
-        method: "POST",
+        method: "PUT",
         body: JSON.stringify(jockey),
         headers: { "Content-type": "application/json; charset=UTF-8" },
       }
     );
+
     if (!response.ok) {
       throw new Error(response.statusText);
     }

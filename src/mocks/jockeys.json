@@ -6,7 +6,7 @@
       "lastname": "Pulido",
       "birth": "1991-04-30",
       "gender": "2",
-      "nationality": "1"
+      "nationality": "10"
     },
     {
       "id": "2",
@@ -14,7 +14,7 @@
       "lastname": "Pulido",
       "birth": "1997-04-09",
       "gender": "1",
-      "nationality": "2"
+      "nationality": "10"
     },
     {
       "id": "3",
@@ -22,7 +22,7 @@
       "lastname": "Barzotto",
       "birth": "1984-08-01",
       "gender": "2",
-      "nationality": "2"
+      "nationality": "3"
     },
     {
       "id": "4",
@@ -49,11 +49,11 @@
       "nationality": "1"
     },
     {
-      "firstname": "Prueba",
-      "lastname": "Test",
-      "birth": "1991-04-30",
+      "firstname": "Juan",
+      "lastname": "Pulido",
+      "birth": "1926-05-06",
       "gender": "2",
-      "nationality": "2",
+      "nationality": "10",
       "id": "Oyf2to9"
     },
     {

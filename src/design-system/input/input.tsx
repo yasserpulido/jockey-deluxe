@@ -30,8 +30,6 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
   ) => {
     const hasDate = value !== "";
 
-    console.log("value: ", value);
-
     return (
       <Container>
         <FormGroup hasDate={hasDate}>
