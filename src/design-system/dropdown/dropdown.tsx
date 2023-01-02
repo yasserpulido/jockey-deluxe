@@ -13,159 +13,162 @@ type Props<T extends Option> = {
   onChange: (value: T["id"]) => void;
 };
 
-const Dropdown = React.forwardRef<HTMLUListElement, Props<Option>>(
-  (
-    { label, options, value, errors, placeholder = "Select", onChange },
-    ref
-  ) => {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [option, setOption] = useState<Option | null>(null);
-    const [hasOption, setHasOption] = useState<boolean>(false);
-    const [cursor, setCursor] = useState<number | null>(null);
-    const optionBox = useRef<HTMLUListElement>(null);
-    const optionSelected = useRef<Array<HTMLLIElement>>([]);
+const Dropdown = ({
+  label,
+  options,
+  value,
+  errors,
+  placeholder = "Select",
+  onChange,
+}: Props<Option>) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [option, setOption] = useState<Option | null>(null);
+  const [hasOption, setHasOption] = useState<boolean>(false);
+  const [cursor, setCursor] = useState<number | null>(null);
+  const optionBox = useRef<HTMLUListElement>(null);
+  const optionSelected = useRef<Array<HTMLLIElement>>([]);
 
-    // Si se abre el dropdown, asiga el primero si no hay opcion previamente seleccionado.
-    useEffect(() => {
-      if (isOpen && options.length > 0 && option === null) {
-        setOption(options[0]);
-        setCursor(0);
-        setHasOption(true);
-      }
-    }, [isOpen, options, option]);
+  // Si se abre el dropdown, asiga el primero si no hay opcion previamente seleccionado.
+  useEffect(() => {
+    if (isOpen && options.length > 0 && option === null) {
+      setOption(options[0]);
+      setCursor(0);
+      setHasOption(true);
+    }
+  }, [isOpen, options, option]);
 
-    // Si viene valor desde props.value y existe en la lista se asigna esa opcion.
-    useEffect(() => {
-      if (value !== "" && options.length > 0) {
-        options.forEach((o, index) => {
-          if (o.id === value) {
-            setOption(o);
-            setCursor(index);
-            setHasOption(true);
-          }
-        });
-      }
-    }, [value, options]);
-
-    // Al setearse el cursor, se actualiza la option.
-    useEffect(() => {
-      if (cursor !== null) {
-        setOption(options[cursor]);
-        setHasOption(true);
-      }
-    }, [options, cursor]);
-
-    // Verifica el comportamiento del scrollbar
-    useEffect(() => {
-      if (
-        cursor !== null &&
-        isOpen &&
-        optionSelected !== null &&
-        optionSelected.current !== null &&
-        optionBox !== null &&
-        optionBox.current !== null &&
-        optionBox.current.scrollHeight > optionBox.current.clientHeight
-      ) {
-        const scrollBottom =
-          optionBox.current.clientHeight + optionBox.current.scrollTop;
-        const elementBottom =
-          optionSelected.current[cursor].offsetTop +
-          optionSelected.current[cursor].offsetHeight;
-
-        if (elementBottom > scrollBottom) {
-          optionBox.current.scrollTop =
-            elementBottom - optionBox.current.clientHeight;
-        } else if (
-          optionSelected.current[cursor].offsetTop < optionBox.current.scrollTop
-        ) {
-          optionBox.current.scrollTop =
-            optionSelected.current[cursor].offsetTop;
+  // Si viene valor desde props.value y existe en la lista se asigna esa opcion.
+  useEffect(() => {
+    if (value !== "" && options.length > 0) {
+      options.forEach((o, index) => {
+        if (o.id === value) {
+          setOption(o);
+          setCursor(index);
+          setHasOption(true);
         }
+      });
+    } else {
+      setOption(null);
+      setCursor(null);
+      setHasOption(false);
+    }
+  }, [value, options]);
+
+  // Al setearse el cursor, se actualiza la option.
+  useEffect(() => {
+    if (cursor !== null) {
+      setOption(options[cursor]);
+      setHasOption(true);
+    }
+  }, [options, cursor]);
+
+  // Verifica el comportamiento del scrollbar
+  useEffect(() => {
+    if (
+      cursor !== null &&
+      isOpen &&
+      optionSelected !== null &&
+      optionSelected.current !== null &&
+      optionBox !== null &&
+      optionBox.current !== null &&
+      optionBox.current.scrollHeight > optionBox.current.clientHeight
+    ) {
+      const scrollBottom =
+        optionBox.current.clientHeight + optionBox.current.scrollTop;
+      const elementBottom =
+        optionSelected.current[cursor].offsetTop +
+        optionSelected.current[cursor].offsetHeight;
+
+      if (elementBottom > scrollBottom) {
+        optionBox.current.scrollTop =
+          elementBottom - optionBox.current.clientHeight;
+      } else if (
+        optionSelected.current[cursor].offsetTop < optionBox.current.scrollTop
+      ) {
+        optionBox.current.scrollTop = optionSelected.current[cursor].offsetTop;
       }
-    }, [cursor, isOpen]);
+    }
+  }, [cursor, isOpen]);
 
-    const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
-      switch (e.key) {
-        case "Enter":
-          setIsOpen(!isOpen);
-          break;
-        case "ArrowUp":
-          if (isOpen) {
-            setCursor((prevState) => {
-              return prevState !== null && prevState > 0
-                ? prevState - 1
-                : prevState;
-            });
-          }
-          break;
-        case "ArrowDown":
-          if (isOpen) {
-            setCursor((prevState) => {
-              return prevState !== null && prevState < options.length - 1
-                ? prevState + 1
-                : prevState;
-            });
-          }
-          break;
-      }
-    };
+  const handleKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    switch (e.key) {
+      case "Enter":
+        setIsOpen(!isOpen);
+        break;
+      case "ArrowUp":
+        if (isOpen) {
+          setCursor((prevState) => {
+            return prevState !== null && prevState > 0
+              ? prevState - 1
+              : prevState;
+          });
+        }
+        break;
+      case "ArrowDown":
+        if (isOpen) {
+          setCursor((prevState) => {
+            return prevState !== null && prevState < options.length - 1
+              ? prevState + 1
+              : prevState;
+          });
+        }
+        break;
+    }
+  };
 
-    return (
-      <Container>
-        <FormGroup>
-          <label>{label}:</label>
-          <Input
-            onClick={() => setIsOpen(!isOpen)}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              handleKey(e);
-            }}
-            onBlur={() => setIsOpen(false)}
-          >
-            <Content hasOption={hasOption}>
-              {option?.name ?? placeholder}
-            </Content>
-          </Input>
-        </FormGroup>
+  return (
+    <Container>
+      <FormGroup>
+        <label>{label}:</label>
+        <Input
+          onClick={() => setIsOpen(!isOpen)}
+          tabIndex={0}
+          onKeyDown={(e) => {
+            handleKey(e);
+          }}
+          onBlur={() => setIsOpen(false)}
+        >
+          <Content hasOption={hasOption}>{option?.name ?? placeholder}</Content>
+        </Input>
+      </FormGroup>
 
-        {isOpen && (
-          <OptionsList ref={optionBox}>
-            {options.length > 0 ? (
-              options.map((o, index) => (
-                <OptionList
-                  key={o.id}
-                  onMouseDown={() => {
-                    onChange(o.id);
-                    setOption(o);
-                    setHasOption(true);
-                    setIsOpen(false);
-                    setCursor(index);
-                  }}
-                  active={option?.id === o.id}
-                  ref={(element) => {
-                    if (element !== null) {
-                      optionSelected.current[index] = element;
-                    }
-                  }}
-                >
-                  {o.name}
-                </OptionList>
-              ))
-            ) : (
-              <OptionList active={hasOption}>No Options</OptionList>
-            )}
-          </OptionsList>
-        )}
-        {errors && (
-          <Error>
-            <GrStatusWarning />
-            {errors}
-          </Error>
-        )}
-      </Container>
-    );
-  }
-);
+      {isOpen && (
+        <OptionsList ref={optionBox}>
+          {options.length > 0 ? (
+            options.map((o, index) => (
+              <OptionList
+                key={o.id}
+                onMouseDown={() => {
+                  onChange(o.id);
+                  setOption(o);
+                  setHasOption(true);
+                  setIsOpen(false);
+                  setCursor(index);
+                }}
+                active={option?.id === o.id}
+                ref={(element) => {
+                  if (element !== null) {
+                    optionSelected.current[index] = element;
+                  }
+                }}
+              >
+                {o.name}
+              </OptionList>
+            ))
+          ) : (
+            <OptionList active={hasOption}>No Options</OptionList>
+          )}
+        </OptionsList>
+      )}
+      {errors && (
+        <Error>
+          <GrStatusWarning />
+          {errors}
+        </Error>
+      )}
+    </Container>
+  );
+};
 
 const Container = styled.div({
   position: "relative",

@@ -48,6 +48,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
   fontFamily: "inherit",
   fontSize: "1.2em",
   padding: "0.2rem 0.6rem",
+  minWidth: "6rem",
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,

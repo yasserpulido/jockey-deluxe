@@ -8,8 +8,8 @@ const jockeyDefaultValues: Jockey = {
   firstname: "",
   lastname: "",
   birth: "",
-  gender: "1",
-  nationality: "1",
+  gender: "",
+  nationality: "",
 };
 
 export type JockeyContextType = {
@@ -62,17 +62,17 @@ export const Provider = ({ children }: Props) => {
 
   useEffect(() => {
     if (status === "success") {
-      console.log(data);
       setJockeys(data!);
     }
   }, [status, data]);
 
   const saveHandler = (jockey: Jockey) => {
-    if (!jockey.id) {
-      createMutation.mutate(jockey);
-    } else {
-      editMutation.mutate(jockey);
-    }
+    console.log(jockey);
+    // if (!jockey.id) {
+    //   createMutation.mutate(jockey);
+    // } else {
+    //   editMutation.mutate(jockey);
+    // }
     setJockey(jockeyDefaultValues);
   };
 
