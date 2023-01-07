@@ -111,6 +111,8 @@ const Dropdown = ({
               ? prevState + 1
               : prevState;
           });
+        } else {
+          setIsOpen(true);
         }
         break;
     }
@@ -131,7 +133,6 @@ const Dropdown = ({
           <Content hasOption={hasOption}>{option?.name ?? placeholder}</Content>
         </Input>
       </FormGroup>
-
       {isOpen && (
         <OptionsList ref={optionBox}>
           {options.length > 0 ? (

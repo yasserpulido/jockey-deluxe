@@ -77,12 +77,10 @@ const Container = styled.div<ContainerProps>(({ width, height }) => ({
 
 const Header = styled.div({
   padding: "0.5rem",
-  borderBottom: `1px solid ${colors.Black}`,
 });
 
 const Content = styled.div({
   padding: "0.5rem",
-  borderBottom: `1px solid ${colors.Black}`,
 });
 
 const Footer = styled.div({
