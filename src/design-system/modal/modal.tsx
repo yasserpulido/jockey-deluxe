@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import { Heading } from "../heading";
-import { colors } from "../theme";
 
 type Props = {
   showModal: boolean;

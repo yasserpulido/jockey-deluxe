@@ -1,15 +1,19 @@
+import React, { useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useCountry, useGender } from "../../../../hooks";
 import { colors } from "../../../../design-system/theme/colors";
-import { Jockey } from "../../../../types";
+import { Jockey, ModalFooter } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
 import { Button, Dropdown, Input, Modal } from "../../../../design-system";
-import React from "react";
 
 const Detail = () => {
   const [showModal, setShowModal] = useState(false);
+  const [modalFooter, setModalFooter] = useState<ModalFooter>({
+    header: "",
+    content: "",
+    onClick: () => {},
+  });
   const [jockey, setJockey] = useState<Jockey>();
 
   const { data: countries } = useCountry();
@@ -21,13 +25,24 @@ const Detail = () => {
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
     setJockey(data);
+    setModalFooter({
+      header: "Save",
+      content: `Do you want to save ${data.firstname} ${data.lastname}?`,
+      onClick: saveHandler,
+    });
     setShowModal(true);
   };
 
   const saveHandler = () => {
-    if (jockey !== undefined) {
-      context.save(jockey);
-    }
+    console.log("Saving...");
+    // if (jockey !== undefined) {
+    //   context.save(jockey);
+    // }
+    setShowModal(false);
+  };
+
+  const deleteHandler = () => {
+    console.log("Deleting...");
     setShowModal(false);
   };
 
@@ -143,18 +158,36 @@ const Detail = () => {
               variant="Danger"
               type="button"
               disabled={!!!context.jockey?.id}
+              onClick={() => {
+                if (context.jockey?.id) {
+                  setModalFooter({
+                    header: "Save",
+                    content: `Do you want to delete ${context.jockey.firstname} ${context.jockey.lastname}?`,
+                    onClick: deleteHandler,
+                  });
+                  setShowModal(true);
+                }
+              }}
             />
             <Button text="Save" variant="Success" type="submit" />
           </Footer>
         </fieldset>
       </Form>
-      <Modal showModal={showModal} header="Save" content="Do you want to save?">
+      <Modal
+        showModal={showModal}
+        header={modalFooter.header}
+        content={modalFooter.content}
+      >
         <Button
           text="Cancel"
           onClick={() => setShowModal(false)}
           variant="Danger"
         />
-        <Button text="Ok" onClick={() => saveHandler()} variant="Success" />
+        <Button
+          text="Ok"
+          onClick={() => modalFooter.onClick()}
+          variant="Success"
+        />
       </Modal>
     </React.Fragment>
   );

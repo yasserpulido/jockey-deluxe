@@ -219,6 +219,7 @@ const Navigation = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "end",
+  padding: "0.8rem",
 
   "& button:first-of-type": {
     marginRight: "0.2rem",
