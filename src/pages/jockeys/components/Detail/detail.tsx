@@ -55,6 +55,9 @@ const Detail = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
           <legend>Form Jockey</legend>
+          <Header>
+            <Button variant="Link" text="Reset" />
+          </Header>
           <InputsContainer>
             <Controller
               control={control}
@@ -161,7 +164,7 @@ const Detail = () => {
               onClick={() => {
                 if (context.jockey?.id) {
                   setModalFooter({
-                    header: "Save",
+                    header: "Delete",
                     content: `Do you want to delete ${context.jockey.firstname} ${context.jockey.lastname}?`,
                     onClick: deleteHandler,
                   });
@@ -218,6 +221,10 @@ const Footer = styled.footer({
   "& button:first-of-type": {
     marginRight: "0.2rem",
   },
+});
+
+const Header = styled.div({
+  textAlign: "end",
 });
 
 export default Detail;

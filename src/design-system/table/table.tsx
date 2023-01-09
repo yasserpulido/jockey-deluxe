@@ -207,7 +207,7 @@ const Pagination = styled.div({
   borderLeft: `1px solid ${colors.Black}`,
   borderBottom: `1px solid ${colors.Black}`,
   borderRight: `1px solid ${colors.Black}`,
-  padding: "0.2rem",
+  padding: "1rem",
 });
 
 const Show = styled.div({
@@ -219,7 +219,6 @@ const Navigation = styled.div({
   display: "flex",
   alignItems: "center",
   justifyContent: "end",
-  padding: "0.8rem",
 
   "& button:first-of-type": {
     marginRight: "0.2rem",

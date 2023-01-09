@@ -1,13 +1,13 @@
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
 
-interface Props {
+type Props = {
   text: string;
-  variant: "Primary" | "Danger" | "Warning" | "Success";
+  variant: "Primary" | "Danger" | "Warning" | "Success" | "Link";
   disabled?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   onClick?: () => void;
-}
+};
 
 const Button = ({
   text,
@@ -40,15 +40,23 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
       ? colors.PersianRed
       : variant === "Warning"
       ? colors.ArylideYellow
-      : colors.GreenBlue,
+      : variant === "Success"
+      ? colors.GreenBlue
+      : "transparent",
   border: "none",
-  color: variant === "Warning" ? colors.Black : colors.White,
+  color:
+    variant === "Warning"
+      ? colors.Black
+      : variant === "Link"
+      ? colors.BlueDress
+      : colors.White,
   cursor: "pointer",
   display: "inline-block",
   fontFamily: "inherit",
   fontSize: "1.2em",
-  padding: "0.2rem 0.6rem",
-  minWidth: "6rem",
+  padding: variant === "Link" ? 0 : "0.2rem 0.6rem",
+  minWidth: variant === "Link" ? 0 : "6rem",
+  textDecoration: variant === "Link" ? "underline" : "none",
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,
@@ -62,13 +70,22 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
         ? colors.Salmon
         : variant === "Warning"
         ? colors.LightTan
+        : variant === "Link"
+        ? "none"
         : colors.LightGreenishBlue,
+    color:
+      variant === "Warning"
+        ? colors.Black
+        : variant === "Link"
+        ? colors.DenimBlue
+        : colors.White,
+
     outline: 0,
   },
 
   "&:disabled": {
-    backgroundColor: colors.FrenchGrey,
-    color: colors.White,
+    backgroundColor: variant === "Link" ? "none" : colors.FrenchGrey,
+    color: variant === "Link" ? colors.FrenchGrey : colors.White,
   },
 }));
 
