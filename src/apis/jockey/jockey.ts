@@ -33,14 +33,11 @@ export const createJockey = async (jockey: Jockey) => {
 
 export const editJockey = async (jockey: Jockey) => {
   try {
-    const response = await fetch(
-      `http://localhost:3001/jockeys/${jockey.id}`,
-      {
-        method: "PUT",
-        body: JSON.stringify(jockey),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      }
-    );
+    const response = await fetch(`http://localhost:3001/jockeys/${jockey.id}`, {
+      method: "PUT",
+      body: JSON.stringify(jockey),
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+    });
 
     if (!response.ok) {
       throw new Error(response.statusText);
@@ -52,7 +49,7 @@ export const editJockey = async (jockey: Jockey) => {
 
 export const deleteJockey = async (id: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/jockey/${id}/delete`, {
+    const response = await fetch(`http://localhost:3001/jockeys/${id}`, {
       method: "DELETE",
     });
     console.log(response);

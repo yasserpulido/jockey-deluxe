@@ -17,16 +17,18 @@ export type JockeyContextType = {
   jockey?: Jockey;
   jockeys?: Array<Jockey>;
   save: (jockey: Jockey) => void;
-  remove: (id: string) => void;
+  delete: (id: string) => void;
   jockeySelected: (jockey: Jockey) => void;
+  reset: () => void;
 };
 
 export const JockeyContext = React.createContext<JockeyContextType>({
   isLoading: false,
   jockeys: [],
   save: () => {},
-  remove: () => {},
+  delete: () => {},
   jockeySelected: () => {},
+  reset: () => {},
 });
 
 type Props = {
@@ -67,21 +69,25 @@ export const Provider = ({ children }: Props) => {
   }, [status, data]);
 
   const saveHandler = (jockey: Jockey) => {
-    console.log(jockey);
-    // if (!jockey.id) {
-    //   createMutation.mutate(jockey);
-    // } else {
-    //   editMutation.mutate(jockey);
-    // }
+    if (!jockey.id) {
+      createMutation.mutate(jockey);
+    } else {
+      editMutation.mutate(jockey);
+    }
     setJockey(jockeyDefaultValues);
   };
 
-  const removeHandler = (id: string) => {
+  const deleteHandler = (id: string) => {
     deleteMutation.mutate(id);
+    setJockey(jockeyDefaultValues);
   };
 
   const jockeyHandler = (jockey: Jockey) => {
     setJockey(jockey);
+  };
+
+  const resetHandler = () => {
+    setJockey(jockeyDefaultValues);
   };
 
   return (
@@ -91,8 +97,9 @@ export const Provider = ({ children }: Props) => {
         jockey,
         jockeys,
         save: saveHandler,
-        remove: removeHandler,
+        delete: deleteHandler,
         jockeySelected: jockeyHandler,
+        reset: resetHandler,
       }}
     >
       {children}

@@ -34,16 +34,24 @@ const Detail = () => {
   };
 
   const saveHandler = () => {
-    console.log("Saving...");
-    // if (jockey !== undefined) {
-    //   context.save(jockey);
-    // }
+    if (jockey !== undefined) {
+      context.save(jockey);
+    }
     setShowModal(false);
   };
 
   const deleteHandler = () => {
-    console.log("Deleting...");
+    if (context.jockey !== undefined) {
+      context.delete(context.jockey.id);
+    }
     setShowModal(false);
+  };
+
+  const resetHandler = () => {
+    reset(context.jockey);
+    if (context.jockey && context.jockey.id.length > 0) {
+      context.reset();
+    }
   };
 
   useEffect(() => {
@@ -56,7 +64,7 @@ const Detail = () => {
         <fieldset>
           <legend>Form Jockey</legend>
           <Header>
-            <Button variant="Link" text="Reset" />
+            <Button variant="Link" text="Reset" onClick={resetHandler} />
           </Header>
           <InputsContainer>
             <Controller
