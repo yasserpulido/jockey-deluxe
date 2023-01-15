@@ -1,18 +1,8 @@
 import { Jockey } from "../../types";
 
 export const getJockeys = async () => {
-  try {
-    const response = await fetch("http://localhost:3001/jockeys");
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-
-    const result = await response.json();
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch("http://localhost:3001/jockeys");
+  return response.json();
 };
 
 export const createJockey = async (jockey: Jockey) => {

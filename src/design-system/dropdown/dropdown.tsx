@@ -6,6 +6,7 @@ import { Option } from "../../types";
 
 type Props<T extends Option> = {
   label: string;
+  name: string;
   options: Array<Option>;
   errors?: string;
   value?: string;
@@ -15,6 +16,7 @@ type Props<T extends Option> = {
 
 const Dropdown = ({
   label,
+  name,
   options,
   value,
   errors,
@@ -123,6 +125,7 @@ const Dropdown = ({
       <FormGroup>
         <label>{label}:</label>
         <Input
+          id={name}
           onClick={() => setIsOpen(!isOpen)}
           tabIndex={0}
           onKeyDown={(e) => {

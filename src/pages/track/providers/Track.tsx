@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useCountry } from "../../../hooks/country";
-import { tracks as tracksMock } from "../../../mocks";
+import { tracks as tracksMock } from "../../../mocks/tracks";
 import { TrackType } from "../types";
 
 const trackDefaultValues = {

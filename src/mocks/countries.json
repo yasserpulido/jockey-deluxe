@@ -1,0 +1,44 @@
+{
+  "countries": [
+    {
+      "id": "1",
+      "name": "Argentina"
+    },
+    {
+      "id": "2",
+      "name": "Bolivia"
+    },
+    {
+      "id": "3",
+      "name": "Brazil"
+    },
+    {
+      "id": "4",
+      "name": "Chile"
+    },
+    {
+      "id": "5",
+      "name": "Colombia"
+    },
+    {
+      "id": "6",
+      "name": "Ecuador"
+    },
+    {
+      "id": "7",
+      "name": "Paraguay"
+    },
+    {
+      "id": "8",
+      "name": "Peru"
+    },
+    {
+      "id": "9",
+      "name": "Uruguay"
+    },
+    {
+      "id": "10",
+      "name": "Venezuela"
+    }
+  ]
+}

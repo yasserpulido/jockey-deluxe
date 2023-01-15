@@ -105,6 +105,7 @@ const Table = <T extends Jockey>({
     <React.Fragment>
       <Header>
         <Dropdown
+          name="entries"
           label="Entries"
           options={ENTRIES}
           onChange={setEntriesPerPage}

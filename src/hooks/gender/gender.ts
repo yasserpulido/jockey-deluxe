@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { getGenders } from "../../apis/gender";
 import { Gender } from "../../types";
 
 const useGender = () => {
@@ -6,25 +7,22 @@ const useGender = () => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await fetch("/mocks/genders.json");
-      if (!response.ok) {
-        throw new Error(response.statusText);
-      }
-      const { genders } = await response.json();
+      const genders = await getGenders();
       setData(genders);
+      console.log(genders);
     } catch (error) {
       setError(error as string);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return { data, error, loading };
 };

@@ -1,23 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useCountry, useGender } from "../../../../hooks";
 import { colors } from "../../../../design-system/theme/colors";
 import { Jockey, ModalFooter } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
 import { Button, Dropdown, Input, Modal } from "../../../../design-system";
+import { CommonContext } from "../../../../providers/common";
 
 const Detail = () => {
+  const [jockey, setJockey] = useState<Jockey>();
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
     content: "",
     onClick: () => {},
   });
-  const [jockey, setJockey] = useState<Jockey>();
-
-  const { data: countries } = useCountry();
-  const { data: genders } = useGender();
+  const common = useContext(CommonContext);
   const context = useContext(JockeyContext);
   const { control, handleSubmit, reset } = useForm<Jockey>({
     defaultValues: context.jockey,
@@ -137,7 +135,7 @@ const Detail = () => {
               render={({ field, formState: { errors } }) => (
                 <Dropdown
                   label="Gender"
-                  options={genders}
+                  options={common.gender.data}
                   errors={errors.gender?.message}
                   {...field}
                 />
@@ -156,7 +154,7 @@ const Detail = () => {
               render={({ field, formState: { errors } }) => (
                 <Dropdown
                   label="Nationality"
-                  options={countries}
+                  options={common.country.data}
                   errors={errors.nationality?.message}
                   {...field}
                 />

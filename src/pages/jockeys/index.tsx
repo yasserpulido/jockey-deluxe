@@ -1,15 +1,18 @@
 import { default as Page } from "./jockey";
-import { Provider } from "./providers";
+import { Provider as JockeyProvider } from "./providers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Common as CommonProvider } from "../../providers";
 
 function Jockeys() {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider>
-        <Page />
-      </Provider>
+      <JockeyProvider>
+        <CommonProvider>
+          <Page />
+        </CommonProvider>
+      </JockeyProvider>
     </QueryClientProvider>
   );
 }

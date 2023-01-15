@@ -14,8 +14,8 @@ const jockeyDefaultValues: Jockey = {
 
 export type JockeyContextType = {
   isLoading: boolean;
-  jockey?: Jockey;
-  jockeys?: Array<Jockey>;
+  jockey: Jockey | undefined;
+  jockeys: Array<Jockey>;
   save: (jockey: Jockey) => void;
   delete: (id: string) => void;
   jockeySelected: (jockey: Jockey) => void;
@@ -24,6 +24,7 @@ export type JockeyContextType = {
 
 export const JockeyContext = React.createContext<JockeyContextType>({
   isLoading: false,
+  jockey: undefined,
   jockeys: [],
   save: () => {},
   delete: () => {},
@@ -37,24 +38,28 @@ type Props = {
 
 export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
-  const [jockey, setJockey] = useState<Jockey>();
+  const [jockey, setJockey] = useState<Jockey | undefined>(undefined);
   const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
   const { data, status, isLoading } = useQuery({
     queryKey: ["Jockey"],
     queryFn: api.getJockeys,
+    retry: false,
   });
+
   const createMutation = useMutation({
     mutationFn: api.createJockey,
     onSuccess: () => {
       queryClient.invalidateQueries(["Jockey"]);
     },
   });
+
   const editMutation = useMutation({
     mutationFn: api.editJockey,
     onSuccess: () => {
       queryClient.invalidateQueries(["Jockey"]);
     },
   });
+  
   const deleteMutation = useMutation({
     mutationFn: api.deleteJockey,
     onSuccess: () => {
@@ -63,8 +68,8 @@ export const Provider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    if (status === "success") {
-      setJockeys(data!);
+    if (status === "success" && data !== null) {
+      setJockeys(data.jockeys);
     }
   }, [status, data]);
 
