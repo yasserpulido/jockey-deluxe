@@ -8,7 +8,6 @@ import { Button, Dropdown, Input, Modal } from "../../../../design-system";
 import { CommonContext } from "../../../../providers/common";
 
 const Detail = () => {
-  const [jockey, setJockey] = useState<Jockey>();
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -17,12 +16,11 @@ const Detail = () => {
   });
   const common = useContext(CommonContext);
   const context = useContext(JockeyContext);
-  const { control, handleSubmit, reset } = useForm<Jockey>({
+  const { control, handleSubmit, reset, getValues } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    setJockey(data);
     setModalFooter({
       header: "Save",
       content: `Do you want to save ${data.firstname} ${data.lastname}?`,
@@ -32,9 +30,7 @@ const Detail = () => {
   };
 
   const saveHandler = () => {
-    if (jockey !== undefined) {
-      context.save(jockey);
-    }
+    context.save(getValues());
     setShowModal(false);
   };
 
@@ -182,22 +178,22 @@ const Detail = () => {
           </Footer>
         </fieldset>
       </Form>
-      <Modal
-        showModal={showModal}
-        header={modalFooter.header}
-        content={modalFooter.content}
-      >
-        <Button
-          text="Cancel"
-          onClick={() => setShowModal(false)}
-          variant="Danger"
-        />
-        <Button
-          text="Ok"
-          onClick={() => modalFooter.onClick()}
-          variant="Success"
-        />
-      </Modal>
+      {showModal && (
+        <Modal header={modalFooter.header} content={modalFooter.content}>
+          <Button
+            text="Cancel"
+            onClick={() => setShowModal(false)}
+            variant="Danger"
+            type="button"
+          />
+          <Button
+            text="Ok"
+            onClick={() => modalFooter.onClick()}
+            variant="Success"
+            type="button"
+          />
+        </Modal>
+      )}
     </React.Fragment>
   );
 };

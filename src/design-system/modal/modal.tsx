@@ -3,40 +3,35 @@ import { useEffect, useRef, useState } from "react";
 import { Heading } from "../heading";
 
 type Props = {
-  showModal: boolean;
   header: string;
   content: string;
   children: React.ReactNode;
 };
 
-const Modal = ({ showModal, header, content, children }: Props) => {
+const Modal = ({ header, content, children }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (ref.current && showModal) {
+    if (ref.current) {
       setWidth(ref.current.offsetWidth);
       setHeight(ref.current.offsetHeight);
     }
-  }, [showModal]);
+  }, []);
 
   return (
-    <>
-      {showModal ? (
-        <Background>
-          <Container ref={ref} width={width} height={height}>
-            <Header>
-              <Heading size="h6">{header}</Heading>
-            </Header>
-            <Content>
-              <p>{content}</p>
-            </Content>
-            <Footer>{children}</Footer>
-          </Container>
-        </Background>
-      ) : null}
-    </>
+    <Background>
+      <Container ref={ref} width={width} height={height}>
+        <Header>
+          <Heading size="h6">{header}</Heading>
+        </Header>
+        <Content>
+          <p>{content}</p>
+        </Content>
+        <Footer>{children}</Footer>
+      </Container>
+    </Background>
   );
 };
 
