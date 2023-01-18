@@ -124,7 +124,11 @@ const Table = <T extends Jockey>({
           </tr>
         </Thead>
         <Tbody>
-          {!isLoading && content.length > 0 ? (
+          {isLoading ? (
+            <Tr>
+              <Td colSpan={columns.length}>Loading</Td>
+            </Tr>
+          ) : content.length > 0 ? (
             content.map((d) => (
               <Tr key={`tr-${d.id}`}>
                 {columns.map((c) => (
@@ -139,7 +143,7 @@ const Table = <T extends Jockey>({
             ))
           ) : (
             <Tr>
-              <Td colSpan={columns.length}>Loading</Td>
+              <Td colSpan={columns.length}>No data found.</Td>
             </Tr>
           )}
         </Tbody>

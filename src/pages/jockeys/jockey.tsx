@@ -15,14 +15,11 @@ const Jockeys = () => {
 };
 
 const Container = styled.div({
-  "& form": {
-    marginBottom: "1rem",
-  },
-  
   [mediaQuery.large]: {
-    maxWidth: maxWidth.large,
+    marginTop: "2rem",
     marginLeft: "auto",
     marginRight: "auto",
+    maxWidth: maxWidth.large,
   },
 });
 
