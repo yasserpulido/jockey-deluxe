@@ -6,17 +6,6 @@ import { Dropdown } from "../dropdown";
 import { Input } from "../input";
 import { colors } from "../theme/colors";
 
-export type ColumnProp<T> = {
-  heading: string;
-  value: keyof T;
-};
-
-type TableProps<T> = {
-  columns: Array<ColumnProp<T>>;
-  data: Array<T> | undefined;
-  onSelect: (jockey: Jockey) => void;
-};
-
 const ENTRIES = [
   {
     id: "1",
@@ -36,9 +25,22 @@ const ENTRIES = [
   },
 ];
 
+export type ColumnProp<T> = {
+  heading: string;
+  value: keyof T;
+};
+
+type TableProps<T> = {
+  columns: Array<ColumnProp<T>>;
+  data: Array<T> | undefined;
+  isLoading: boolean;
+  onSelect: (jockey: Jockey) => void;
+};
+
 const Table = <T extends Jockey>({
   columns,
   data,
+  isLoading,
   onSelect,
 }: TableProps<T>) => {
   const [page, setPage] = useState(1); // Pagina seleccionada.
@@ -122,15 +124,24 @@ const Table = <T extends Jockey>({
           </tr>
         </Thead>
         <Tbody>
-          {content?.map((d) => (
-            <Tr key={`tr-${d.id}`}>
-              {columns.map((c) => (
-                <Td key={`td-${d.id}-${c.heading}`} onClick={() => onSelect(d)}>
-                  {d[c.value] as ReactNode}
-                </Td>
-              ))}
+          {!isLoading && content.length > 0 ? (
+            content.map((d) => (
+              <Tr key={`tr-${d.id}`}>
+                {columns.map((c) => (
+                  <Td
+                    key={`td-${d.id}-${c.heading}`}
+                    onClick={() => onSelect(d)}
+                  >
+                    {d[c.value] as ReactNode}
+                  </Td>
+                ))}
+              </Tr>
+            ))
+          ) : (
+            <Tr>
+              <Td colSpan={columns.length}>Loading</Td>
             </Tr>
-          ))}
+          )}
         </Tbody>
       </TableContainer>
       <Pagination>

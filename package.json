@@ -41,7 +41,9 @@
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "cypress": "npx cypress open"
+    "cypress": "npx cypress open",
+    "server": "npx json-server -p 3001 -w src/mocks/jockeys.json",
+    "server-common": "npx json-server -p 3002 -w src/mocks/index.js"
   },
   "eslintConfig": {
     "extends": [

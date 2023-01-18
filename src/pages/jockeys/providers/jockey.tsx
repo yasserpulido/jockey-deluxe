@@ -59,7 +59,7 @@ export const Provider = ({ children }: Props) => {
       queryClient.invalidateQueries(["Jockey"]);
     },
   });
-  
+
   const deleteMutation = useMutation({
     mutationFn: api.deleteJockey,
     onSuccess: () => {
@@ -68,8 +68,8 @@ export const Provider = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    if (status === "success" && data !== null) {
-      setJockeys(data.jockeys);
+    if (status === "success" && data !== undefined) {
+      setJockeys(data);
     }
   }, [status, data]);
 

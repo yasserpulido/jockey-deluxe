@@ -6,7 +6,7 @@ import { JockeyContext } from "../../providers";
 
 const List = () => {
   const context = useContext(JockeyContext);
-  
+
   const columns: ColumnProp<Jockey>[] = [
     { heading: "First Name", value: "firstname" },
     { heading: "Last Name", value: "lastname" },
@@ -15,7 +15,14 @@ const List = () => {
     { heading: "Nationality", value: "nationality" },
   ];
 
-  return <Table columns={columns} data={context.jockeys} onSelect={context.jockeySelected}/>;
+  return (
+    <Table
+      columns={columns}
+      data={context.jockeys}
+      onSelect={context.jockeySelected}
+      isLoading={context.isLoading}
+    />
+  );
 };
 
 export default List;
