@@ -1,1 +1,1 @@
-export { default as BreedsPage } from "./Breeds";
+export { default as BreedsPage } from "./test";
