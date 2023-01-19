@@ -19,6 +19,10 @@ const Detail = () => {
   const { control, handleSubmit, reset, getValues } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
+  
+  useEffect(() => {
+    reset(context.jockey);
+  }, [reset, context.jockey]);
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
     setModalFooter({
@@ -47,10 +51,6 @@ const Detail = () => {
       context.reset();
     }
   };
-
-  useEffect(() => {
-    reset(context.jockey);
-  }, [reset, context.jockey]);
 
   return (
     <React.Fragment>
@@ -219,6 +219,7 @@ const InputsContainer = styled.div({
 });
 
 const Footer = styled.footer({
+  paddingTop: "1rem",
   textAlign: "end",
 
   "& button:first-of-type": {

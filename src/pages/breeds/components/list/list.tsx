@@ -1,27 +1,20 @@
 import { useContext } from "react";
+import { ColumnProp, Table } from "../../../../design-system/table/table";
+import { Breed } from "../../../../types";
 import { BreedContext, BreedContextType } from "../../providers";
 
 const List = () => {
   const context = useContext<BreedContextType>(BreedContext);
 
-  if (context.isLoading) {
-    return <p>Loading...</p>;
-  }
+  const columns: Array<ColumnProp<Breed>> = [{ heading: "Name", value: "name" }];
 
   return (
-    <ul>
-      {context.breeds?.map((breed) => (
-        <li key={breed.id}>
-          {breed.name}
-          <button type="button" onClick={() => context.breedSelected(breed)}>
-            Edit
-          </button>
-          <button type="button" onClick={() => context.remove(breed.id)}>
-            Delete
-          </button>
-        </li>
-      ))}
-    </ul>
+    <Table
+      columns={columns}
+      data={context.breeds}
+      onSelect={context.breedSelected}
+      isLoading={context.isLoading}
+    />
   );
 };
 

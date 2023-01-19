@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { BreedType } from "../types";
-import { getBreeds } from "../../../apis/breed";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Breed } from "../../../types";
+import { breed as api } from "../../../apis";
 
 const breedDefaultValues = {
   id: "",
@@ -10,19 +10,21 @@ const breedDefaultValues = {
 
 export type BreedContextType = {
   isLoading: boolean;
-  breed?: BreedType;
-  breeds?: Array<BreedType>;
-  save: (breed: BreedType) => void;
-  remove: (id: string) => void;
-  breedSelected: (breed: BreedType) => void;
+  breed?: Breed;
+  breeds?: Array<Breed>;
+  save: (breed: Breed) => void;
+  delete: (id: string) => void;
+  breedSelected: (breed: Breed) => void;
+  reset: () => void;
 };
 
 export const BreedContext = React.createContext<BreedContextType>({
   isLoading: false,
   breeds: [],
   save() {},
-  remove() {},
+  delete() {},
   breedSelected() {},
+  reset: () => {},
 });
 
 type Props = {
@@ -30,45 +32,61 @@ type Props = {
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {
-  const [breed, setBreed] = useState<BreedType>();
-  const [breeds, setBreeds] = useState<Array<BreedType>>([]);
-  const { data, status, isLoading } = useQuery(["breeds"], getBreeds);
+  const queryClient = useQueryClient();
+  const [breed, setBreed] = useState<Breed>();
+  const [breeds, setBreeds] = useState<Array<Breed>>([]);
+  const { data, status, isLoading } = useQuery({
+    queryKey: ["Breed"],
+    queryFn: api.getBreeds,
+    retry: false,
+  });
+
+  const createMutation = useMutation({
+    mutationFn: api.createBreed,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["Breed"]);
+    },
+  });
+
+  const editMutation = useMutation({
+    mutationFn: api.editBreed,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["Breed"]);
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: api.deleteBreed,
+    onSuccess: () => {
+      queryClient.invalidateQueries(["Breed"]);
+    },
+  });
 
   useEffect(() => {
-    if (status === "success") {
+    if (status === "success" && data !== undefined) {
       setBreeds(data);
     }
   }, [status, data]);
 
-  const saveHandler = (breed: BreedType) => {
+  const saveHandler = (breed: Breed) => {
     if (!breed.id) {
-      setBreeds((prevState) => {
-        return [
-          ...prevState,
-          (breed = {
-            ...breed,
-            id: Math.floor(Math.random() * 100).toString(),
-          }),
-        ];
-      });
+      createMutation.mutate(breed);
     } else {
-      const updatedBreeds = breeds.map((b: BreedType) => {
-        if (b.id === breed.id) {
-          return { ...breed };
-        }
-        return b;
-      });
-      setBreeds(updatedBreeds);
-      setBreed(breedDefaultValues);
+      editMutation.mutate(breed);
     }
+    setBreed(breedDefaultValues);
   };
 
-  const removeHandler = (id: string) => {
-    setBreeds(breeds.filter((b: BreedType) => b.id !== id));
+  const deleteHandler = (id: string) => {
+    setBreeds(breeds.filter((b: Breed) => b.id !== id));
   };
 
-  const breedHandler = (breed: BreedType) => {
+  const breedHandler = (breed: Breed) => {
     setBreed(breed);
+  };
+
+  const resetHandler = () => {
+    setBreed(breedDefaultValues);
   };
 
   return (
@@ -78,8 +96,9 @@ export const Provider: React.FC<Props> = ({ children }) => {
         breed,
         breeds,
         save: saveHandler,
-        remove: removeHandler,
+        delete: deleteHandler,
         breedSelected: breedHandler,
+        reset: resetHandler,
       }}
     >
       {children}

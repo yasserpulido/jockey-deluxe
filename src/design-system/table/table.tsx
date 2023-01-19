@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React, { ReactNode, useCallback, useEffect, useState } from "react";
-import { Jockey } from "../../types";
+import { Breed, Jockey } from "../../types";
 import { Button } from "../button";
 import { Dropdown } from "../dropdown";
 import { Input } from "../input";
@@ -34,10 +34,10 @@ type TableProps<T> = {
   columns: Array<ColumnProp<T>>;
   data: Array<T> | undefined;
   isLoading: boolean;
-  onSelect: (jockey: Jockey) => void;
+  onSelect: (element: T) => void;
 };
 
-const Table = <T extends Jockey>({
+export const Table = <T extends Jockey | Breed>({
   columns,
   data,
   isLoading,
@@ -240,5 +240,3 @@ const Navigation = styled.div({
     marginRight: "0.2rem",
   },
 });
-
-export default Table;

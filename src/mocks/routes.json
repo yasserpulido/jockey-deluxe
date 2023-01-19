@@ -1,0 +1,4 @@
+{
+  "/api/breed": "/breeds",
+  "/api/jockey": "/jockeys"
+}

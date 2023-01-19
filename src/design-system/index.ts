@@ -5,6 +5,6 @@ export { Input } from "./input";
 export { Modal } from "./modal";
 export { Dropdown } from "./dropdown";
 export { Alert } from "./alert";
-export { Table } from "./table";
+export * from "./table";
 export { Workshop } from "./workshop";
 export * from "./theme";

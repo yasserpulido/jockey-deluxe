@@ -1,9 +1,8 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import { Table } from "../../design-system";
 import { Theme } from "../../providers";
-import { ColumnProp } from "../../design-system/table/table";
-import { Jockey } from "../../types";
+import { ColumnProp, Table } from "../../design-system/table/table";
+import { Breed, Jockey } from "../../types";
 
 export default {
   title: "Table",
@@ -24,7 +23,7 @@ Default.decorators = [
 ];
 
 const columns: Array<ColumnProp<Jockey>> = [
-  { heading: "Id", value: "id" },
+  { heading: "Id", value: "id"},
   { heading: "First Name", value: "firstname" },
   { heading: "Last Name", value: "lastname" },
   { heading: "Birth", value: "birth" },
@@ -35,9 +34,17 @@ const columns: Array<ColumnProp<Jockey>> = [
 const data: Array<Jockey> = [
   {
     id: "1",
-    firstname: "Yasser",
-    lastname: "Pulido",
-    birth: "30-04-1991",
+    firstname: "Peter",
+    lastname: "Anguila",
+    birth: "24-09-2000",
+    gender: "2",
+    nationality: "10",
+  },
+  {
+    id: "2",
+    firstname: "Jack",
+    lastname: "Parra",
+    birth: "01-02-1990",
     gender: "2",
     nationality: "10",
   },
@@ -46,4 +53,6 @@ const data: Array<Jockey> = [
 Default.args = {
   columns,
   data,
+  isLoading: false,
+  onSelect: () => {},
 };

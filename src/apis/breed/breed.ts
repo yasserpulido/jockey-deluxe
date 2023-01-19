@@ -1,12 +1,28 @@
+import { Breed } from "../../types";
+
 export const getBreeds = async () => {
-  try {
-    const response = await fetch("/mocks/breeds.json");
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    const { breeds } = await response.json();
-    return breeds;
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await fetch("http://localhost:3001/api/breed");
+  return response.json();
+};
+
+export const createBreed = async (breed: Breed) => {
+  await fetch("http://localhost:3001/api/breed", {
+    method: "POST",
+    body: JSON.stringify(breed),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+  });
+};
+
+export const editBreed = async (breed: Breed) => {
+  await fetch(`http://localhost:3001/api/breed/${breed.id}`, {
+    method: "PUT",
+    body: JSON.stringify(breed),
+    headers: { "Content-type": "application/json; charset=UTF-8" },
+  });
+};
+
+export const deleteBreed = async (id: string) => {
+  await fetch(`http://localhost:3001/api/breed/${id}`, {
+    method: "DELETE",
+  });
 };
