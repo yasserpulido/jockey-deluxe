@@ -2,14 +2,16 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Theme } from "../../providers";
 import { ColumnProp, Table } from "../../design-system/table/table";
-import { Breed, Jockey } from "../../types";
+import { Jockey } from "../../types";
 
 export default {
   title: "Table",
   component: Table,
 } as ComponentMeta<typeof Table>;
 
-const Template: ComponentStory<typeof Table> = (args) => <Table {...args} />;
+const Template: ComponentStory<typeof Table> = () => (
+  <Table columns={columns} data={data} isLoading={false} onSelect={() => {}} />
+);
 
 export const Default = Template.bind({});
 
@@ -23,7 +25,7 @@ Default.decorators = [
 ];
 
 const columns: Array<ColumnProp<Jockey>> = [
-  { heading: "Id", value: "id"},
+  { heading: "Id", value: "id" },
   { heading: "First Name", value: "firstname" },
   { heading: "Last Name", value: "lastname" },
   { heading: "Birth", value: "birth" },
@@ -49,10 +51,3 @@ const data: Array<Jockey> = [
     nationality: "10",
   },
 ];
-
-Default.args = {
-  columns,
-  data,
-  isLoading: false,
-  onSelect: () => {},
-};
