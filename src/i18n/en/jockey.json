@@ -1,0 +1,18 @@
+{
+  "labels": {
+    "first-name": "First Name",
+    "last-name": "Last Name",
+    "birth-date": "Birth Date",
+    "gender": "Gender",
+    "nationality": "Nationality"
+  },
+  "errors": {
+    "first-name": "First Name is required",
+    "first-name-min": "First Name must be at least 3 characters long",
+    "last-name": "Last Name is required",
+    "last-name-min": "Last Name must be at least 3 characters long",
+    "birth-date": "Birth Date is required",
+    "gender": "Gender is required.",
+    "nationality": "Nationality is required"
+  }
+}

@@ -6,8 +6,10 @@ import { Jockey, ModalFooter } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
 import { Button, Dropdown, Input, Modal } from "../../../../design-system";
 import { CommonContext } from "../../../../providers/common";
+import { useTranslation } from "react-i18next";
 
 const Detail = () => {
+  const [t] = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -19,7 +21,7 @@ const Detail = () => {
   const { control, handleSubmit, reset, getValues } = useForm<Jockey>({
     defaultValues: context.jockey,
   });
-  
+
   useEffect(() => {
     reset(context.jockey);
   }, [reset, context.jockey]);
@@ -77,7 +79,7 @@ const Detail = () => {
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label="First Name"
+                  label={t("labels.first-name")}
                   errors={errors.firstname?.message}
                   {...field}
                 />

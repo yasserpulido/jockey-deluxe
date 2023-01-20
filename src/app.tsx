@@ -5,7 +5,7 @@ import { routes } from "./Routes";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Breeds />,
+    element: <Jockeys />,
   },
 ]);
 

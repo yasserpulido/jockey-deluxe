@@ -1,0 +1,18 @@
+{
+  "labels": {
+    "first-name": "Nombre",
+    "last-name": "Apellido",
+    "birth-date": "Fecha de Nacimiento",
+    "gender": "Género",
+    "nationality": "Nacionalidad"
+  },
+  "errors": {
+    "first-name": "Nombre es requerido.",
+    "first-name-min": "Nombre debe tener al menos 3 caracteres.",
+    "last-name": "Apellido es requerido.",
+    "last-name-min": "Apellido debe tener al menos 3 caracteres.",
+    "birth-date": "Fecha de Nacimiento es requerido.",
+    "gender": "Género es requerido.",
+    "nationality": "Nacionalidad es requerido."
+  }
+}
