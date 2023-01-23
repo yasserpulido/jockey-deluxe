@@ -1,0 +1,36 @@
+{
+  "labels": {
+    "form_title": "Formulário Jockey",
+    "first_name": "Nome",
+    "last_name": "Sobrenome",
+    "birth_date": "Data de Nascimento",
+    "gender": "Gênero",
+    "nationality": "Nacionalidade"
+  },
+  "errors": {
+    "first_name": "O nome é obrigatório.",
+    "first_name_min": "O nome deve ter pelo menos 3 caracteres.",
+    "last_name": "Sobrenome é obrigatório.",
+    "last_name_min": "O sobrenome deve ter pelo menos 3 caracteres.",
+    "birth_date": "A data de nascimento é obrigatória.",
+    "gender": "Gênero é obrigatório.",
+    "nationality": "Nacionalidade é obrigatória."
+  },
+  "inputs": {
+    "save": "Salvar",
+    "delete": "Deletar",
+    "no": "Não",
+    "yes": "Sim",
+    "reset": "Restablecer"
+  },
+  "modals": {
+    "save_title": "Salvar",
+    "save_message": "Tem certeza de que deseja salvar?",
+    "delete_title": "Deletar",
+    "delete_message": "Tem certeza de que deseja deletar?"
+  },
+  "placeholders": {
+    "general_input": "Insira seu valor aqui",
+    "general_dropdown": "Selecione seu valor aqui"
+  }
+}

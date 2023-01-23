@@ -1,18 +1,36 @@
 {
   "labels": {
-    "first-name": "First Name",
-    "last-name": "Last Name",
-    "birth-date": "Birth Date",
+    "form_title": "Form Jockey",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "birth_date": "Birth Date",
     "gender": "Gender",
     "nationality": "Nationality"
   },
   "errors": {
-    "first-name": "First Name is required",
-    "first-name-min": "First Name must be at least 3 characters long",
-    "last-name": "Last Name is required",
-    "last-name-min": "Last Name must be at least 3 characters long",
-    "birth-date": "Birth Date is required",
+    "first_name": "First Name is required.",
+    "first_name_min": "First Name must be at least 3 characters long.",
+    "last_name": "Last Name is required.",
+    "last_name_min": "Last Name must be at least 3 characters long.",
+    "birth_date": "Birth Date is required.",
     "gender": "Gender is required.",
-    "nationality": "Nationality is required"
+    "nationality": "Nationality is required."
+  },
+  "inputs": {
+    "save": "Save",
+    "delete": "Delete",
+    "no": "No",
+    "yes": "Yes",
+    "reset": "Reset"
+  },
+  "modals": {
+    "save_title": "Save",
+    "save_message": "Are you sure you want to save?",
+    "delete_title": "Delete",
+    "delete_message": "Are you sure do you want to delete?"
+  },
+  "placeholders": {
+    "general_input": "Enter your value here",
+    "general_dropdown": "Select your value here"
   }
 }

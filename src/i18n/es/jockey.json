@@ -1,18 +1,36 @@
 {
   "labels": {
-    "first-name": "Nombre",
-    "last-name": "Apellido",
-    "birth-date": "Fecha de Nacimiento",
+    "form_title": "Formulario de Jockey",
+    "first_name": "Nombre",
+    "last_name": "Apellido",
+    "birth_date": "Fecha de Nacimiento",
     "gender": "Género",
     "nationality": "Nacionalidad"
   },
   "errors": {
-    "first-name": "Nombre es requerido.",
-    "first-name-min": "Nombre debe tener al menos 3 caracteres.",
-    "last-name": "Apellido es requerido.",
-    "last-name-min": "Apellido debe tener al menos 3 caracteres.",
-    "birth-date": "Fecha de Nacimiento es requerido.",
+    "first_name": "Nombre es requerido.",
+    "first_name_min": "Nombre debe tener al menos 3 caracteres.",
+    "last_name": "Apellido es requerido.",
+    "last_name_min": "Apellido debe tener al menos 3 caracteres.",
+    "birth_date": "Fecha de Nacimiento es requerido.",
     "gender": "Género es requerido.",
     "nationality": "Nacionalidad es requerido."
+  },
+  "inputs": {
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "no": "No",
+    "yes": "Si",
+    "reset": "Reiniciar"
+  },
+  "modals": {
+    "save_title": "Guardar",
+    "save_message": "¿Está seguro que desea guardar?",
+    "delete_title": "Eliminar",
+    "delete_message": "¿Está seguro que desea eliminar?"
+  },
+  "placeholders": {
+    "general_input": "Escribe tu valor aqui",
+    "general_dropdown": "Selecciona tu valor aqui"
   }
 }

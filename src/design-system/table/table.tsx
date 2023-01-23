@@ -1,5 +1,12 @@
 import styled from "@emotion/styled";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
+import { useTranslation } from "react-i18next";
 import { Breed, Jockey } from "../../types";
 import { Button } from "../button";
 import { Dropdown } from "../dropdown";
@@ -43,6 +50,7 @@ export const Table = <T extends Jockey | Breed>({
   isLoading,
   onSelect,
 }: TableProps<T>) => {
+  const { t } = useTranslation("table");
   const [page, setPage] = useState(1); // Pagina seleccionada.
   const [entriesPerPage, setEntriesPerPage] = useState("1"); // Cantidad de entries a mostrar.
   const [totalPage, setTotalPages] = useState(0); // Total de paginas.
@@ -108,12 +116,18 @@ export const Table = <T extends Jockey | Breed>({
       <Header>
         <Dropdown
           name="entries"
-          label="Entries"
+          label={t("labels.entries")}
           options={ENTRIES}
           onChange={setEntriesPerPage}
           value={entriesPerPage}
+          placeholder={t("placeholders.general_dropdown") as string}
         />
-        <Input label="Search" name="search" onChange={setFilter} />
+        <Input
+          label={t("labels.search")}
+          name="search"
+          onChange={setFilter}
+          placeholder={t("placeholders.general_input") as string}
+        />
       </Header>
       <TableContainer>
         <Thead>
@@ -126,7 +140,7 @@ export const Table = <T extends Jockey | Breed>({
         <Tbody>
           {isLoading ? (
             <Tr>
-              <Td colSpan={columns.length}>Loading</Td>
+              <Td colSpan={columns.length}>{t("labels.loading")}</Td>
             </Tr>
           ) : content.length > 0 ? (
             content.map((d) => (
@@ -143,7 +157,7 @@ export const Table = <T extends Jockey | Breed>({
             ))
           ) : (
             <Tr>
-              <Td colSpan={columns.length}>No data found.</Td>
+              <Td colSpan={columns.length}>{t("labels.no_data")}</Td>
             </Tr>
           )}
         </Tbody>
@@ -154,13 +168,13 @@ export const Table = <T extends Jockey | Breed>({
         </Show>
         <Navigation>
           <Button
-            text="Previous"
+            text={t("labels.previous")}
             variant="Primary"
             onClick={prevPage}
             disabled={page === 1}
           />
           <Button
-            text="Next"
+            text={t("labels.next")}
             variant="Primary"
             onClick={nextPage}
             disabled={page === totalPage}

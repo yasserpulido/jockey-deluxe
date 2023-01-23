@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { LanguageSwitcher } from "./i18n";
 import { Breeds, Jockeys } from "./pages";
 import { routes } from "./Routes";
 
@@ -10,7 +11,12 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <LanguageSwitcher />
+      <RouterProvider router={router} />
+    </>
+  );
 };
 
 export default App;

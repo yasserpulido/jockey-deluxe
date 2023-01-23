@@ -9,7 +9,7 @@ import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
 
 const Detail = () => {
-  const [t] = useTranslation();
+  const { t } = useTranslation("jockey");
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -58,9 +58,13 @@ const Detail = () => {
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <legend>Form Jockey</legend>
+          <legend>{t("labels.form_title")}</legend>
           <Header>
-            <Button variant="Link" text="Reset" onClick={resetHandler} />
+            <Button
+              variant="Link"
+              text={t("inputs.reset")}
+              onClick={resetHandler}
+            />
           </Header>
           <InputsContainer>
             <Controller
@@ -70,17 +74,18 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: "Please enter a first name.",
+                  message: t("errors.first_name"),
                 },
                 minLength: {
                   value: 3,
-                  message: "The first name must have at least 3 letters.",
+                  message: t("errors.first_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("labels.first-name")}
+                  label={t("labels.first_name")}
                   errors={errors.firstname?.message}
+                  placeholder={t("placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -90,16 +95,20 @@ const Detail = () => {
               name="lastname"
               defaultValue=""
               rules={{
-                required: { value: true, message: "Please enter a last name." },
+                required: {
+                  value: true,
+                  message: t("errors.last_name"),
+                },
                 minLength: {
                   value: 3,
-                  message: "The last name must have at least 3 letters.",
+                  message: t("errors.last_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label="Last Name"
+                  label={t("labels.last_name")}
                   errors={errors.lastname?.message}
+                  placeholder={t("placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -111,14 +120,15 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: "Please enter a birth date.",
+                  message: t("errors.birth_date"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label="Birth"
+                  label={t("labels.birth_date")}
                   type="date"
                   errors={errors.birth?.message}
+                  placeholder={t("placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -128,13 +138,14 @@ const Detail = () => {
               name="gender"
               defaultValue=""
               rules={{
-                required: { value: true, message: "Please select a gender." },
+                required: { value: true, message: t("errors.gender") },
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label="Gender"
+                  label={t("labels.gender")}
                   options={common.gender.data}
                   errors={errors.gender?.message}
+                  placeholder={t("placeholders.general_dropdown") as string}
                   {...field}
                 />
               )}
@@ -146,14 +157,15 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: "Please select a nationality.",
+                  message: t("errors.nationality"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label="Nationality"
+                  label={t("labels.nationality")}
                   options={common.country.data}
                   errors={errors.nationality?.message}
+                  placeholder={t("placeholders.general_dropdown") as string}
                   {...field}
                 />
               )}
@@ -161,35 +173,35 @@ const Detail = () => {
           </InputsContainer>
           <Footer>
             <Button
-              text="Delete"
+              text={t("inputs.delete")}
               variant="Danger"
               type="button"
               disabled={!!!context.jockey?.id}
               onClick={() => {
                 if (context.jockey?.id) {
                   setModalFooter({
-                    header: "Delete",
-                    content: `Do you want to delete ${context.jockey.firstname} ${context.jockey.lastname}?`,
+                    header: t("modals.delete"),
+                    content: t("modals.delete_message"),
                     onClick: deleteHandler,
                   });
                   setShowModal(true);
                 }
               }}
             />
-            <Button text="Save" variant="Success" type="submit" />
+            <Button text={t("inputs.save")} variant="Success" type="submit" />
           </Footer>
         </fieldset>
       </Form>
       {showModal && (
         <Modal header={modalFooter.header} content={modalFooter.content}>
           <Button
-            text="Cancel"
+            text={t("inputs.no")}
             onClick={() => setShowModal(false)}
             variant="Danger"
             type="button"
           />
           <Button
-            text="Ok"
+            text={t("inputs.yes")}
             onClick={() => modalFooter.onClick()}
             variant="Success"
             type="button"

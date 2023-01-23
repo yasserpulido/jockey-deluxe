@@ -1,0 +1,14 @@
+{
+  "labels": {
+    "entries": "Entradas",
+    "search": "Buscador",
+    "previous": "Atras",
+    "next": "Siguiente",
+    "loading": "Cargando...",
+    "no_data": "No hay datos disponibles."
+  },
+  "placeholders": {
+    "general_input": "Escribe tu valor aqui",
+    "general_dropdown": "Selecciona tu valor aqui"
+  }
+}
