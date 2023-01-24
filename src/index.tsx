@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import App from "./app";
 import { Theme } from "./providers";
-import i18next from './i18n/i18n';
+import { i18next } from "./i18n";
 import { I18nextProvider } from "react-i18next";
 
 const root = ReactDOM.createRoot(
@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <I18nextProvider i18n={i18next}>
-    <Theme />
+      <Theme />
       <App />
     </I18nextProvider>
   </React.StrictMode>
