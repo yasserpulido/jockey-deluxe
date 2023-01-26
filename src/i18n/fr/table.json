@@ -1,0 +1,14 @@
+{
+  "labels": {
+    "entries": "Entries",
+    "search": "Rechercher",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "loading": "Chargement en cours",
+    "no_data": "Aucune donnée disponible dans le tableau"
+  },
+  "placeholders": {
+    "general_input": "Entrez votre valeur ici",
+    "general_dropdown": "Sélectionnez votre valeur ici"
+  }
+}

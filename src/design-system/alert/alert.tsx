@@ -1,38 +1,71 @@
 import styled from "@emotion/styled";
+import { FormClose } from "grommet-icons";
+import { useEffect } from "react";
+import { maxWidth, mediaQuery } from "../theme";
 import { colors } from "../theme/colors";
 
-type Props = {
-  children: React.ReactNode;
-  type: "Success" | "Danger" | "Warning";
+type AlertProps = {
+  status: {
+    type: string;
+    text: string;
+  };
+  reset: () => void;
 };
 
-const Alert = ({ children, type }: Props) => {
+const Alert = ({ status, reset }: AlertProps) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      reset();
+    }, 5000);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [reset]);
+
   return (
-    <Container type={type}>
-      <Content>{children}</Content>
+    <Container>
+      <Content status={status.type}>
+        <Text>{status.text}</Text>
+        <IconContainer>
+          <FormClose color={colors.White} onClick={reset} />
+        </IconContainer>
+      </Content>
     </Container>
   );
 };
 
-type ContainerProps = {
-  type: string;
+const Container = styled.div({
+  position: "absolute",
+  left: 0,
+  bottom: 0,
+  width: "100%",
+  padding: "1rem",
+});
+
+type ContentProps = {
+  status: string;
 };
 
-const Container = styled.div<ContainerProps>(({ type }) => ({
-  backgroundColor:
-    type === "Success"
-      ? colors.GreenBlue
-      : type === "Danger"
-      ? colors.PersianRed
-      : colors.ArylideYellow,
-  border: "none",
-  color: type === "Warning" ? colors.Black : colors.White,
-  fontFamily: "inherit",
-  fontSize: "1rem",
+const Content = styled.div<ContentProps>(({ status }) => ({
+  backgroundColor: status === "success" ? colors.GreenBlue : colors.PersianRed,
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "1rem",
+  margin: "0 auto",
+
+  [mediaQuery.large]: {
+    maxWidth: maxWidth.large,
+  },
 }));
 
-const Content = styled.div({
-  padding: "1rem",
+const Text = styled.p({
+  fontSize: "1rem",
+  color: colors.White,
+});
+
+const IconContainer = styled.div({
+  cursor: "pointer",
 });
 
 export default Alert;

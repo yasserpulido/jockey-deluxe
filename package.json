@@ -17,6 +17,7 @@
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "date-fns": "^2.29.3",
+    "grommet-icons": "^4.8.0",
     "i18next": "^22.4.9",
     "i18next-browser-languagedetector": "^7.0.1",
     "json-server": "^0.17.1",
@@ -29,7 +30,6 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.38.0",
     "react-i18next": "^12.1.4",
-    "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
@@ -44,7 +44,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "cypress": "npx cypress open",
-    "server": "npx json-server -p 3001 -w src/mocks/breeds.json --routes src/mocks/routes.json",
+    "server": "npx json-server -p 3001 -w src/mocks/jockeys.json",
     "server-common": "npx json-server -p 3002 -w src/mocks/index.js"
   },
   "eslintConfig": {

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Button, colors, Input, Modal } from "../../../../design-system";
+import { Alert, Button, colors, Input, Modal } from "../../../../design-system";
 import { Breed, ModalFooter } from "../../../../types";
 import { BreedContext, BreedContextType } from "../../providers";
 
@@ -17,6 +17,21 @@ const Detail = () => {
   const { control, handleSubmit, reset, getValues } = useForm<Breed>({
     defaultValues: context.breed,
   });
+
+  const ALERT_SETUP = {
+    success: {
+      type: "success",
+      text: "Success",
+    },
+    error: {
+      type: "error",
+      text: "Error",
+    },
+  };
+
+  useEffect(() => {
+    reset(context.breed);
+  }, [reset, context]);
 
   const onSubmit: SubmitHandler<Breed> = (data) => {
     setModalFooter({
@@ -38,10 +53,6 @@ const Detail = () => {
     }
     setShowModal(false);
   };
-
-  useEffect(() => {
-    reset(context.breed);
-  }, [reset, context]);
 
   const resetHandler = () => {
     reset(context.breed);
@@ -112,6 +123,12 @@ const Detail = () => {
             type="button"
           />
         </Modal>
+      )}
+      {context.status !== "idle" && (
+        <Alert
+          status={ALERT_SETUP[context.status]}
+          reset={context.resetQueryStatus}
+        />
       )}
     </React.Fragment>
   );

@@ -13,6 +13,7 @@ const jockeyDefaultValues: Jockey = {
 };
 
 export type JockeyContextType = {
+  status: "idle" | "success" | "error";
   isLoading: boolean;
   jockey: Jockey | undefined;
   jockeys: Array<Jockey>;
@@ -20,9 +21,11 @@ export type JockeyContextType = {
   delete: (id: string) => void;
   jockeySelected: (jockey: Jockey) => void;
   reset: () => void;
+  resetQueryStatus: () => void;
 };
 
 export const JockeyContext = React.createContext<JockeyContextType>({
+  status: "idle",
   isLoading: false,
   jockey: undefined,
   jockeys: [],
@@ -30,6 +33,7 @@ export const JockeyContext = React.createContext<JockeyContextType>({
   delete: () => {},
   jockeySelected: () => {},
   reset: () => {},
+  resetQueryStatus: () => {},
 });
 
 type Props = {
@@ -40,31 +44,46 @@ export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
   const [jockey, setJockey] = useState<Jockey | undefined>(undefined);
   const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
+  const [queryStatus, setQueryStatus] =
+    useState<"idle" | "success" | "error">("idle");
   const { data, status, isLoading } = useQuery({
     queryKey: ["Jockey"],
     queryFn: api.getJockeys,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const createMutation = useMutation({
     mutationFn: api.createJockey,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
     },
+    onError: () => {
+      setQueryStatus("error");
+    }
   });
 
   const editMutation = useMutation({
     mutationFn: api.editJockey,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
     },
+    onError: () => {
+      setQueryStatus("error");
+    }
   });
 
   const deleteMutation = useMutation({
     mutationFn: api.deleteJockey,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
     },
+    onError: () => {
+      setQueryStatus("error");
+    }
   });
 
   useEffect(() => {
@@ -95,9 +114,14 @@ export const Provider = ({ children }: Props) => {
     setJockey(jockeyDefaultValues);
   };
 
+  const resetQueryStatusHandler = () => {
+    setQueryStatus("idle");
+  };
+
   return (
     <JockeyContext.Provider
       value={{
+        status: queryStatus,
         isLoading,
         jockey,
         jockeys,
@@ -105,6 +129,7 @@ export const Provider = ({ children }: Props) => {
         delete: deleteHandler,
         jockeySelected: jockeyHandler,
         reset: resetHandler,
+        resetQueryStatus: resetQueryStatusHandler,
       }}
     >
       {children}

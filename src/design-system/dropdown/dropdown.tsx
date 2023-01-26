@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { GrStatusWarning } from "react-icons/gr";
 import { colors, fontWeight } from "../theme";
 import { Option } from "../../types";
+import { Alert } from "grommet-icons";
 
 type Props<T extends Option> = {
   label: string;
@@ -166,7 +166,7 @@ const Dropdown = ({
       )}
       {errors && (
         <Error>
-          <GrStatusWarning />
+          <Alert />
           {errors}
         </Error>
       )}

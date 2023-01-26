@@ -9,6 +9,7 @@ const breedDefaultValues = {
 };
 
 export type BreedContextType = {
+  status: "idle" | "success" | "error";
   isLoading: boolean;
   breed?: Breed;
   breeds?: Array<Breed>;
@@ -16,15 +17,18 @@ export type BreedContextType = {
   delete: (id: string) => void;
   breedSelected: (breed: Breed) => void;
   reset: () => void;
+  resetQueryStatus: () => void;
 };
 
 export const BreedContext = React.createContext<BreedContextType>({
+  status: "idle",
   isLoading: false,
   breeds: [],
   save() {},
   delete() {},
   breedSelected() {},
   reset: () => {},
+  resetQueryStatus: () => {},
 });
 
 type Props = {
@@ -35,16 +39,22 @@ export const Provider: React.FC<Props> = ({ children }) => {
   const queryClient = useQueryClient();
   const [breed, setBreed] = useState<Breed>();
   const [breeds, setBreeds] = useState<Array<Breed>>([]);
+  const [queryStatus, setQueryStatus] =
+    useState<"idle" | "success" | "error">("idle");
   const { data, status, isLoading } = useQuery({
     queryKey: ["Breed"],
     queryFn: api.getBreeds,
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const createMutation = useMutation({
     mutationFn: api.createBreed,
     onSuccess: () => {
       queryClient.invalidateQueries(["Breed"]);
+    },
+    onError: () => {
+      setQueryStatus("error");
     },
   });
 
@@ -53,12 +63,18 @@ export const Provider: React.FC<Props> = ({ children }) => {
     onSuccess: () => {
       queryClient.invalidateQueries(["Breed"]);
     },
+    onError: () => {
+      setQueryStatus("error");
+    },
   });
 
   const deleteMutation = useMutation({
     mutationFn: api.deleteBreed,
     onSuccess: () => {
       queryClient.invalidateQueries(["Breed"]);
+    },
+    onError: () => {
+      setQueryStatus("error");
     },
   });
 
@@ -89,9 +105,14 @@ export const Provider: React.FC<Props> = ({ children }) => {
     setBreed(breedDefaultValues);
   };
 
+  const resetQueryStatusHandler = () => {
+    setQueryStatus("idle");
+  };
+
   return (
     <BreedContext.Provider
       value={{
+        status: queryStatus,
         isLoading,
         breed,
         breeds,
@@ -99,6 +120,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
         delete: deleteHandler,
         breedSelected: breedHandler,
         reset: resetHandler,
+        resetQueryStatus: resetQueryStatusHandler,
       }}
     >
       {children}

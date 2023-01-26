@@ -4,7 +4,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { colors } from "../../../../design-system/theme/colors";
 import { Jockey, ModalFooter } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
-import { Button, Dropdown, Input, Modal } from "../../../../design-system";
+import { Alert, Button, Dropdown, Input, Modal } from "../../../../design-system";
 import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
 
@@ -22,6 +22,17 @@ const Detail = () => {
     defaultValues: context.jockey,
   });
 
+  const ALERT_SETUP = {
+    success: {
+      type: "success",
+      text: "Success",
+    },
+    error: {
+      type: "error",
+      text: "Error",
+    },
+  };
+
   useEffect(() => {
     reset(context.jockey);
   }, [reset, context.jockey]);
@@ -29,7 +40,7 @@ const Detail = () => {
   const onSubmit: SubmitHandler<Jockey> = (data) => {
     setModalFooter({
       header: "Save",
-      content: `Do you want to save ${data.firstname} ${data.lastname}?`,
+      content: t("modals.save_message"),
       onClick: saveHandler,
     });
     setShowModal(true);
@@ -207,6 +218,12 @@ const Detail = () => {
             type="button"
           />
         </Modal>
+      )}
+       {context.status !== "idle" && (
+        <Alert
+          status={ALERT_SETUP[context.status]}
+          reset={context.resetQueryStatus}
+        />
       )}
     </React.Fragment>
   );

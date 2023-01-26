@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { colors } from "../theme/colors";
-import { GrStatusWarning } from "react-icons/gr";
 import { fontWeight } from "../theme";
+import { Alert } from "grommet-icons";
 
 type Props = {
   label: string;
@@ -47,7 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         </FormGroup>
         {errors && (
           <Error>
-            <GrStatusWarning />
+            <Alert />
             {errors}
           </Error>
         )}
