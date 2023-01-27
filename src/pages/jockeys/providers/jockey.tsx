@@ -10,6 +10,7 @@ const jockeyDefaultValues: Jockey = {
   birth: "",
   gender: "",
   nationality: "",
+  job: "",
 };
 
 export type JockeyContextType = {
@@ -61,7 +62,7 @@ export const Provider = ({ children }: Props) => {
     },
     onError: () => {
       setQueryStatus("error");
-    }
+    },
   });
 
   const editMutation = useMutation({
@@ -72,7 +73,7 @@ export const Provider = ({ children }: Props) => {
     },
     onError: () => {
       setQueryStatus("error");
-    }
+    },
   });
 
   const deleteMutation = useMutation({
@@ -83,7 +84,7 @@ export const Provider = ({ children }: Props) => {
     },
     onError: () => {
       setQueryStatus("error");
-    }
+    },
   });
 
   useEffect(() => {

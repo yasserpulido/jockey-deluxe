@@ -15,22 +15,5 @@
     "birth_date": "A data de nascimento é obrigatória.",
     "gender": "Gênero é obrigatório.",
     "nationality": "Nacionalidade é obrigatória."
-  },
-  "inputs": {
-    "save": "Salvar",
-    "delete": "Deletar",
-    "no": "Não",
-    "yes": "Sim",
-    "reset": "Restablecer"
-  },
-  "modals": {
-    "save_title": "Salvar",
-    "save_message": "Tem certeza de que deseja salvar?",
-    "delete_title": "Deletar",
-    "delete_message": "Tem certeza de que deseja deletar?"
-  },
-  "placeholders": {
-    "general_input": "Insira seu valor aqui",
-    "general_dropdown": "Selecione seu valor aqui"
   }
 }

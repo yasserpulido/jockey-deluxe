@@ -4,7 +4,14 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { colors } from "../../../../design-system/theme/colors";
 import { Jockey, ModalFooter } from "../../../../types";
 import { JockeyContext } from "../../providers/jockey";
-import { Alert, Button, Dropdown, Input, Modal } from "../../../../design-system";
+import {
+  Alert,
+  Button,
+  Checkbox,
+  Dropdown,
+  Input,
+  Modal,
+} from "../../../../design-system";
 import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
 
@@ -181,6 +188,14 @@ const Detail = () => {
                 />
               )}
             />
+            <Controller
+              control={control}
+              name="job"
+              defaultValue=""
+              render={({ field }) => (
+                <Checkbox label="Jockey" checked={field.value} {...field} />
+              )}
+            />
           </InputsContainer>
           <Footer>
             <Button
@@ -219,7 +234,7 @@ const Detail = () => {
           />
         </Modal>
       )}
-       {context.status !== "idle" && (
+      {context.status !== "idle" && (
         <Alert
           status={ALERT_SETUP[context.status]}
           reset={context.resetQueryStatus}

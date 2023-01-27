@@ -51,6 +51,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
   const createMutation = useMutation({
     mutationFn: api.createBreed,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Breed"]);
     },
     onError: () => {
@@ -61,6 +62,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
   const editMutation = useMutation({
     mutationFn: api.editBreed,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Breed"]);
     },
     onError: () => {
@@ -71,6 +73,7 @@ export const Provider: React.FC<Props> = ({ children }) => {
   const deleteMutation = useMutation({
     mutationFn: api.deleteBreed,
     onSuccess: () => {
+      setQueryStatus("success");
       queryClient.invalidateQueries(["Breed"]);
     },
     onError: () => {
@@ -94,7 +97,9 @@ export const Provider: React.FC<Props> = ({ children }) => {
   };
 
   const deleteHandler = (id: string) => {
-    setBreeds(breeds.filter((b: Breed) => b.id !== id));
+    console.log(id);
+    deleteMutation.mutate(id);
+    setBreed(breedDefaultValues);
   };
 
   const breedHandler = (breed: Breed) => {

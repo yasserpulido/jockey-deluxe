@@ -6,22 +6,5 @@
   "errors": {
     "full_name": "Full Name is required.",
     "full_name_min": "Full Name must be at least 3 characters long."
-  },
-  "inputs": {
-    "save": "Save",
-    "delete": "Delete",
-    "no": "No",
-    "yes": "Yes",
-    "reset": "Reset"
-  },
-  "modals": {
-    "save_title": "Save",
-    "save_message": "Are you sure you want to save?",
-    "delete_title": "Delete",
-    "delete_message": "Are you sure do you want to delete?"
-  },
-  "placeholders": {
-    "general_input": "Enter your value here",
-    "general_dropdown": "Select your value here"
   }
 }

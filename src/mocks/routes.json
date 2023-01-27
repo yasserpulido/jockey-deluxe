@@ -1,4 +1,6 @@
 {
   "/api/breed": "/breeds",
-  "/api/jockey": "/jockeys"
+  "/api/breed/:id": "/breeds/:id",
+  "/api/jockey": "/jockeys",
+  "/api/jockey/:id": "/jockeys/:id"
 }

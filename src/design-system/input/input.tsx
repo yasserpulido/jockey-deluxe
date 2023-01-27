@@ -47,7 +47,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
         </FormGroup>
         {errors && (
           <Error>
-            <Alert />
+            <Alert size="small" />
             {errors}
           </Error>
         )}

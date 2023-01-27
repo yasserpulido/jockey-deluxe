@@ -2,11 +2,13 @@ import styled from "@emotion/styled";
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { Alert, Button, colors, Input, Modal } from "../../../../design-system";
 import { Breed, ModalFooter } from "../../../../types";
 import { BreedContext, BreedContextType } from "../../providers";
 
 const Detail = () => {
+  const { t } = useTranslation(["breed", "form"]);
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -35,8 +37,8 @@ const Detail = () => {
 
   const onSubmit: SubmitHandler<Breed> = (data) => {
     setModalFooter({
-      header: "Save",
-      content: `Do you want to save ${data.name}?`,
+      header: t("form:modals.save_title"),
+      content: t("form:modals.save_message"),
       onClick: saveHandler,
     });
     setShowModal(true);
@@ -65,9 +67,13 @@ const Detail = () => {
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <legend>Form Breed</legend>
+          <legend>{t("breed:labels.form_title")}</legend>
           <Header>
-            <Button variant="Link" text="Reset" onClick={resetHandler} />
+            <Button
+              variant="Link"
+              text={t("form:inputs.reset")}
+              onClick={resetHandler}
+            />
           </Header>
           <Controller
             control={control}
@@ -76,35 +82,39 @@ const Detail = () => {
             rules={{
               required: {
                 value: true,
-                message: "Please enter a name.",
+                message: t("breed:errors.full_name"),
               },
               minLength: {
                 value: 3,
-                message: "The name must have at least 3 letters.",
+                message: t("breed:errors.full_name_min"),
               },
             }}
             render={({ field, formState: { errors } }) => (
-              <Input label="Name" errors={errors.name?.message} {...field} />
+              <Input
+                label={t("breed:labels.full_name")}
+                errors={errors.name?.message}
+                {...field}
+              />
             )}
           />
           <Footer>
             <Button
-              text="Delete"
+              text={t("form:inputs.delete")}
               variant="Danger"
               type="button"
               disabled={!!!context.breed?.id}
               onClick={() => {
                 if (context.breed?.id) {
                   setModalFooter({
-                    header: "Delete",
-                    content: `Do you want to delete ${context.breed.name}?`,
+                    header: t("form:modals.delete_title"),
+                    content: t("form:modals.delete_message"),
                     onClick: deleteHandler,
                   });
                   setShowModal(true);
                 }
               }}
             />
-            <Button text="Save" variant="Success" type="submit" />
+            <Button text={t("form:inputs.save")} variant="Success" type="submit" />
           </Footer>
         </fieldset>
       </Form>

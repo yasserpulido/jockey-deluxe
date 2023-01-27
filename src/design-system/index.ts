@@ -1,10 +1,11 @@
+export * from "./table";
+export * from "./theme";
+export { Alert } from "./alert";
 export { Button } from "./button";
 export { Card } from "./card";
+export { Checkbox } from "./checkbox";
+export { Dropdown } from "./dropdown";
 export { Heading } from "./heading";
 export { Input } from "./input";
 export { Modal } from "./modal";
-export { Dropdown } from "./dropdown";
-export { Alert } from "./alert";
-export * from "./table";
 export { Workshop } from "./workshop";
-export * from "./theme";

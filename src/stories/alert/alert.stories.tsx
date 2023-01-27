@@ -28,10 +28,6 @@ Default.decorators = [
   ),
 ];
 
-const content =
-  "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate delectus soluta exercitationem dolorum quaerat porro impedit nam ratione. Porro vitae omnis quod corporis nam molestiae fugit id odit facilis tenetur.";
-
 Default.args = {
-  type: "Success",
-  children: content,
+  status: { type: "success", text: "Success" },
 };

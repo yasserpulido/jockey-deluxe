@@ -5,4 +5,5 @@ export type Jockey = {
   birth: string;
   gender: string;
   nationality: string;
+  job: string;
 };
