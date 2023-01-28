@@ -95,7 +95,10 @@ export const Table = <T extends Jockey | Breed>({
 
       data.forEach((d, index) => {
         Object.values(d).forEach((v) => {
-          if (v.toLocaleLowerCase().includes(filter.toLocaleLowerCase())) {
+          if (
+            typeof v === "string" &&
+            v.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+          ) {
             const exist = listEntries.some((s) => s.id === data[index].id);
             if (!exist) {
               listEntries.push(data[index]);

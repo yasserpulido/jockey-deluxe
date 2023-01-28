@@ -26,6 +26,4 @@ Default.decorators = [
 Default.args = {
   label: "Jockey",
   name: "name",
-  value: "jockey",
-  // onChange: (value: boolean) => console.log(value),
 };

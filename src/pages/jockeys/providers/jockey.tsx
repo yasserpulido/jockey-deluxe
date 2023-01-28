@@ -10,7 +10,10 @@ const jockeyDefaultValues: Jockey = {
   birth: "",
   gender: "",
   nationality: "",
-  job: "",
+  job: {
+    jockey: false,
+    trainer: false,
+  },
 };
 
 export type JockeyContextType = {

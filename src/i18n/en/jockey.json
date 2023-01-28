@@ -5,7 +5,8 @@
     "last_name": "Last Name",
     "birth_date": "Birth Date",
     "gender": "Gender",
-    "nationality": "Nationality"
+    "nationality": "Nationality",
+    "job": "Job"
   },
   "errors": {
     "first_name": "First Name is required.",

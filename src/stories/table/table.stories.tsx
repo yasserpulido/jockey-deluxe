@@ -41,7 +41,10 @@ const data: Array<Jockey> = [
     birth: "24-09-2000",
     gender: "2",
     nationality: "10",
-    job: "jockey",
+    job: {
+      jockey: true,
+      trainer: false,
+    },
   },
   {
     id: "2",
@@ -50,6 +53,9 @@ const data: Array<Jockey> = [
     birth: "01-02-1990",
     gender: "2",
     nationality: "10",
-    job: "jockey",
+    job: {
+      jockey: true,
+      trainer: false,
+    },
   },
 ];

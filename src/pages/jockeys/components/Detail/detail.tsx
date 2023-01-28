@@ -16,7 +16,7 @@ import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
 
 const Detail = () => {
-  const { t } = useTranslation("jockey");
+  const { t } = useTranslation(["jockey", "form"]);
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -45,12 +45,13 @@ const Detail = () => {
   }, [reset, context.jockey]);
 
   const onSubmit: SubmitHandler<Jockey> = (data) => {
-    setModalFooter({
-      header: "Save",
-      content: t("modals.save_message"),
-      onClick: saveHandler,
-    });
-    setShowModal(true);
+    console.log(data.job);
+    // setModalFooter({
+    //   header: "Save",
+    //   content: t("modals.save_message"),
+    //   onClick: saveHandler,
+    // });
+    // setShowModal(true);
   };
 
   const saveHandler = () => {
@@ -76,11 +77,11 @@ const Detail = () => {
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <legend>{t("labels.form_title")}</legend>
+          <legend>{t("jockey:labels.form_title")}</legend>
           <Header>
             <Button
               variant="Link"
-              text={t("inputs.reset")}
+              text={t("form:inputs.reset")}
               onClick={resetHandler}
             />
           </Header>
@@ -92,18 +93,18 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("errors.first_name"),
+                  message: t("jockey:errors.first_name"),
                 },
                 minLength: {
                   value: 3,
-                  message: t("errors.first_name_min"),
+                  message: t("jockey:errors.first_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("labels.first_name")}
+                  label={t("jockey:labels.first_name")}
                   errors={errors.firstname?.message}
-                  placeholder={t("placeholders.general_input") as string}
+                  placeholder={t("form:placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -115,18 +116,18 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("errors.last_name"),
+                  message: t("jockey:errors.last_name"),
                 },
                 minLength: {
                   value: 3,
-                  message: t("errors.last_name_min"),
+                  message: t("jockey:errors.last_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("labels.last_name")}
+                  label={t("jockey:labels.last_name")}
                   errors={errors.lastname?.message}
-                  placeholder={t("placeholders.general_input") as string}
+                  placeholder={t("form:placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -138,15 +139,15 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("errors.birth_date"),
+                  message: t("jockey:errors.birth_date"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("labels.birth_date")}
+                  label={t("jockey:labels.birth_date")}
                   type="date"
                   errors={errors.birth?.message}
-                  placeholder={t("placeholders.general_input") as string}
+                  placeholder={t("form:placeholders.general_input") as string}
                   {...field}
                 />
               )}
@@ -160,10 +161,12 @@ const Detail = () => {
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("labels.gender")}
+                  label={t("jockey:labels.gender")}
                   options={common.gender.data}
                   errors={errors.gender?.message}
-                  placeholder={t("placeholders.general_dropdown") as string}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
                   {...field}
                 />
               )}
@@ -175,59 +178,87 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("errors.nationality"),
+                  message: t("jockey:errors.nationality"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("labels.nationality")}
+                  label={t("jockey:labels.nationality")}
                   options={common.country.data}
                   errors={errors.nationality?.message}
-                  placeholder={t("placeholders.general_dropdown") as string}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
                   {...field}
                 />
               )}
             />
-            <Controller
-              control={control}
-              name="job"
-              defaultValue=""
-              render={({ field }) => (
-                <Checkbox label="Jockey" checked={field.value} {...field} />
-              )}
-            />
+            <JobContainer>
+              <span>{t("jockey:labels.job")}:</span>
+              <CheckboxContainer>
+                <Controller
+                  control={control}
+                  name="job.jockey"
+                  render={({ field: { name, value, ...rest } }) => (
+                    <Checkbox
+                      label="Jockey"
+                      value={name}
+                      name={name}
+                      {...rest}
+                    />
+                  )}
+                />
+                <Controller
+                  control={control}
+                  name="job.trainer"
+                  defaultValue={false}
+                  render={({ field: { name, value, ...rest } }) => (
+                    <Checkbox
+                      label="Trainer"
+                      value={name}
+                      name={name}
+                      {...rest}
+                    />
+                  )}
+                />
+              </CheckboxContainer>
+            </JobContainer>
           </InputsContainer>
           <Footer>
             <Button
-              text={t("inputs.delete")}
+              text={t("form:inputs.delete")}
               variant="Danger"
               type="button"
               disabled={!!!context.jockey?.id}
               onClick={() => {
                 if (context.jockey?.id) {
                   setModalFooter({
-                    header: t("modals.delete"),
-                    content: t("modals.delete_message"),
+                    header: t("form:modals.delete"),
+                    content: t("form:modals.delete_message"),
                     onClick: deleteHandler,
                   });
                   setShowModal(true);
                 }
               }}
             />
-            <Button text={t("inputs.save")} variant="Success" type="submit" />
+            <Button
+              text={t("form:inputs.save")}
+              variant="Success"
+              type="submit"
+            />
           </Footer>
         </fieldset>
       </Form>
       {showModal && (
         <Modal header={modalFooter.header} content={modalFooter.content}>
           <Button
-            text={t("inputs.no")}
+            text={t("form:inputs.no")}
             onClick={() => setShowModal(false)}
             variant="Danger"
             type="button"
           />
           <Button
-            text={t("inputs.yes")}
+            text={t("form:inputs.yes")}
             onClick={() => modalFooter.onClick()}
             variant="Success"
             type="button"
@@ -275,6 +306,17 @@ const Footer = styled.footer({
 
 const Header = styled.div({
   textAlign: "end",
+});
+
+const JobContainer = styled.div({});
+
+const CheckboxContainer = styled.div({
+  marginTop: "0.3rem",
+  display: "flex",
+
+  "& > div": {
+    marginRight: "1.4rem",
+  },
 });
 
 export default Detail;

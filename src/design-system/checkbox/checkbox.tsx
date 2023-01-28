@@ -5,23 +5,15 @@ import { colors } from "../theme";
 type Props = {
   label: string;
   name: string;
-  checked?: string;
-  disabled?: boolean;
   value: string;
-  onChange: (value: string) => void;
+  checked?: boolean;
+  disabled?: boolean;
+  onChange: (value: boolean) => void;
 };
 
 const Checkbox = React.forwardRef<HTMLInputElement, Props>(
   (
-    {
-      label,
-      name,
-      value,
-      checked = "unchecked",
-      disabled = false,
-      onChange,
-      ...props
-    },
+    { label, name, value, checked, disabled = false, onChange, ...props },
     ref
   ) => {
     return (
@@ -33,8 +25,8 @@ const Checkbox = React.forwardRef<HTMLInputElement, Props>(
           disabled={disabled}
           ref={ref}
           value={value}
-          checked={checked === "checked"}
-          onChange={(e) => onChange(e.target.checked ? "checked" : "unchecked")}
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
           {...props}
         />
         <label htmlFor={name}>{label}</label>
@@ -50,49 +42,45 @@ const Container = styled.div({
 });
 
 const Input = styled.input({
-  position: "absolute",
-  opacity: 0,
+  padding: 0,
+  height: "initial",
+  width: "initial",
+  marginBottom: 0,
+  display: "none",
+  cursor: "pointer",
 
   "& + label": {
     position: "relative",
     cursor: "pointer",
-    padding: 0,
   },
 
   "& + label:before": {
     content: '""',
+    appearance: "none",
+    backgroundColor: `${colors.White}`,
+    border: `2px solid ${colors.Black}`,
+    padding: "0.6rem",
     display: "inline-block",
-    width: "1rem",
-    height: "1rem",
-    marginRight: "0.5rem",
-    verticalAlign: "text-top",
-    backgroundColor: colors.White,
-    border: `1px solid ${colors.Black}`,
+    position: "relative",
+    verticalAlign: "middle",
+    cursor: "pointer",
+    marginRight: "0.4rem",
   },
 
   "&:checked + label:before": {
-    backgroundColor: colors.DenimBlue,
-  },
-
-  "&:disabled + label": {
-    color: colors.FrenchGrey,
-    cursor: "auto",
-  },
-
-  "&:disabled + label:before": {
-    backgroundColor: colors.FrenchGrey,
+    backgroundColor: `${colors.DenimBlue}`,
   },
 
   "&:checked + label:after": {
     content: '""',
+    display: "block",
     position: "absolute",
-    left: "0.15rem",
-    top: "0.45rem",
-    backgroundColor: "white",
-    width: "2px",
-    height: "2px",
-    boxShadow:
-      "2px 0 0 white, 4px 0 0 white, 4px -2px 0 white, 4px -4px 0 white, 4px -6px 0 white, 4px -8px 0 white",
+    top: "0.15rem",
+    left: "0.5rem",
+    width: "6px",
+    height: "14px",
+    border: `solid ${colors.Black}`,
+    borderWidth: "0 2px 2px 0",
     transform: "rotate(45deg)",
   },
 });
