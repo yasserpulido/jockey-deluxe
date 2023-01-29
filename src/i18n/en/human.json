@@ -1,6 +1,6 @@
 {
   "labels": {
-    "form_title": "Form Jockey",
+    "form_title": "Human's Form",
     "first_name": "First Name",
     "last_name": "Last Name",
     "birth_date": "Birth Date",
@@ -15,6 +15,7 @@
     "last_name_min": "Last Name must be at least 3 characters long.",
     "birth_date": "Birth Date is required.",
     "gender": "Gender is required.",
-    "nationality": "Nationality is required."
+    "nationality": "Nationality is required.",
+    "job": "At least one job should be selected."
   }
 }

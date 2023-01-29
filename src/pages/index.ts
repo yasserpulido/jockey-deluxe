@@ -1,2 +1,2 @@
-export { default as Jockeys } from "./jockeys";
-export { default as Breeds } from "./breeds";
+export { default as Human } from "./human";
+export { default as Breed } from "./breed";

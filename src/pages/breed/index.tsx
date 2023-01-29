@@ -1,8 +1,8 @@
-import { default as Page } from "./breeds";
+import { default as Page } from "./breed";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider as BreedProvider } from "./providers";
 
-const Breeds = () => {
+const Breed = () => {
   const queryClient = new QueryClient();
 
   return (
@@ -14,4 +14,4 @@ const Breeds = () => {
   );
 };
 
-export default Breeds;
+export default Breed;

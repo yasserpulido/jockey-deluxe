@@ -1,0 +1,19 @@
+{
+  "inputs": {
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "no": "Non",
+    "yes": "Oui",
+    "reset": "Restaurer"
+  },
+  "modals": {
+    "save_title": "Enregistrer",
+    "save_message": "Vous êtes sûr de vouloir enregistrer ?",
+    "delete_title": "Supprimer",
+    "delete_message": "Vous êtes sûr de vouloir supprimer ?"
+  },
+  "placeholders": {
+    "general_input": "Entrez votre valeur ici",
+    "general_dropdown": "Sélectionnez votre valeur ici"
+  }
+}

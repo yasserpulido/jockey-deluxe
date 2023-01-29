@@ -1,9 +1,9 @@
-import { default as Page } from "./jockeys";
+import { default as Page } from "./human";
 import { Provider as JockeyProvider } from "./providers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Common as CommonProvider } from "../../providers";
 
-const Jockeys = () => {
+const Human = () => {
   const queryClient = new QueryClient();
 
   return (
@@ -17,4 +17,4 @@ const Jockeys = () => {
   );
 };
 
-export default Jockeys;
+export default Human;

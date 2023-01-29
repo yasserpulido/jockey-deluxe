@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { colors } from "../../../../design-system/theme/colors";
-import { Jockey, ModalFooter } from "../../../../types";
-import { JockeyContext } from "../../providers/jockey";
+import { Human, ModalFooter } from "../../../../types";
+import { HumanContext, humanDefaultValues } from "../../providers/human";
 import {
   Alert,
   Button,
@@ -14,9 +14,10 @@ import {
 } from "../../../../design-system";
 import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
+import { Alert as ErrorIcon } from "grommet-icons";
 
 const Detail = () => {
-  const { t } = useTranslation(["jockey", "form"]);
+  const { t } = useTranslation(["human", "form"]);
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
@@ -24,10 +25,18 @@ const Detail = () => {
     onClick: () => {},
   });
   const common = useContext(CommonContext);
-  const context = useContext(JockeyContext);
-  const { control, handleSubmit, reset, getValues } = useForm<Jockey>({
-    defaultValues: context.jockey,
+  const context = useContext(HumanContext);
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+    reset,
+    getValues,
+  } = useForm<Human>({
+    defaultValues: humanDefaultValues,
   });
+  const errorMessage =
+    errors.job?.jockey?.message || errors.job?.trainer?.message;
 
   const ALERT_SETUP = {
     success: {
@@ -41,17 +50,16 @@ const Detail = () => {
   };
 
   useEffect(() => {
-    reset(context.jockey);
-  }, [reset, context.jockey]);
+    reset(context.human);
+  }, [reset, context.human]);
 
-  const onSubmit: SubmitHandler<Jockey> = (data) => {
-    console.log(data.job);
-    // setModalFooter({
-    //   header: "Save",
-    //   content: t("modals.save_message"),
-    //   onClick: saveHandler,
-    // });
-    // setShowModal(true);
+  const onSubmit: SubmitHandler<Human> = (data) => {
+    setModalFooter({
+      header: "Save",
+      content: t("modals.save_message"),
+      onClick: saveHandler,
+    });
+    setShowModal(true);
   };
 
   const saveHandler = () => {
@@ -60,24 +68,22 @@ const Detail = () => {
   };
 
   const deleteHandler = () => {
-    if (context.jockey !== undefined) {
-      context.delete(context.jockey.id);
+    if (context.human !== undefined) {
+      context.delete(context.human.id);
     }
     setShowModal(false);
   };
 
   const resetHandler = () => {
-    reset(context.jockey);
-    if (context.jockey && context.jockey.id.length > 0) {
-      context.reset();
-    }
+    reset(context.human);
+    context.reset();
   };
 
   return (
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <fieldset>
-          <legend>{t("jockey:labels.form_title")}</legend>
+          <legend>{t("human:labels.form_title")}</legend>
           <Header>
             <Button
               variant="Link"
@@ -93,16 +99,16 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("jockey:errors.first_name"),
+                  message: t("human:errors.first_name"),
                 },
                 minLength: {
                   value: 3,
-                  message: t("jockey:errors.first_name_min"),
+                  message: t("human:errors.first_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("jockey:labels.first_name")}
+                  label={t("human:labels.first_name")}
                   errors={errors.firstname?.message}
                   placeholder={t("form:placeholders.general_input") as string}
                   {...field}
@@ -116,16 +122,16 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("jockey:errors.last_name"),
+                  message: t("human:errors.last_name"),
                 },
                 minLength: {
                   value: 3,
-                  message: t("jockey:errors.last_name_min"),
+                  message: t("human:errors.last_name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("jockey:labels.last_name")}
+                  label={t("human:labels.last_name")}
                   errors={errors.lastname?.message}
                   placeholder={t("form:placeholders.general_input") as string}
                   {...field}
@@ -139,12 +145,12 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("jockey:errors.birth_date"),
+                  message: t("human:errors.birth_date"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("jockey:labels.birth_date")}
+                  label={t("human:labels.birth_date")}
                   type="date"
                   errors={errors.birth?.message}
                   placeholder={t("form:placeholders.general_input") as string}
@@ -157,11 +163,11 @@ const Detail = () => {
               name="gender"
               defaultValue=""
               rules={{
-                required: { value: true, message: t("errors.gender") },
+                required: { value: true, message: t("human:errors.gender") },
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("jockey:labels.gender")}
+                  label={t("human:labels.gender")}
                   options={common.gender.data}
                   errors={errors.gender?.message}
                   placeholder={
@@ -178,12 +184,12 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("jockey:errors.nationality"),
+                  message: t("human:errors.nationality"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("jockey:labels.nationality")}
+                  label={t("human:labels.nationality")}
                   options={common.country.data}
                   errors={errors.nationality?.message}
                   placeholder={
@@ -194,15 +200,29 @@ const Detail = () => {
               )}
             />
             <JobContainer>
-              <span>{t("jockey:labels.job")}:</span>
+              <span>{t("human:labels.job")}:</span>
               <CheckboxContainer>
                 <Controller
                   control={control}
                   name="job.jockey"
-                  render={({ field: { name, value, ...rest } }) => (
+                  rules={{
+                    validate: () => {
+                      if (
+                        Object.values(getValues().job).every(
+                          (val) => val === false
+                        )
+                      ) {
+                        const message = t("human:errors.job");
+                        return message;
+                      }
+
+                      return undefined;
+                    },
+                  }}
+                  defaultValue={false}
+                  render={({ field: { name, ...rest } }) => (
                     <Checkbox
                       label="Jockey"
-                      value={name}
                       name={name}
                       {...rest}
                     />
@@ -211,17 +231,38 @@ const Detail = () => {
                 <Controller
                   control={control}
                   name="job.trainer"
+                  rules={{
+                    validate: () => {
+                      if (
+                        Object.values(getValues().job).every(
+                          (val) => val === false
+                        )
+                      ) {
+                        const message = t("human:errors.job");
+                        return message;
+                      }
+
+                      return undefined;
+                    },
+                  }}
                   defaultValue={false}
-                  render={({ field: { name, value, ...rest } }) => (
+                  render={({ field: { name, ...rest } }) => (
                     <Checkbox
                       label="Trainer"
-                      value={name}
                       name={name}
                       {...rest}
                     />
                   )}
                 />
               </CheckboxContainer>
+              <Error>
+                {errorMessage ? (
+                  <>
+                    <ErrorIcon size="small" />
+                    {errorMessage}
+                  </>
+                ) : null}
+              </Error>
             </JobContainer>
           </InputsContainer>
           <Footer>
@@ -229,9 +270,9 @@ const Detail = () => {
               text={t("form:inputs.delete")}
               variant="Danger"
               type="button"
-              disabled={!!!context.jockey?.id}
+              disabled={!!!context.human?.id}
               onClick={() => {
-                if (context.jockey?.id) {
+                if (context.human?.id) {
                   setModalFooter({
                     header: t("form:modals.delete"),
                     content: t("form:modals.delete_message"),
@@ -308,14 +349,28 @@ const Header = styled.div({
   textAlign: "end",
 });
 
-const JobContainer = styled.div({});
+const JobContainer = styled.div({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+});
 
 const CheckboxContainer = styled.div({
-  marginTop: "0.3rem",
   display: "flex",
 
   "& > div": {
     marginRight: "1.4rem",
+  },
+});
+
+const Error = styled.small({
+  color: colors.PersianRed,
+  display: "flex",
+  alignItems: "center",
+
+  "& svg, path": {
+    marginRight: "0.4rem",
+    stroke: colors.PersianRed,
   },
 });
 

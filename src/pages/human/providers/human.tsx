@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { jockey as api } from "../../../apis";
-import { Jockey } from "../../../types";
+import { human as api } from "../../../apis";
+import { Human } from "../../../types";
 
-const jockeyDefaultValues: Jockey = {
+export const humanDefaultValues: Human = {
   id: "",
   firstname: "",
   lastname: "",
@@ -16,26 +16,26 @@ const jockeyDefaultValues: Jockey = {
   },
 };
 
-export type JockeyContextType = {
+export type HumanContextType = {
   status: "idle" | "success" | "error";
   isLoading: boolean;
-  jockey: Jockey | undefined;
-  jockeys: Array<Jockey>;
-  save: (jockey: Jockey) => void;
+  human: Human | undefined;
+  humans: Array<Human>;
+  save: (human: Human) => void;
   delete: (id: string) => void;
-  jockeySelected: (jockey: Jockey) => void;
+  humanSelected: (human: Human) => void;
   reset: () => void;
   resetQueryStatus: () => void;
 };
 
-export const JockeyContext = React.createContext<JockeyContextType>({
+export const HumanContext = React.createContext<HumanContextType>({
   status: "idle",
   isLoading: false,
-  jockey: undefined,
-  jockeys: [],
+  human: undefined,
+  humans: [],
   save: () => {},
   delete: () => {},
-  jockeySelected: () => {},
+  humanSelected: () => {},
   reset: () => {},
   resetQueryStatus: () => {},
 });
@@ -46,19 +46,19 @@ type Props = {
 
 export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
-  const [jockey, setJockey] = useState<Jockey | undefined>(undefined);
-  const [jockeys, setJockeys] = useState<Array<Jockey>>([]);
+  const [human, setHuman] = useState<Human | undefined>(undefined);
+  const [humans, setHumans] = useState<Array<Human>>([]);
   const [queryStatus, setQueryStatus] =
     useState<"idle" | "success" | "error">("idle");
   const { data, status, isLoading } = useQuery({
-    queryKey: ["Jockey"],
-    queryFn: api.getJockeys,
+    queryKey: ["Human"],
+    queryFn: api.getHumans,
     retry: false,
     refetchOnWindowFocus: false,
   });
 
   const createMutation = useMutation({
-    mutationFn: api.createJockey,
+    mutationFn: api.createHuman,
     onSuccess: () => {
       setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
@@ -69,7 +69,7 @@ export const Provider = ({ children }: Props) => {
   });
 
   const editMutation = useMutation({
-    mutationFn: api.editJockey,
+    mutationFn: api.editHuman,
     onSuccess: () => {
       setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
@@ -80,7 +80,7 @@ export const Provider = ({ children }: Props) => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: api.deleteJockey,
+    mutationFn: api.deleteHuman,
     onSuccess: () => {
       setQueryStatus("success");
       queryClient.invalidateQueries(["Jockey"]);
@@ -92,30 +92,30 @@ export const Provider = ({ children }: Props) => {
 
   useEffect(() => {
     if (status === "success" && data !== undefined) {
-      setJockeys(data);
+      setHumans(data);
     }
   }, [status, data]);
 
-  const saveHandler = (jockey: Jockey) => {
-    if (!jockey.id) {
-      createMutation.mutate(jockey);
+  const saveHandler = (human: Human) => {
+    if (!human.id) {
+      createMutation.mutate(human);
     } else {
-      editMutation.mutate(jockey);
+      editMutation.mutate(human);
     }
-    setJockey(jockeyDefaultValues);
+    setHuman(humanDefaultValues);
   };
 
   const deleteHandler = (id: string) => {
     deleteMutation.mutate(id);
-    setJockey(jockeyDefaultValues);
+    setHuman(humanDefaultValues);
   };
 
-  const jockeyHandler = (jockey: Jockey) => {
-    setJockey(jockey);
+  const humanHandler = (human: Human) => {
+    setHuman(human);
   };
 
   const resetHandler = () => {
-    setJockey(jockeyDefaultValues);
+    setHuman(humanDefaultValues);
   };
 
   const resetQueryStatusHandler = () => {
@@ -123,20 +123,20 @@ export const Provider = ({ children }: Props) => {
   };
 
   return (
-    <JockeyContext.Provider
+    <HumanContext.Provider
       value={{
         status: queryStatus,
         isLoading,
-        jockey,
-        jockeys,
+        human,
+        humans,
         save: saveHandler,
         delete: deleteHandler,
-        jockeySelected: jockeyHandler,
+        humanSelected: humanHandler,
         reset: resetHandler,
         resetQueryStatus: resetQueryStatusHandler,
       }}
     >
       {children}
-    </JockeyContext.Provider>
+    </HumanContext.Provider>
   );
 };

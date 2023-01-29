@@ -1,4 +1,4 @@
 export * as breed from "./breed";
 export * as gender from "./gender";
-export * as jockey from "./jockey";
+export * as human from "./human";
 export * as country from "./country";

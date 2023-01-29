@@ -5,7 +5,7 @@ import { colors } from "../theme";
 type Props = {
   label: string;
   name: string;
-  value: string;
+  value: boolean;
   checked?: boolean;
   disabled?: boolean;
   onChange: (value: boolean) => void;
@@ -24,8 +24,8 @@ const Checkbox = React.forwardRef<HTMLInputElement, Props>(
           type="checkbox"
           disabled={disabled}
           ref={ref}
-          value={value}
-          checked={checked}
+          checked={value}
+          value={name}
           onChange={(e) => onChange(e.target.checked)}
           {...props}
         />

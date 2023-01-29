@@ -1,13 +1,7 @@
 import styled from "@emotion/styled";
-import React, {
-  ReactNode,
-  useCallback,
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Breed, Jockey } from "../../types";
+import { Breed, Human } from "../../types";
 import { Button } from "../button";
 import { Dropdown } from "../dropdown";
 import { Input } from "../input";
@@ -44,7 +38,7 @@ type TableProps<T> = {
   onSelect: (element: T) => void;
 };
 
-export const Table = <T extends Jockey | Breed>({
+export const Table = <T extends Human | Breed>({
   columns,
   data,
   isLoading,

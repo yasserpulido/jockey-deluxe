@@ -166,7 +166,7 @@ const Dropdown = ({
       )}
       {errors && (
         <Error>
-          <Alert />
+          <Alert size="small" />
           {errors}
         </Error>
       )}
@@ -245,7 +245,6 @@ const Error = styled.small({
   alignItems: "center",
 
   "& svg, path": {
-    fontSize: "1rem",
     marginRight: "0.4rem",
     stroke: colors.PersianRed,
   },

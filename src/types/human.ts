@@ -1,4 +1,4 @@
-export type Jockey = {
+export type Human = {
   id: string;
   firstname: string;
   lastname: string;

@@ -2,7 +2,7 @@ import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 import { Theme } from "../../providers";
 import { ColumnProp, Table } from "../../design-system/table/table";
-import { Jockey } from "../../types";
+import { Human } from "../../types";
 
 export default {
   title: "Table",
@@ -24,7 +24,7 @@ Default.decorators = [
   ),
 ];
 
-const columns: Array<ColumnProp<Jockey>> = [
+const columns: Array<ColumnProp<Human>> = [
   { heading: "Id", value: "id" },
   { heading: "First Name", value: "firstname" },
   { heading: "Last Name", value: "lastname" },
@@ -33,7 +33,7 @@ const columns: Array<ColumnProp<Jockey>> = [
   { heading: "Nationality", value: "nationality" },
 ];
 
-const data: Array<Jockey> = [
+const data: Array<Human> = [
   {
     id: "1",
     firstname: "Peter",
