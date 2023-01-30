@@ -66,8 +66,8 @@ const Detail = () => {
   return (
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset>
-          <legend>{t("breed:labels.form_title")}</legend>
+        <Fieldset>
+          <Legend>{t("breed:labels.form_title")}</Legend>
           <Header>
             <Button
               variant="Link"
@@ -114,9 +114,13 @@ const Detail = () => {
                 }
               }}
             />
-            <Button text={t("form:inputs.save")} variant="Success" type="submit" />
+            <Button
+              text={t("form:inputs.save")}
+              variant="Success"
+              type="submit"
+            />
           </Footer>
-        </fieldset>
+        </Fieldset>
       </Form>
       {showModal && (
         <Modal header={modalFooter.header} content={modalFooter.content}>
@@ -147,15 +151,15 @@ const Detail = () => {
 const Form = styled.form({
   marginBottom: "1rem",
   backgroundColor: colors.White,
+});
 
-  "& fieldset": {
-    border: `1px solid ${colors.Gunmetal}`,
-    padding: "1rem",
-  },
+const Fieldset = styled.fieldset({
+  border: `1px solid ${colors.Gunmetal}`,
+  padding: "1rem",
+});
 
-  "& legend": {
-    fontWeight: "bold",
-  },
+const Legend = styled.legend({
+  fontWeight: "bold",
 });
 
 const Header = styled.div({

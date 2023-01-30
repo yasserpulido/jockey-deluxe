@@ -12,9 +12,9 @@ import {
   Input,
   Modal,
 } from "../../../../design-system";
-import { CommonContext } from "../../../../providers/common";
 import { useTranslation } from "react-i18next";
 import { Alert as ErrorIcon } from "grommet-icons";
+import { Common } from "../../../../providers";
 
 const Detail = () => {
   const { t } = useTranslation(["human", "form"]);
@@ -24,7 +24,7 @@ const Detail = () => {
     content: "",
     onClick: () => {},
   });
-  const common = useContext(CommonContext);
+  const common = useContext(Common.Context);
   const context = useContext(HumanContext);
   const {
     control,

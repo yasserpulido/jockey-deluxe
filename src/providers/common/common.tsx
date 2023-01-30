@@ -13,7 +13,7 @@ export type CommonContextType = {
   country: Common<Country>;
 };
 
-export const CommonContext = React.createContext<CommonContextType>({
+export const Context = React.createContext<CommonContextType>({
   gender: {
     data: [],
     isLoading: false,
@@ -63,7 +63,7 @@ export const Provider = ({ children }: Props) => {
   }, [countryStatus, countryData]);
 
   return (
-    <CommonContext.Provider
+    <Context.Provider
       value={{
         gender: {
           data: genders,
@@ -76,6 +76,6 @@ export const Provider = ({ children }: Props) => {
       }}
     >
       {children}
-    </CommonContext.Provider>
+    </Context.Provider>
   );
 };

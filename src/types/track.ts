@@ -1,7 +1,5 @@
-export type TrackType = {
+export type Track = {
   id: string;
   name: string;
   country: string;
-  state: string;
-  city: string;
 };

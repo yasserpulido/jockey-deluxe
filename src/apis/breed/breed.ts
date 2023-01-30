@@ -22,7 +22,6 @@ export const editBreed = async (breed: Breed) => {
 };
 
 export const deleteBreed = async (id: string) => {
-  console.log("id", id);
   await fetch(`http://localhost:3001/api/breed/${id}`, {
     method: "DELETE",
   });

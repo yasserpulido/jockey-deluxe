@@ -1,59 +1,60 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Breed } from "../../../types";
-import { breed as api } from "../../../apis";
+import { Track } from "../../../types";
+import { Track as api } from "../../../apis";
 
-const breedDefaultValues = {
+const trackDefaultValues = {
   id: "",
   name: "",
+  country: "",
 };
 
-export type BreedContextType = {
+export type TrackContextType = {
   status: "idle" | "success" | "error";
   isLoading: boolean;
-  breed: Breed | undefined;
-  breeds: Array<Breed>;
-  save: (breed: Breed) => void;
+  track: Track;
+  tracks: Array<Track>;
+  save: (track: Track) => void;
   delete: (id: string) => void;
-  breedSelected: (breed: Breed) => void;
+  trackSelected: (track: Track) => void;
   reset: () => void;
   resetQueryStatus: () => void;
 };
 
-export const BreedContext = React.createContext<BreedContextType>({
+export const Context = React.createContext<TrackContextType>({
   status: "idle",
   isLoading: false,
-  breed: undefined,
-  breeds: [],
-  save() {},
-  delete() {},
-  breedSelected() {},
+  track: trackDefaultValues,
+  tracks: [],
+  save: () => {},
+  delete: () => {},
+  trackSelected: () => {},
   reset: () => {},
   resetQueryStatus: () => {},
 });
 
 type Props = {
-  children: React.ReactNode;
+  children: import("react").ReactNode;
 };
 
 export const Provider: React.FC<Props> = ({ children }) => {
   const queryClient = useQueryClient();
-  const [breed, setBreed] = useState<Breed>();
-  const [breeds, setBreeds] = useState<Array<Breed>>([]);
+  const [track, setTrack] = useState<Track>(trackDefaultValues);
+  const [tracks, setTracks] = useState<Array<Track>>([]);
   const [queryStatus, setQueryStatus] =
     useState<"idle" | "success" | "error">("idle");
   const { data, status, isLoading } = useQuery({
-    queryKey: ["Breed"],
-    queryFn: api.getBreeds,
+    queryKey: ["Track"],
+    queryFn: api.getTracks,
     retry: false,
     refetchOnWindowFocus: false,
   });
 
   const createMutation = useMutation({
-    mutationFn: api.createBreed,
+    mutationFn: api.createTrack,
     onSuccess: () => {
       setQueryStatus("success");
-      queryClient.invalidateQueries(["Breed"]);
+      queryClient.invalidateQueries(["Track"]);
     },
     onError: () => {
       setQueryStatus("error");
@@ -61,10 +62,10 @@ export const Provider: React.FC<Props> = ({ children }) => {
   });
 
   const editMutation = useMutation({
-    mutationFn: api.editBreed,
+    mutationFn: api.editTrack,
     onSuccess: () => {
       setQueryStatus("success");
-      queryClient.invalidateQueries(["Breed"]);
+      queryClient.invalidateQueries(["Track"]);
     },
     onError: () => {
       setQueryStatus("error");
@@ -72,10 +73,10 @@ export const Provider: React.FC<Props> = ({ children }) => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: api.deleteBreed,
+    mutationFn: api.deleteTrack,
     onSuccess: () => {
       setQueryStatus("success");
-      queryClient.invalidateQueries(["Breed"]);
+      queryClient.invalidateQueries(["Track"]);
     },
     onError: () => {
       setQueryStatus("error");
@@ -84,30 +85,30 @@ export const Provider: React.FC<Props> = ({ children }) => {
 
   useEffect(() => {
     if (status === "success" && data !== undefined) {
-      setBreeds(data);
+      setTracks(data);
     }
   }, [status, data]);
 
-  const saveHandler = (breed: Breed) => {
-    if (!breed.id) {
-      createMutation.mutate(breed);
+  const saveHandler = (track: Track) => {
+    if (!track.id) {
+      createMutation.mutate(track);
     } else {
-      editMutation.mutate(breed);
+      editMutation.mutate(track);
     }
-    setBreed(breedDefaultValues);
+    setTrack(trackDefaultValues);
   };
 
   const deleteHandler = (id: string) => {
     deleteMutation.mutate(id);
-    setBreed(breedDefaultValues);
+    setTrack(trackDefaultValues);
   };
 
-  const breedHandler = (breed: Breed) => {
-    setBreed(breed);
+  const trackHandler = (track: Track) => {
+    setTrack(track);
   };
 
   const resetHandler = () => {
-    setBreed(breedDefaultValues);
+    setTrack(trackDefaultValues);
   };
 
   const resetQueryStatusHandler = () => {
@@ -115,20 +116,20 @@ export const Provider: React.FC<Props> = ({ children }) => {
   };
 
   return (
-    <BreedContext.Provider
+    <Context.Provider
       value={{
         status: queryStatus,
         isLoading,
-        breed,
-        breeds,
+        track,
+        tracks,
         save: saveHandler,
         delete: deleteHandler,
-        breedSelected: breedHandler,
+        trackSelected: trackHandler,
         reset: resetHandler,
         resetQueryStatus: resetQueryStatusHandler,
       }}
     >
       {children}
-    </BreedContext.Provider>
+    </Context.Provider>
   );
 };

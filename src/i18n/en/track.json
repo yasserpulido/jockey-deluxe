@@ -1,0 +1,12 @@
+{
+  "labels": {
+    "form_title": "Track's Form",
+    "name": "Name",
+    "country": "Country"
+  },
+  "errors": {
+    "name": "Name is required.",
+    "name_min": "Name must be at least 3 characters long.",
+    "country": "Nationality is required."
+  }
+}

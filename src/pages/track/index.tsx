@@ -1,17 +1,17 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { default as Page } from "./breed";
-import { Provider as BreedProvider } from "./providers";
+import { default as Page } from "./track";
+import { TrackProvider } from "./providers";
 
-const Breed = () => {
+const Track = () => {
   const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <BreedProvider>
+      <TrackProvider.Provider>
         <Page />
-      </BreedProvider>
+      </TrackProvider.Provider>
     </QueryClientProvider>
   );
 };
 
-export default Breed;
+export default Track;
