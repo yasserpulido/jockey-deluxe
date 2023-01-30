@@ -1,8 +1,7 @@
-import React from "react";
 import { Detail } from "./components/detail";
 import { Provider } from "./providers";
 
-const Horses = () => {
+const Horse = () => {
   return (
     <Provider>
       <Detail />
@@ -10,4 +9,4 @@ const Horses = () => {
   );
 };
 
-export default Horses;
+export default Horse;

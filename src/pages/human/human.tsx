@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { maxWidth, mediaQuery, Workshop } from "../../design-system";
 import Detail from "./components/detail";
 import List from "./components/list";
+import { maxWidth, mediaQuery, Workshop } from "../../design-system";
 
 const Human = () => {
   return (
