@@ -1,5 +1,5 @@
 import { Provider } from "./providers";
-import { Studs as StudsPage } from "./stud";
+import { Studs as StudsPage } from "./stud-test";
 
 export const Studs = () => {
   return (
