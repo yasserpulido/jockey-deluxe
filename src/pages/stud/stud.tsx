@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
 import { maxWidth, mediaQuery, Workshop } from "../../design-system";
-import { Detail } from "./components/detail-test";
-import { List } from "./components/list-test";
+import { Detail } from "./components/detail";
+import { List } from "./components/list";
 
-const Breed = () => {
+const Stud = () => {
   return (
     <Container>
       <Workshop>
@@ -23,4 +23,4 @@ const Container = styled.div({
   },
 });
 
-export default Breed;
+export default Stud;

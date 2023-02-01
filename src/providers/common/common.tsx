@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Country, Gender } from "../../types";
-import { country, gender } from "../../apis";
+import { Country as apiCountry, Gender as apiGender } from "../../apis";
 
 type Common<T> = {
   data: Array<T>;
@@ -37,7 +37,7 @@ export const Provider = ({ children }: Props) => {
     isLoading: genderIsLoading,
   } = useQuery({
     queryKey: ["Gender"],
-    queryFn: gender.getGenders,
+    queryFn: apiGender.getGenders,
     retry: false,
   });
   const {
@@ -46,7 +46,7 @@ export const Provider = ({ children }: Props) => {
     isLoading: countryIsLoading,
   } = useQuery({
     queryKey: ["Country"],
-    queryFn: country.getCountries,
+    queryFn: apiCountry.getCountries,
     retry: false,
   });
 

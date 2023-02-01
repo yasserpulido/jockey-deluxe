@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Breed } from "../../../types";
-import { breed as api } from "../../../apis";
+import { Breed as api } from "../../../apis";
 
 const breedDefaultValues = {
   id: "",

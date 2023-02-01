@@ -1,5 +1,6 @@
-export * as breed from "./breed";
-export * as gender from "./gender";
-export * as human from "./human";
-export * as country from "./country";
+export * as Breed from "./breed";
+export * as Country from "./country";
+export * as Gender from "./gender";
+export * as Human from "./human";
+export * as Stud from "./stud";
 export * as Track from "./track";

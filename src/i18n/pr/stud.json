@@ -1,0 +1,10 @@
+{
+  "labels": {
+    "form_title": "Formulário de Stud",
+    "name": "Nome"
+  },
+  "errors": {
+    "name": "O nome é obrigatório.",
+    "name_min": "O nome deve ter pelo menos 3 caracteres."
+  }
+}

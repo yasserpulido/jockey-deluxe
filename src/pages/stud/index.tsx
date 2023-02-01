@@ -1,10 +1,17 @@
-import { Provider } from "./providers";
-import { Studs as StudsPage } from "./stud-test";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { default as Page } from "./stud";
+import { StudProvider } from "./providers";
 
-export const Studs = () => {
+const Stud = () => {
+  const queryClient = new QueryClient();
+
   return (
-    <Provider>
-      <StudsPage />
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <StudProvider.Provider>
+        <Page />
+      </StudProvider.Provider>
+    </QueryClientProvider>
   );
 };
+
+export default Stud;
