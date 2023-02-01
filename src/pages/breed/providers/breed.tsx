@@ -25,9 +25,9 @@ export const BreedContext = React.createContext<BreedContextType>({
   isLoading: false,
   breed: undefined,
   breeds: [],
-  save() {},
-  delete() {},
-  breedSelected() {},
+  save: () => {},
+  delete: () => {},
+  breedSelected: () => {},
   reset: () => {},
   resetQueryStatus: () => {},
 });

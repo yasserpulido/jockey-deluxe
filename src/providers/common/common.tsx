@@ -8,12 +8,12 @@ type Common<T> = {
   isLoading: boolean;
 };
 
-export type CommonContextType = {
+export type ContextType = {
   gender: Common<Gender>;
   country: Common<Country>;
 };
 
-export const Context = React.createContext<CommonContextType>({
+export const Context = React.createContext<ContextType>({
   gender: {
     data: [],
     isLoading: false,
@@ -30,7 +30,7 @@ type Props = {
 
 export const Provider = ({ children }: Props) => {
   const [genders, setGenders] = useState<Array<Gender>>([]);
-  const [countries, setCountries] = useState<Array<Gender>>([]);
+  const [countries, setCountries] = useState<Array<Country>>([]);
   const {
     data: genderData,
     status: genderStatus,

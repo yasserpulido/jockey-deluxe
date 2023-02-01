@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { StudContext } from "../../providers/Stud";
+import { StudContext } from "../../providers/stud-test";
 import { StoreType } from "../../models";
-import { StudType } from "./types";
 
 function Detail() {
   const context = React.useContext(StudContext) as StoreType;
@@ -21,13 +20,7 @@ function Detail() {
     context.save(data);
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Full Name:</label>
-      <input {...register("fullName")} />
-      <button type="submit">Save</button>
-    </form>
-  );
+  return <form onSubmit={handleSubmit(onSubmit)}></form>;
 }
 
 export default observer(Detail);

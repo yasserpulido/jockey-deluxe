@@ -1,0 +1,13 @@
+{
+    "labels": {
+      "form_title": "Formulario de Hipódromo",
+      "name": "Nombre",
+      "country": "Pais"
+    },
+    "errors": {
+      "name": "Name es requerido.",
+      "name_min": "Nombre debe tener al menos 3 caracteres.",
+      "country": "Pais es requerido."
+    }
+  }
+  

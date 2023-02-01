@@ -1,12 +1,19 @@
+import React from "react";
 import styled from "@emotion/styled";
-import { t } from "i18next";
-import { useContext, useEffect, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
-import { Button, colors, Dropdown, Input } from "../../../../design-system";
+import {
+  Alert,
+  Button,
+  colors,
+  Dropdown,
+  Input,
+  Modal,
+} from "../../../../design-system";
 import { Common } from "../../../../providers";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ModalFooter, Track } from "../../../../types";
 import { TrackProvider } from "../../providers";
+import { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Detail = () => {
   const { t } = useTranslation(["track", "form"]);
@@ -16,7 +23,7 @@ const Detail = () => {
     content: "",
     onClick: () => {},
   });
-  const common = useContext(Common.Context);
+  const common = useContext<Common.ContextType>(Common.Context);
   const context = useContext<TrackProvider.TrackContextType>(
     TrackProvider.Context
   );
@@ -40,7 +47,12 @@ const Detail = () => {
   }, [reset, context]);
 
   const onSubmit: SubmitHandler<Track> = (data) => {
-    context.save(data);
+    setModalFooter({
+      header: t("form:modals.save_title"),
+      content: t("form:modals.save_message"),
+      onClick: saveHandler,
+    });
+    setShowModal(true);
   };
 
   const saveHandler = () => {
@@ -63,85 +75,112 @@ const Detail = () => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Fieldset>
-        <Legend>{t("track:labels.form_title")}</Legend>
-        <Header>
+    <React.Fragment>
+      <Form onSubmit={handleSubmit(onSubmit)}>
+        <Fieldset>
+          <Legend>{t("track:labels.form_title")}</Legend>
+          <Header>
+            <Button
+              variant="Link"
+              text={t("form:inputs.reset")}
+              onClick={resetHandler}
+            />
+          </Header>
+          <InputsContainer>
+            <Controller
+              control={control}
+              name="name"
+              defaultValue=""
+              rules={{
+                required: {
+                  value: true,
+                  message: t("track:errors.name"),
+                },
+                minLength: {
+                  value: 3,
+                  message: t("track:errors.name_min"),
+                },
+              }}
+              render={({ field, formState: { errors } }) => (
+                <Input
+                  label={t("track:labels.name")}
+                  errors={errors.name?.message}
+                  placeholder={t("form:placeholders.general_input") as string}
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="country"
+              defaultValue=""
+              rules={{
+                required: {
+                  value: true,
+                  message: t("track:errors.country"),
+                },
+              }}
+              render={({ field, formState: { errors } }) => (
+                <Dropdown
+                  label={t("track:labels.country")}
+                  options={common.country.data}
+                  errors={errors.country?.message}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
+                  {...field}
+                />
+              )}
+            />
+          </InputsContainer>
+          <Footer>
+            <Button
+              text={t("form:inputs.delete")}
+              variant="Danger"
+              type="button"
+              disabled={!!!context.track?.id}
+              onClick={() => {
+                if (context.track?.id) {
+                  setModalFooter({
+                    header: t("form:modals.delete_title"),
+                    content: t("form:modals.delete_message"),
+                    onClick: deleteHandler,
+                  });
+                  setShowModal(true);
+                }
+              }}
+            />
+            <Button
+              text={t("form:inputs.save")}
+              variant="Success"
+              type="submit"
+            />
+          </Footer>
+        </Fieldset>
+      </Form>
+      {showModal && (
+        <Modal header={modalFooter.header} content={modalFooter.content}>
           <Button
-            variant="Link"
-            text={t("form:inputs.reset")}
-            onClick={resetHandler}
-          />
-        </Header>
-        <InputsContainer>
-          <Controller
-            control={control}
-            name="name"
-            defaultValue=""
-            rules={{
-              required: {
-                value: true,
-                message: t("track:errors.name"),
-              },
-              minLength: {
-                value: 3,
-                message: t("track:errors.name_min"),
-              },
-            }}
-            render={({ field, formState: { errors } }) => (
-              <Input
-                label={t("track:labels.name")}
-                errors={errors.name?.message}
-                {...field}
-              />
-            )}
-          />
-          <Controller
-            control={control}
-            name="country"
-            defaultValue=""
-            rules={{
-              required: {
-                value: true,
-                message: t("track:errors.country"),
-              },
-            }}
-            render={({ field, formState: { errors } }) => (
-              <Dropdown
-                label={t("track:labels.country")}
-                options={common.country.data}
-                errors={errors.country?.message}
-                placeholder={t("form:placeholders.general_dropdown") as string}
-                {...field}
-              />
-            )}
-          />
-        </InputsContainer>
-        <Footer>
-          <Button
-            text={t("form:inputs.delete")}
+            text="Cancel"
+            onClick={() => setShowModal(false)}
             variant="Danger"
             type="button"
-            disabled={!!!context.track?.id}
-            onClick={() => {
-              if (context.track?.id) {
-                setModalFooter({
-                  header: t("form:modals.delete_title"),
-                  content: t("form:modals.delete_message"),
-                  onClick: deleteHandler,
-                });
-                setShowModal(true);
-              }
-            }}
           />
           <Button
-            text={t("form:inputs.save")}
+            text="Ok"
+            onClick={() => modalFooter.onClick()}
             variant="Success"
-            type="submit"
+            type="button"
           />
-        </Footer>
-      </Fieldset>
-    </Form>
+        </Modal>
+      )}
+      {context.status !== "idle" && (
+        <Alert
+          status={ALERT_SETUP[context.status]}
+          reset={context.resetQueryStatus}
+        />
+      )}
+    </React.Fragment>
   );
 };
 

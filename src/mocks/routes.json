@@ -2,5 +2,7 @@
   "/api/breed": "/breeds",
   "/api/breed/:id": "/breeds/:id",
   "/api/jockey": "/jockeys",
-  "/api/jockey/:id": "/jockeys/:id"
+  "/api/jockey/:id": "/jockeys/:id",
+  "/api/track": "/tracks",
+  "/api/track/:id": "/tracks/:id"
 }

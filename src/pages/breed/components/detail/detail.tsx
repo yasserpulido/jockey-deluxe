@@ -82,16 +82,16 @@ const Detail = () => {
             rules={{
               required: {
                 value: true,
-                message: t("breed:errors.full_name"),
+                message: t("breed:errors.name"),
               },
               minLength: {
                 value: 3,
-                message: t("breed:errors.full_name_min"),
+                message: t("breed:errors.name_min"),
               },
             }}
             render={({ field, formState: { errors } }) => (
               <Input
-                label={t("breed:labels.full_name")}
+                label={t("breed:labels.name")}
                 errors={errors.name?.message}
                 {...field}
               />

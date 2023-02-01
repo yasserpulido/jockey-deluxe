@@ -1,10 +1,10 @@
 {
   "labels": {
-    "form_title": "Form Breed",
-    "full_name": "Full Name"
+    "form_title": "Breed's Form",
+    "name": "Name"
   },
   "errors": {
-    "full_name": "Full Name is required.",
-    "full_name_min": "Full Name must be at least 3 characters long."
+    "name": "Name is required.",
+    "name_min": "Name must be at least 3 characters long."
   }
 }

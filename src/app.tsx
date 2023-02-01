@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LanguageSwitcher } from "./i18n";
-import { Track } from "./pages";
+import { Breed, Track } from "./pages";
 // import { routes } from "./Routes";
 
 const router = createBrowserRouter([
