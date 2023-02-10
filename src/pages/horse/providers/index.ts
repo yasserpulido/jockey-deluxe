@@ -1,1 +1,1 @@
-export * from "./Horse";
+export * as HorseProvider from "./horse-provider";

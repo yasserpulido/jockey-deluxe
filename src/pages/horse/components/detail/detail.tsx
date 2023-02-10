@@ -1,5 +1,7 @@
-import React from "react";
 import styled from "@emotion/styled";
+import React, { useContext, useState } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import {
   Alert,
   Button,
@@ -8,27 +10,22 @@ import {
   Input,
   Modal,
 } from "../../../../design-system";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { ModalFooter, Track } from "../../../../types";
-import { TrackProvider } from "../../providers";
-import { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { CommonProvider } from "../../../../providers";
+import { Horse, ModalFooter } from "../../../../types";
+import { HorseProvider } from "../../providers";
 
 const Detail = () => {
-  const { t } = useTranslation(["track", "form"]);
+  const { t } = useTranslation(["horse", "form"]);
   const [showModal, setShowModal] = useState(false);
   const [modalFooter, setModalFooter] = useState<ModalFooter>({
     header: "",
     content: "",
     onClick: () => {},
   });
-  const common = useContext<CommonProvider.ContextType>(CommonProvider.Context);
-  const context = useContext<TrackProvider.TrackContextType>(
-    TrackProvider.Context
-  );
-  const { control, handleSubmit, reset, getValues } = useForm<Track>({
-    defaultValues: context.track,
+  const common = useContext(CommonProvider.Context);
+  const context = useContext<HorseProvider.ContextType>(HorseProvider.Context);
+  const { control, handleSubmit, reset, getValues } = useForm<Horse>({
+    defaultValues: context.horse,
   });
 
   const ALERT_SETUP = {
@@ -42,11 +39,7 @@ const Detail = () => {
     },
   };
 
-  useEffect(() => {
-    reset(context.track);
-  }, [reset, context]);
-
-  const onSubmit: SubmitHandler<Track> = (data) => {
+  const onSubmit: SubmitHandler<Horse> = (data) => {
     setModalFooter({
       header: t("form:modals.save_title"),
       content: t("form:modals.save_message"),
@@ -61,15 +54,15 @@ const Detail = () => {
   };
 
   const deleteHandler = () => {
-    if (context.track) {
-      context.delete(context.track.id);
+    if (context.horse !== undefined) {
+      context.delete(context.horse.id);
     }
     setShowModal(false);
   };
 
   const resetHandler = () => {
-    reset(context.track);
-    if (context.track?.id?.length > 0) {
+    reset(context.horse);
+    if (context.horse.id.length > 0) {
       context.reset();
     }
   };
@@ -78,7 +71,7 @@ const Detail = () => {
     <React.Fragment>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
-          <Legend>{t("track:labels.form_title")}</Legend>
+          <Legend>{t("horse:labels.form_title")}</Legend>
           <Header>
             <Button
               variant="Link"
@@ -94,16 +87,16 @@ const Detail = () => {
               rules={{
                 required: {
                   value: true,
-                  message: t("track:errors.name"),
+                  message: t("horse:errors.name"),
                 },
                 minLength: {
                   value: 3,
-                  message: t("track:errors.name_min"),
+                  message: t("horse:errors.name_min"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
                 <Input
-                  label={t("track:labels.name")}
+                  label={t("horse:labels.name")}
                   errors={errors.name?.message}
                   placeholder={t("form:placeholders.general_input") as string}
                   {...field}
@@ -112,19 +105,85 @@ const Detail = () => {
             />
             <Controller
               control={control}
-              name="country"
+              name="birth"
               defaultValue=""
               rules={{
                 required: {
                   value: true,
-                  message: t("track:errors.country"),
+                  message: t("horse:errors.birth_date"),
                 },
               }}
               render={({ field, formState: { errors } }) => (
+                <Input
+                  label={t("horse:labels.birth_date")}
+                  type="date"
+                  errors={errors.birth?.message}
+                  placeholder={t("form:placeholders.general_input") as string}
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="genderId"
+              defaultValue=""
+              rules={{
+                required: { value: true, message: t("horse:errors.gender") },
+              }}
+              render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("track:labels.country")}
-                  options={common.country.data}
-                  errors={errors.country?.message}
+                  label={t("horse:labels.gender")}
+                  options={common.gender.data}
+                  errors={errors.genderId?.message}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="nationalityId"
+              defaultValue=""
+              rules={{
+                required: { value: true, message: t("horse:errors.gender") },
+              }}
+              render={({ field, formState: { errors } }) => (
+                <Dropdown
+                  label={t("horse:labels.nationality")}
+                  options={common.gender.data}
+                  errors={errors.genderId?.message}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="motherId"
+              defaultValue=""
+              render={({ field }) => (
+                <Dropdown
+                  label={t("horse:labels.mother")}
+                  options={common.gender.data}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="fatherId"
+              defaultValue=""
+              render={({ field }) => (
+                <Dropdown
+                  label={t("horse:labels.father")}
+                  options={common.gender.data}
                   placeholder={
                     t("form:placeholders.general_dropdown") as string
                   }
@@ -138,9 +197,9 @@ const Detail = () => {
               text={t("form:inputs.delete")}
               variant="Danger"
               type="button"
-              disabled={!!!context.track?.id}
+              disabled={!!!context.horse.id}
               onClick={() => {
-                if (context.track?.id) {
+                if (context.horse.id) {
                   setModalFooter({
                     header: t("form:modals.delete_title"),
                     content: t("form:modals.delete_message"),
@@ -161,13 +220,13 @@ const Detail = () => {
       {showModal && (
         <Modal header={modalFooter.header} content={modalFooter.content}>
           <Button
-            text="Cancel"
+            text={t("form:inputs.no")}
             onClick={() => setShowModal(false)}
             variant="Danger"
             type="button"
           />
           <Button
-            text="Ok"
+            text={t("form:inputs.yes")}
             onClick={() => modalFooter.onClick()}
             variant="Success"
             type="button"

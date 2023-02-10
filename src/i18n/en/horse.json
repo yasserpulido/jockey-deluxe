@@ -1,0 +1,18 @@
+{
+  "labels": {
+    "form_title": "Horse's Form",
+    "name": "Name",
+    "birth_date": "Birth Date",
+    "gender": "Gender",
+    "nationality": "Nationality",
+    "mother": "Mother",
+    "father": "Father"
+  },
+  "errors": {
+    "name": "Name is required.",
+    "name_min": "Name must be at least 3 characters long.",
+    "birth_date": "Birth Date is required.",
+    "gender": "Gender is required.",
+    "nationality": "Nationality is required."
+  }
+}

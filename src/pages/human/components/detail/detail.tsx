@@ -14,7 +14,7 @@ import {
 } from "../../../../design-system";
 import { useTranslation } from "react-i18next";
 import { Alert as ErrorIcon } from "grommet-icons";
-import { Common } from "../../../../providers";
+import { CommonProvider } from "../../../../providers";
 
 const Detail = () => {
   const { t } = useTranslation(["human", "form"]);
@@ -24,7 +24,7 @@ const Detail = () => {
     content: "",
     onClick: () => {},
   });
-  const common = useContext(Common.Context);
+  const common = useContext(CommonProvider.Context);
   const context = useContext(HumanContext);
   const {
     control,
