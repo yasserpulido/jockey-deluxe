@@ -5,7 +5,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Alert, Button, colors, Input, Modal } from "../../../../design-system";
 import { Breed, ModalFooter } from "../../../../types";
-import { BreedContext, BreedContextType } from "../../providers";
+import { BreedProvider } from "../../providers";
 
 const Detail = () => {
   const { t } = useTranslation(["breed", "form"]);
@@ -15,7 +15,9 @@ const Detail = () => {
     content: "",
     onClick: () => {},
   });
-  const context = useContext<BreedContextType>(BreedContext);
+  const context = useContext<BreedProvider.BreedContextType>(
+    BreedProvider.BreedContext
+  );
   const { control, handleSubmit, reset, getValues } = useForm<Breed>({
     defaultValues: context.breed,
   });

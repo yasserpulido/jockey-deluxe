@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
+import Detail from "./components/detail";
+import List from "./components/list";
 import { maxWidth, mediaQuery, Workshop } from "../../design-system";
-import { Detail } from "./components/detail";
-import { List } from "./components/list";
 
-const Stud = () => {
+const HumanPage = () => {
   return (
     <Container>
       <Workshop>
@@ -19,8 +19,8 @@ const Container = styled.div({
     marginTop: "2rem",
     marginLeft: "auto",
     marginRight: "auto",
-    maxWidth: maxWidth.medium,
+    maxWidth: maxWidth.large,
   },
 });
 
-export default Stud;
+export default HumanPage;

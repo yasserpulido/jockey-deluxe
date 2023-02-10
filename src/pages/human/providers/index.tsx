@@ -1,1 +1,1 @@
-export * from "./human";
+export * from "./human-provider";

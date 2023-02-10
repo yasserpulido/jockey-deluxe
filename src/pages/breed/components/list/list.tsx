@@ -1,12 +1,16 @@
 import { useContext } from "react";
 import { ColumnProp, Table } from "../../../../design-system/table/table";
 import { Breed } from "../../../../types";
-import { BreedContext, BreedContextType } from "../../providers";
+import { BreedProvider } from "../../providers";
 
 const List = () => {
-  const context = useContext<BreedContextType>(BreedContext);
+  const context = useContext<BreedProvider.BreedContextType>(
+    BreedProvider.BreedContext
+  );
 
-  const columns: Array<ColumnProp<Breed>> = [{ heading: "Name", value: "name" }];
+  const columns: Array<ColumnProp<Breed>> = [
+    { heading: "Name", value: "name" },
+  ];
 
   return (
     <Table

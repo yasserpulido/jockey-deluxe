@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { colors } from "../../../../design-system/theme/colors";
 import { Human, ModalFooter } from "../../../../types";
-import { HumanContext, humanDefaultValues } from "../../providers/human";
+import { HumanContext, humanDefaultValues } from "../../providers/human-provider";
 import {
   Alert,
   Button,

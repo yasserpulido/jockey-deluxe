@@ -1,1 +1,1 @@
-export { default as RacesPage } from "./Races";
+export { default as RacesPage } from "./races-page";

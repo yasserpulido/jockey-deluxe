@@ -1,7 +1,7 @@
 import Page from "./horse-page";
+import { CommonProvider } from "../../providers";
 import { HorseProvider } from "./providers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CommonProvider } from "../../providers";
 
 const Horse = () => {
   const queryClient = new QueryClient();

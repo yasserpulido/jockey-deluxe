@@ -1,1 +1,1 @@
-export * as StudProvider from "./stud";
+export * as StudProvider from "./stud-provider";
