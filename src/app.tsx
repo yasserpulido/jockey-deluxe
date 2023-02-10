@@ -7,7 +7,7 @@ import { Horse } from "./pages";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Stud />,
+    element: <Horse />,
   },
 ]);
 

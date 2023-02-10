@@ -1,7 +1,7 @@
 import Page from "./horse-page";
 import { HorseProvider } from "./providers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Common } from "../../providers";
+import { CommonProvider } from "../../providers";
 
 const Horse = () => {
   const queryClient = new QueryClient();
@@ -9,9 +9,9 @@ const Horse = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <HorseProvider.Provider>
-        <Common.Provider>
+        <CommonProvider.Provider>
           <Page />
-        </Common.Provider>
+        </CommonProvider.Provider>
       </HorseProvider.Provider>
     </QueryClientProvider>
   );

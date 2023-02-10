@@ -58,7 +58,7 @@ const Detail = () => {
 
   const resetHandler = () => {
     reset(context.stud);
-    if (context.stud?.id?.length > 0) {
+    if (context.stud.id.length > 0) {
       context.reset();
     }
   };

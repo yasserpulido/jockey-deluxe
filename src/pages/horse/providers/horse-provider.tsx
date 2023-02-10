@@ -7,7 +7,8 @@ export const horseDefaultValues: HorseType = {
   id: "",
   name: "",
   birth: "",
-  gender: "",
+  genderId: "",
+  nationalityId: "",
   fatherId: "",
   motherId: "",
 };
@@ -15,7 +16,7 @@ export const horseDefaultValues: HorseType = {
 export type ContextType = {
   status: "idle" | "success" | "error";
   isLoading: boolean;
-  horse: HorseType | undefined;
+  horse: HorseType;
   horses: Array<HorseType>;
   save: (horse: HorseType) => void;
   delete: (id: string) => void;
@@ -27,7 +28,7 @@ export type ContextType = {
 export const Context = React.createContext<ContextType>({
   status: "idle",
   isLoading: false,
-  horse: undefined,
+  horse: horseDefaultValues,
   horses: [],
   save: () => {},
   delete: () => {},
@@ -42,7 +43,7 @@ type Props = {
 
 export const Provider = ({ children }: Props) => {
   const queryClient = useQueryClient();
-  const [horse, setHorse] = useState<HorseType | undefined>(undefined);
+  const [horse, setHorse] = useState<HorseType>(horseDefaultValues);
   const [horses, setHorses] = useState<Array<HorseType>>([]);
   const [queryStatus, setQueryStatus] =
     useState<"idle" | "success" | "error">("idle");

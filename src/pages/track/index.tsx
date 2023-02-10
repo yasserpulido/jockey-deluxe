@@ -1,7 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { default as Page } from "./track";
 import { TrackProvider } from "./providers";
-import { Common } from "../../providers";
+import { CommonProvider } from "../../providers";
 
 const Track = () => {
   const queryClient = new QueryClient();
@@ -9,9 +9,9 @@ const Track = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TrackProvider.Provider>
-        <Common.Provider>
+        <CommonProvider.Provider>
           <Page />
-        </Common.Provider>
+        </CommonProvider.Provider>
       </TrackProvider.Provider>
     </QueryClientProvider>
   );

@@ -6,6 +6,7 @@ i18next.use(initReactI18next).init({
     en: {
       breed: require("./en/breed.json"),
       form: require("./en/form.json"),
+      horse: require("./en/horse.json"),
       human: require("./en/human.json"),
       stud: require("./en/stud.json"),
       table: require("./en/table.json"),
