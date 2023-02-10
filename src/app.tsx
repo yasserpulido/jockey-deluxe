@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LanguageSwitcher } from "./i18n";
-import { Breed, Stud, Track } from "./pages";
+import { Horse } from "./pages";
 // import { routes } from "./Routes";
 
 const router = createBrowserRouter([

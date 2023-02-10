@@ -6,3 +6,4 @@ export * from "./human";
 export * from "./modal";
 export * from "./track";
 export * from "./stud";
+export * from "./horse";

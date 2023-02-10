@@ -1,4 +1,4 @@
-export type HorseType = {
+export type Horse = {
   id: string;
   name: string;
   birth: string;
