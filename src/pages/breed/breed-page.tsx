@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import Detail from "./components/detail";
-import List from "./components/list";
 import { maxWidth, mediaQuery, Workshop } from "../../design-system";
+import { Detail } from "./components/detail";
+import { List } from "./components/list";
 
-const Human = () => {
+const BreedPage = () => {
   return (
     <Container>
       <Workshop>
@@ -19,8 +19,8 @@ const Container = styled.div({
     marginTop: "2rem",
     marginLeft: "auto",
     marginRight: "auto",
-    maxWidth: maxWidth.large,
+    maxWidth: maxWidth.medium,
   },
 });
 
-export default Human;
+export default BreedPage;

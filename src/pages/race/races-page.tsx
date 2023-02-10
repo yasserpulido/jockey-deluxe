@@ -1,7 +1,7 @@
 import { Detail } from "./components/detail";
 import { Provider } from "./providers";
 
-const Races = () => {
+const RacesPage = () => {
   return (
     <Provider>
       <Detail />
@@ -9,4 +9,4 @@ const Races = () => {
   );
 };
 
-export default Races;
+export default RacesPage;

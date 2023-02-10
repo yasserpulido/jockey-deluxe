@@ -3,7 +3,7 @@ import { maxWidth, mediaQuery, Workshop } from "../../design-system";
 import { Detail } from "./components/detail";
 import { List } from "./components/list";
 
-const Track = () => {
+const StudPage = () => {
   return (
     <Container>
       <Workshop>
@@ -23,4 +23,4 @@ const Container = styled.div({
   },
 });
 
-export default Track;
+export default StudPage;

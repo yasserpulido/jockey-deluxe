@@ -1,1 +1,1 @@
-export * as TrackProvider from "./track";
+export * as TrackProvider from "./track-provider";

@@ -1,1 +1,1 @@
-export * from "./breed";
+export * as BreedProvider from "./breed-provider";

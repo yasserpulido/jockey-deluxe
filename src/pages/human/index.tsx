@@ -1,7 +1,7 @@
-import { default as Page } from "./human";
+import HumanPage from "./human-page";
+import { CommonProvider } from "../../providers";
 import { Provider as JockeyProvider } from "./providers";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CommonProvider } from "../../providers";
 
 const Human = () => {
   const queryClient = new QueryClient();
@@ -10,7 +10,7 @@ const Human = () => {
     <QueryClientProvider client={queryClient}>
       <JockeyProvider>
         <CommonProvider.Provider>
-          <Page />
+          <HumanPage />
         </CommonProvider.Provider>
       </JockeyProvider>
     </QueryClientProvider>
