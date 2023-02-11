@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { colors, fontWeight } from "../theme";
 import { Option } from "../../types";
-import { Alert } from "grommet-icons";
+import { Alert, FormDown } from "grommet-icons";
 
 type Props<T extends Option> = {
   label: string;
@@ -134,10 +134,11 @@ const Dropdown = ({
           onBlur={() => setIsOpen(false)}
         >
           <Content hasOption={hasOption}>{option?.name ?? placeholder}</Content>
+          <FormDown />
         </Input>
       </FormGroup>
       {isOpen && (
-        <OptionsList ref={optionBox}>
+        <OptionsList ref={optionBox} hasOption={hasOption}>
           {options.length > 0 ? (
             options.map((o, index) => (
               <OptionList
@@ -195,6 +196,9 @@ const Input = styled.div({
   paddingLeft: "0.2rem",
   width: "100%",
   outline: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
 
   "&:focus": {
     outline: `2px solid ${colors.DenimBlue}`,
@@ -213,16 +217,20 @@ const Content = styled.span<ContentProps>(({ hasOption }) => ({
   fontWeight: fontWeight.regular,
 }));
 
-const OptionsList = styled.ul({
+type OptionsListProps = {
+  hasOption?: boolean;
+};
+
+const OptionsList = styled.ul<OptionsListProps>(({ hasOption = false}) => ({
   backgroundColor: colors.White,
   border: `1px solid ${colors.DoveGrey}`,
   width: "100%",
   maxHeight: "200px",
-  overflowY: "scroll",
+  overflowY: hasOption ? "scroll" : "hidden",
   position: "absolute",
   top: "42px",
   zIndex: 1,
-});
+}));
 
 type OptionListProps = {
   active: boolean;

@@ -7,7 +7,7 @@ import { Breed, Horse, Human, Stud, Track } from "./pages";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Track/>,
+    element: <Horse/>,
   },
 ]);
 
