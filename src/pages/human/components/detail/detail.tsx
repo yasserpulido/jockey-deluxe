@@ -3,7 +3,10 @@ import styled from "@emotion/styled";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { colors } from "../../../../design-system/theme/colors";
 import { Human, ModalFooter } from "../../../../types";
-import { HumanContext, humanDefaultValues } from "../../providers/human-provider";
+import {
+  HumanContext,
+  humanDefaultValues,
+} from "../../providers/human-provider";
 import {
   Alert,
   Button,
@@ -41,11 +44,11 @@ const Detail = () => {
   const ALERT_SETUP = {
     success: {
       type: "success",
-      text: "Success",
+      text: "Human successfully created!",
     },
     error: {
       type: "error",
-      text: "Error",
+      text: "Something went wrong!",
     },
   };
 
@@ -56,7 +59,7 @@ const Detail = () => {
   const onSubmit: SubmitHandler<Human> = (data) => {
     setModalFooter({
       header: "Save",
-      content: t("modals.save_message"),
+      content: t("form:modals.save_message"),
       onClick: saveHandler,
     });
     setShowModal(true);
@@ -199,9 +202,9 @@ const Detail = () => {
                 />
               )}
             />
-            <JobContainer>
-              <span>{t("human:labels.job")}:</span>
-              <CheckboxContainer>
+            <CheckboxContainer>
+              <CheckboxLabel>{t("human:labels.job")}:</CheckboxLabel>
+              <CheckboxsContainer>
                 <Controller
                   control={control}
                   name="job.jockey"
@@ -220,12 +223,8 @@ const Detail = () => {
                     },
                   }}
                   defaultValue={false}
-                  render={({ field: { name, ...rest } }) => (
-                    <Checkbox
-                      label="Jockey"
-                      name={name}
-                      {...rest}
-                    />
+                  render={({ field: { ...rest } }) => (
+                    <Checkbox label="Jockey" {...rest} />
                   )}
                 />
                 <Controller
@@ -246,24 +245,18 @@ const Detail = () => {
                     },
                   }}
                   defaultValue={false}
-                  render={({ field: { name, ...rest } }) => (
-                    <Checkbox
-                      label="Trainer"
-                      name={name}
-                      {...rest}
-                    />
+                  render={({ field: { ...rest } }) => (
+                    <Checkbox label="Trainer" {...rest} />
                   )}
                 />
-              </CheckboxContainer>
-              <Error>
-                {errorMessage ? (
-                  <>
-                    <ErrorIcon size="small" />
-                    {errorMessage}
-                  </>
-                ) : null}
-              </Error>
-            </JobContainer>
+              </CheckboxsContainer>
+              {errorMessage ? (
+                <Error>
+                  <ErrorIcon size="small" />
+                  {errorMessage}
+                </Error>
+              ) : null}
+            </CheckboxContainer>
           </InputsContainer>
           <Footer>
             <Button
@@ -349,14 +342,18 @@ const Header = styled.div({
   textAlign: "end",
 });
 
-const JobContainer = styled.div({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
+const CheckboxContainer = styled.div({
+  marginBottom: "0.2rem",
 });
 
-const CheckboxContainer = styled.div({
+const CheckboxLabel = styled.label({
+  display: "block",
+  marginBottom: "0.4rem",
+});
+
+const CheckboxsContainer = styled.div({
   display: "flex",
+  marginBottom: "0.2rem",
 
   "& > div": {
     marginRight: "1.4rem",

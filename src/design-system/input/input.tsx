@@ -32,9 +32,9 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 
     return (
       <Container>
-        <FormGroup hasDate={hasDate}>
-          <label htmlFor={name}>{label}:</label>
-          <input
+        <FormGroup>
+          <Label htmlFor={name}>{label}:</Label>
+          <InputBase
             id={name}
             name={name}
             placeholder={placeholder}
@@ -42,6 +42,7 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             ref={ref}
             onChange={(e) => onChange(e.currentTarget.value)}
             value={value}
+            hasDate={hasDate}
             {...props}
           />
         </FormGroup>
@@ -58,42 +59,38 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
 
 const Container = styled.div({});
 
+const FormGroup = styled.div({
+  borderBottom: `2px solid ${colors.Black}`,
+  marginBottom: "0.2rem",
+});
+
+const Label = styled.label({
+  display: "block",
+  marginBottom: "0.2rem",
+});
+
 type FormGroupProps = {
   hasDate: boolean;
 };
 
-const FormGroup = styled.div<FormGroupProps>(({ hasDate }) => ({
-  borderBottom: `2px solid ${colors.Black}`,
-  marginBottom: "0.2rem",
+const InputBase = styled.input<FormGroupProps>(({ hasDate }) => ({
+  border: `1px solid ${colors.Black}`,
+  borderRadius: 0,
+  fontSize: "1.2em",
+  padding: "0",
+  paddingLeft: "0.2rem",
+  lineHeight: "1.5rem",
+  width: "100%",
+  fontWeight: fontWeight.regular,
+  color: hasDate ? colors.Black : colors.FrenchGrey,
 
-  "& label": {
-    display: "block",
-    marginBottom: "0.2rem",
+  ":focus": {
+    outline: `2px solid ${colors.DenimBlue}`,
   },
 
-  "& input": {
-    border: `1px solid ${colors.Black}`,
-    borderRadius: 0,
-    fontSize: "1.2em",
-    padding: "0",
-    paddingLeft: "0.2rem",
-    lineHeight: "1.5rem",
-    width: "100%",
-    fontWeight: fontWeight.regular,
-
-    ":focus": {
-      outline: `2px solid ${colors.DenimBlue}`,
-    },
-
-    "::placeholder": {
-      color: colors.FrenchGrey,
-      opacity: 1,
-    },
-  },
-
-  "& input[type='date']": {
-    color: hasDate ? colors.Black : colors.FrenchGrey,
-    fontSize: "1.2em",
+  "::placeholder": {
+    color: colors.FrenchGrey,
+    opacity: 1,
   },
 }));
 
