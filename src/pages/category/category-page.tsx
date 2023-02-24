@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { maxWidth, mediaQuery, Workshop } from "../../design-system";
 import { Detail, List } from "./components";
 
-const BreedPage = () => {
+const CategoryPage = () => {
   return (
     <Container>
       <Workshop>
@@ -22,4 +22,4 @@ const Container = styled.div({
   },
 });
 
-export default BreedPage;
+export default CategoryPage;

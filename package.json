@@ -44,7 +44,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "cypress": "npx cypress open",
-    "server": "npx json-server -p 3001 -w src/mocks/tracks.json --routes src/mocks/routes.json",
+    "server-track": "npx json-server -p 3001 -w src/mocks/tracks.json --routes src/mocks/routes.json",
+    "server-category": "npx json-server -p 3001 -w src/mocks/categories.json --routes src/mocks/routes.json",
     "server-common": "npx json-server -p 3002 -w src/mocks/index.js"
   },
   "eslintConfig": {
