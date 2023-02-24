@@ -1,50 +1,72 @@
-# Getting Started with Create React App
+# Jockey Deluxe
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Jockey Deluxe is a project that allows you to create and manage data related to horse racing.
 
-## Available Scripts
+## Third Party Libraries
 
-In the project directory, you can run:
+- [Emotion](https://emotion.sh/docs/introduction)
+- [i18next](https://www.i18next.com/)
+- [React Router](https://reactrouter.com/en/main)
+- [date-fns](https://date-fns.org/)
+- [grommet-icons](https://icons.grommet.io)
+- [json-server](https://github.com/typicode/json-server)
+- [Mobx-state-tree](https://mobx-state-tree.js.org/intro/welcome)
+- [react-query](https://tanstack.com/query/v3/)
+- [Cypress](https://www.cypress.io/)
+- [Storybook](https://storybook.js.org/)
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- npm install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Run the App
 
-### `npm test`
+in progress...
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Run Cypress Tests
 
-### `npm run build`
+- npm start
+- npm run cypress
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Run Storybook
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- npm run storybook
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+- Apis folder contains the api calls to the `json-server`. The api calls are made using the `react-query` library.
+- Design System folder contains the design system for the app.
+- Fonts folder contains the fonts used in the app.
+- i18n folder contains the translations for the app using `i18next`.
+- Mocks folder contains the mock data for the app to use with `json-server`.
+- Pages folder contains the pages for the app.
+- Providers folder contains the providers for the app.
+- Stories folder contains the stories for the app using `storybook`.
+- Types folder contains the types for the app.
+- Utils folder contains the utility functions for the app.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Author
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [**Yasser Barzotto**](https://www.linkedin.com/in/yasserpulido/)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## MIT License
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Copyright (c) [2023] [Jockey Deluxe]
 
-## Learn More
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### TODOS
-
-- Add table column size.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
