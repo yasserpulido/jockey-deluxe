@@ -1,8 +1,10 @@
 {
   "/api/breed": "/breeds",
   "/api/breed/:id": "/breeds/:id",
-  "/api/jockey": "/jockeys",
-  "/api/jockey/:id": "/jockeys/:id",
+  "/api/human": "/humans",
+  "/api/human/:id": "/humans/:id",
   "/api/track": "/tracks",
-  "/api/track/:id": "/tracks/:id"
+  "/api/track/:id": "/tracks/:id",
+  "/api/category": "/categories",
+  "/api/category/:id": "/categories/:id"
 }

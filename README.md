@@ -32,6 +32,10 @@ in progress...
 
 - npm run storybook
 
+## How to use json-server
+
+In progress...
+
 ## Project Structure
 
 - Apis folder contains the api calls to the `json-server`. The api calls are made using the `react-query` library.

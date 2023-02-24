@@ -11,6 +11,7 @@ i18next.use(initReactI18next).init({
       stud: require("./en/stud.json"),
       table: require("./en/table.json"),
       track: require("./en/track.json"),
+      category: require("./en/category.json"),
     },
     es: {
       breed: require("./es/breed.json"),

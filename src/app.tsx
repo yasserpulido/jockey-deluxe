@@ -1,13 +1,13 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { LanguageSwitcher } from "./i18n";
-import { Breed, Horse, Human, Stud, Track } from "./pages";
+import { Breed, Category, Horse, Human, Stud, Track } from "./pages";
 // import { routes } from "./Routes";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Breed />,
+    element: <Category />,
   },
 ]);
 
