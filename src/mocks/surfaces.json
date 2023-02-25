@@ -1,0 +1,16 @@
+{
+  "surface": [
+    {
+      "id": "1",
+      "name": "Dirt"
+    },
+    {
+      "id": "2",
+      "name": "Grass"
+    },
+    {
+      "id": "3",
+      "name": "Synthetic"
+    }
+  ]
+}
