@@ -1,0 +1,14 @@
+{
+  "labels": {
+    "form_title": "Entry's Form",
+    "name": "Name",
+    "place": "Place",
+    "date": "Date"
+  },
+  "errors": {
+    "name": "Name is required.",
+    "name_min": "Name must be at least 3 characters long.",
+    "place": "Place is required.",
+    "date": "Date is required."
+  }
+}

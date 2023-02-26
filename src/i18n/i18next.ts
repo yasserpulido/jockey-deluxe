@@ -5,13 +5,14 @@ i18next.use(initReactI18next).init({
   resources: {
     en: {
       breed: require("./en/breed.json"),
+      category: require("./en/category.json"),
+      entry: require("./en/entry.json"),
       form: require("./en/form.json"),
       horse: require("./en/horse.json"),
       human: require("./en/human.json"),
       stud: require("./en/stud.json"),
       table: require("./en/table.json"),
       track: require("./en/track.json"),
-      category: require("./en/category.json"),
     },
     es: {
       breed: require("./es/breed.json"),

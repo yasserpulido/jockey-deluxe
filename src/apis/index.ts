@@ -1,6 +1,7 @@
 export * as Breed from "./breed";
 export * as Category from "./category";
 export * as Country from "./country";
+export * as Entry from "./entry";
 export * as Gender from "./gender";
 export * as Horse from "./horse";
 export * as Human from "./human";

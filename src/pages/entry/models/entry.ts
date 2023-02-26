@@ -1,4 +1,5 @@
-import { Instance, types } from "mobx-state-tree";
+import { flow, Instance, types } from "mobx-state-tree";
+import { Entry as api } from "../../../apis";
 
 const Competitor = types.model({
   horse: types.string,
@@ -20,24 +21,29 @@ const Entry = types.model({
   name: types.string,
   date: types.string,
   place: types.string,
-  races: types.array(Race),
+  // races: types.array(Race),
 });
 
 export type EntryType = Instance<typeof Entry>;
 
 export const Store = types
   .model({
+    entry: types.maybe(Entry),
     entries: types.array(Entry),
   })
   .actions((self) => ({
-    createEntry(entry: EntryType) {
-      console.log("Create: ", entry);
-    },
-  }))
-  .views((self) => ({
-    // getJockeys() {
-    //   return self.jockeys;
-    // },
+    getEntries: flow(function* getEntries() {
+      const entries = yield api.getEntries();
+      self.entries = entries;
+    }),
+    createEntry: flow(function* createEntry(entry: EntryType) {
+      const result = yield api.createEntry(entry);
+      self.entries.push(result);
+    }),
+    deleteEntry: flow(function* deleteEntry(id: string) {
+      const result = yield api.deleteEntry(id);
+      console.log(result);
+    }),
   }));
 
 export const store = Store.create();
