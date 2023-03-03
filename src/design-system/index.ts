@@ -8,4 +8,5 @@ export { Dropdown } from "./dropdown";
 export { Heading } from "./heading";
 export { Input } from "./input";
 export { Modal } from "./modal";
+export { Panel } from "./panel";
 export { Workshop } from "./workshop";
