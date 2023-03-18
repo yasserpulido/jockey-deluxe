@@ -8,7 +8,7 @@ export default {
   component: Panel,
 } as ComponentMeta<typeof Panel>;
 
-const Template: ComponentStory<typeof Panel> = () => <Panel />;
+const Template: ComponentStory<typeof Panel> = (args) => <Panel {...args}/>;
 
 export const Default = Template.bind({});
 
@@ -20,3 +20,8 @@ Default.decorators = [
     </React.Fragment>
   ),
 ];
+
+Default.args = {
+  children: "Content",
+  title: "Title",
+};

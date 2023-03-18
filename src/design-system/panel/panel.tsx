@@ -1,14 +1,22 @@
 import styled from "@emotion/styled";
 import { colors } from "../theme";
 import { Add } from "grommet-icons";
+import { useState } from "react";
 
-const Panel = () => {
+type Props = {
+  children: React.ReactNode;
+  title: string;
+};
+
+const Panel = ({ children, title }: Props) => {
+  const [panelIsOpen, setPanelIsOpen] = useState<boolean>(false);
   return (
     <Container>
-      <Header>
-        <Title>Title</Title>
-        <Add size="small" color="white" />
+      <Header onClick={() => setPanelIsOpen(!panelIsOpen)}>
+        <Title>{title}</Title>
+        <Add size="small" color="black" />
       </Header>
+      {panelIsOpen && <Content>{children}</Content>}
     </Container>
   );
 };
@@ -19,7 +27,6 @@ const Container = styled.div({
 
 const Header = styled.div({
   alignItems: "center",
-  backgroundColor: colors.FrenchGrey,
   border: `1px solid ${colors.Black}`,
   display: "flex",
   justifyContent: "space-between",
@@ -28,9 +35,13 @@ const Header = styled.div({
 });
 
 const Title = styled.span({
-  fontWeight: "bold",
-  textTransform: "capitalize",
-  color: colors.White,
+  textTransform: "uppercase",
+});
+
+const Content = styled.div({
+  border: `1px solid ${colors.Black}`,
+  borderTop: "none",
+  padding: "0.5rem 1rem",
 });
 
 export default Panel;
