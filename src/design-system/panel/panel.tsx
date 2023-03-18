@@ -14,7 +14,7 @@ const Panel = ({ children, title }: Props) => {
     <Container>
       <Header onClick={() => setPanelIsOpen(!panelIsOpen)}>
         <Title>{title}</Title>
-        <Add size="small" color="black" />
+        <Add size="small" color="white" />
       </Header>
       {panelIsOpen && <Content>{children}</Content>}
     </Container>
@@ -27,11 +27,13 @@ const Container = styled.div({
 
 const Header = styled.div({
   alignItems: "center",
-  border: `1px solid ${colors.Black}`,
+  color: colors.White,
+  backgroundColor: colors.BlueDress,
   display: "flex",
   justifyContent: "space-between",
   padding: "0.5rem 1rem",
   width: "inherit",
+  cursor: "pointer",
 });
 
 const Title = styled.span({
