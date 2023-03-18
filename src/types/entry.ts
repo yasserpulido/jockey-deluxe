@@ -5,5 +5,5 @@ export type Entry = {
   name: string;
   date: string;
   place: string;
-  // races: Array<Race>;
+  races: Array<Race>;
 };

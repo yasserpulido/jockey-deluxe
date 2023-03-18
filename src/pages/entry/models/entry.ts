@@ -21,7 +21,7 @@ const Entry = types.model({
   name: types.string,
   date: types.string,
   place: types.string,
-  // races: types.array(Race),
+  races: types.array(Race),
 });
 
 export type EntryType = Instance<typeof Entry>;

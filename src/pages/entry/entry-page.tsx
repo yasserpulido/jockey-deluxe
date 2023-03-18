@@ -17,7 +17,7 @@ const Container = styled.div({
     marginTop: "2rem",
     marginLeft: "auto",
     marginRight: "auto",
-    maxWidth: maxWidth.medium,
+    maxWidth: maxWidth.large,
   },
 });
 

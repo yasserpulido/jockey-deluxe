@@ -4,7 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Button, colors, Dropdown, Input } from "../../../../design-system";
+import {
+  Button,
+  colors,
+  Dropdown,
+  Input,
+  Panel,
+} from "../../../../design-system";
 import { CommonProvider } from "../../../../providers";
 import { Entry, ModalFooter } from "../../../../types";
 import { StoreType } from "../../models";
@@ -49,7 +55,7 @@ const Detail = observer(() => {
   };
 
   const saveHandler = () => {
-    context.createEntry(getValues());
+    //context.createEntry(getValues());
     setShowModal(false);
   };
 
@@ -142,6 +148,34 @@ const Detail = observer(() => {
               )}
             />
           </InputsContainer>
+          <PanelContainer>
+            <Panel title="Race">
+              <InputsContainer>
+                <Controller
+                  control={control}
+                  name={`name`}
+                  defaultValue=""
+                  rules={{
+                    required: {
+                      value: true,
+                      message: t("entry:errors.name"),
+                    },
+                    minLength: {
+                      value: 3,
+                      message: t("entry:errors.name_min"),
+                    },
+                  }}
+                  render={({ field, formState: { errors } }) => (
+                    <Input
+                      label={t("entry:labels.name")}
+                      errors={errors.name?.message}
+                      {...field}
+                    />
+                  )}
+                />
+              </InputsContainer>
+            </Panel>
+          </PanelContainer>
           <Footer>
             <Button
               text={t("form:inputs.delete")}
@@ -191,8 +225,12 @@ const Header = styled.div({
 
 const InputsContainer = styled.div({
   display: "grid",
-  gridTemplateColumns: "repeat(2, 1fr)",
+  gridTemplateColumns: "repeat(3, 1fr)",
   gap: "1rem",
+});
+
+const PanelContainer = styled.div({
+  marginTop: "1rem",
 });
 
 const Footer = styled.footer({
