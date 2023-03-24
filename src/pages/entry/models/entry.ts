@@ -2,6 +2,7 @@ import { flow, Instance, types } from "mobx-state-tree";
 import { Entry as api } from "../../../apis";
 
 const Competitor = types.model({
+  id: types.identifier,
   horse: types.string,
   jockey: types.string,
 });

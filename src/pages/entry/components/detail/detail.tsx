@@ -2,7 +2,12 @@ import styled from "@emotion/styled";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useState } from "react";
 import { useContext } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import {
   Button,
@@ -15,6 +20,7 @@ import { CommonProvider } from "../../../../providers";
 import { Entry, ModalFooter } from "../../../../types";
 import { StoreType } from "../../models";
 import { EntryProvider } from "../../providers";
+import { Race } from "./race";
 
 const ALERT_SETUP = {
   success: {
@@ -40,18 +46,23 @@ const Detail = observer(() => {
   const { control, handleSubmit, reset, getValues } = useForm<Entry>({
     defaultValues: context.entry,
   });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "races",
+  });
 
   useEffect(() => {
     reset(context.entry);
   }, [reset, context]);
 
   const onSubmit: SubmitHandler<Entry> = (data) => {
-    setModalFooter({
-      header: t("form:modals.save_title"),
-      content: t("form:modals.save_message"),
-      onClick: saveHandler,
-    });
-    setShowModal(true);
+    console.log(data);
+    // setModalFooter({
+    //   header: t("form:modals.save_title"),
+    //   content: t("form:modals.save_message"),
+    //   onClick: saveHandler,
+    // });
+    // setShowModal(true);
   };
 
   const saveHandler = () => {
@@ -132,9 +143,6 @@ const Detail = observer(() => {
               control={control}
               name="place"
               defaultValue=""
-              rules={{
-                required: { value: true, message: t("entry:errors.place") },
-              }}
               render={({ field, formState: { errors } }) => (
                 <Dropdown
                   label={t("entry:labels.place")}
@@ -148,34 +156,33 @@ const Detail = observer(() => {
               )}
             />
           </InputsContainer>
-          <PanelContainer>
-            <Panel title="Race">
-              <InputsContainer>
-                <Controller
-                  control={control}
-                  name={`name`}
-                  defaultValue=""
-                  rules={{
-                    required: {
-                      value: true,
-                      message: t("entry:errors.name"),
-                    },
-                    minLength: {
-                      value: 3,
-                      message: t("entry:errors.name_min"),
-                    },
-                  }}
-                  render={({ field, formState: { errors } }) => (
-                    <Input
-                      label={t("entry:labels.name")}
-                      errors={errors.name?.message}
-                      {...field}
-                    />
-                  )}
-                />
-              </InputsContainer>
-            </Panel>
-          </PanelContainer>
+          <PanelButtonsContainer>
+            <Button
+              text={"Add Race"}
+              variant="Primary"
+              type="button"
+              size="large"
+              onClick={() => {
+                append({
+                  id: fields.length.toString(),
+                  name: "",
+                  distance: 0,
+                  time: "",
+                  surface: "",
+                  condition: "",
+                  competitors: [],
+                });
+              }}
+            />
+          </PanelButtonsContainer>
+          {fields.map((item, index) => (
+            <Race
+              key={index}
+              raceIndex={index}
+              raceRemove={remove}
+              {...{ control }}
+            />
+          ))}
           <Footer>
             <Button
               text={t("form:inputs.delete")}
@@ -229,16 +236,16 @@ const InputsContainer = styled.div({
   gap: "1rem",
 });
 
-const PanelContainer = styled.div({
-  marginTop: "1rem",
+const PanelButtonsContainer = styled.div({
+  marginTop: "0.8rem",
 });
 
 const Footer = styled.footer({
   paddingTop: "1rem",
   textAlign: "end",
 
-  "& button:first-of-type": {
-    marginRight: "0.2rem",
+  "& button:last-of-type": {
+    marginLeft: "0.2rem",
   },
 });
 
