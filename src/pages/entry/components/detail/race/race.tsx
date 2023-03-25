@@ -22,11 +22,12 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
       <Panel title="Race">
         <Header>
           <Button
-            variant="Link"
+            variant="link"
             text={"Delete"}
             onClick={() => {
               raceRemove(raceIndex);
             }}
+            colorText="danger"
           />
         </Header>
         <InputsContainer>
@@ -100,7 +101,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
         <PanelButtonsContainer>
           <Button
             text={"Add Competitors"}
-            variant="Primary"
+            variant="primary"
             type="button"
             size="large"
             onClick={() => {

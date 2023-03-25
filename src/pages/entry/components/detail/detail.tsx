@@ -91,9 +91,10 @@ const Detail = observer(() => {
           <Legend>{t("entry:labels.form_title")}</Legend>
           <Header>
             <Button
-              variant="Link"
+              variant="link"
               text={t("form:inputs.reset")}
               onClick={resetHandler}
+              colorText="danger"
             />
           </Header>
           <InputsContainer>
@@ -159,7 +160,7 @@ const Detail = observer(() => {
           <PanelButtonsContainer>
             <Button
               text={"Add Race"}
-              variant="Primary"
+              variant="primary"
               type="button"
               size="large"
               onClick={() => {
@@ -186,7 +187,7 @@ const Detail = observer(() => {
           <Footer>
             <Button
               text={t("form:inputs.delete")}
-              variant="Danger"
+              variant="danger"
               type="button"
               disabled={!!!context.entry?.id}
               onClick={() => {
@@ -202,7 +203,7 @@ const Detail = observer(() => {
             />
             <Button
               text={t("form:inputs.save")}
-              variant="Success"
+              variant="success"
               type="submit"
             />
           </Footer>

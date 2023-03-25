@@ -27,11 +27,12 @@ const Competitor = ({
       <Panel title="Competitor">
         <Header>
           <Button
-            variant="Link"
+            variant="link"
             text={"Delete"}
             onClick={() => {
               competitorRemove(competitorIndex);
             }}
+            colorText="danger"
           />
         </Header>
         <InputsContainer>
