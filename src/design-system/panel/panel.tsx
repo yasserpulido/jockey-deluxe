@@ -28,7 +28,7 @@ const Container = styled.div({
 const Header = styled.div({
   alignItems: "center",
   color: colors.White,
-  backgroundColor: colors.BlueDress,
+  backgroundColor: colors.DoveGrey,
   display: "flex",
   justifyContent: "space-between",
   padding: "0.5rem 1rem",
@@ -41,7 +41,7 @@ const Title = styled.span({
 });
 
 const Content = styled.div({
-  border: `1px solid ${colors.Black}`,
+  border: `1px solid ${colors.DoveGrey}`,
   borderTop: "none",
   padding: "0.5rem 1rem",
 });
