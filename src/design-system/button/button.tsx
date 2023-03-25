@@ -3,7 +3,8 @@ import { colors } from "../theme/colors";
 
 type Props = {
   text: string;
-  variant: "Primary" | "Danger" | "Warning" | "Success" | "Link";
+  variant: "primary" | "danger" | "warning" | "success" | "link";
+  colorText?: "white" | "danger" | "black";
   disabled?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   size?: "medium" | "large";
@@ -13,6 +14,7 @@ type Props = {
 const Button = ({
   text,
   variant,
+  colorText = "white",
   disabled = false,
   type = "button",
   size = "medium",
@@ -21,6 +23,7 @@ const Button = ({
   return (
     <BaseButton
       variant={variant}
+      colorText={colorText}
       disabled={disabled}
       type={type}
       size={size}
@@ -34,34 +37,37 @@ const Button = ({
 type BaseButtonProps = {
   variant: string;
   size: string;
+  colorText: string;
 };
 
-const BaseButton = styled.button<BaseButtonProps>(({ variant, size }) => ({
+const BaseButton = styled.button<BaseButtonProps>(({ variant, size, colorText }) => ({
   backgroundColor:
-    variant === "Primary"
+    variant === "primary"
       ? colors.BlueDress
-      : variant === "Danger"
+      : variant === "danger"
       ? colors.PersianRed
-      : variant === "Warning"
+      : variant === "warning"
       ? colors.ArylideYellow
-      : variant === "Success"
+      : variant === "success"
       ? colors.GreenBlue
       : "transparent",
   border: "none",
   color:
-    variant === "Warning"
+    variant === "warning"
       ? colors.Black
-      : variant === "Link"
+      : variant === "link" && colorText === "danger"
+      ? colors.PersianRed
+      : variant === "link"
       ? colors.BlueDress
       : colors.White,
   cursor: "pointer",
   display: "inline-block",
   fontFamily: "inherit",
   fontSize: "1.2em",
-  padding: variant === "Link" ? 0 : "0.2rem 0.6rem",
-  minWidth: variant === "Link" ? 0 : "6rem",
+  padding: variant === "link" ? 0 : "0.2rem 0.6rem",
+  minWidth: variant === "link" ? 0 : "6rem",
   width: size === "large" ? "100%" : "auto",
-  textDecoration: variant === "Link" ? "underline" : "none",
+  textDecoration: variant === "link" ? "underline" : "none",
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,
@@ -69,28 +75,30 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant, size }) => ({
 
   "&:active": {
     backgroundColor:
-      variant === "Primary"
+      variant === "primary"
         ? colors.DenimBlue
-        : variant === "Danger"
+        : variant === "danger"
         ? colors.Salmon
-        : variant === "Warning"
+        : variant === "warning"
         ? colors.LightTan
-        : variant === "Link"
+        : variant === "link"
         ? "none"
         : colors.LightGreenishBlue,
     color:
-      variant === "Warning"
+      variant === "warning"
         ? colors.Black
-        : variant === "Link"
-        ? colors.DenimBlue
+        : variant === "link" && colorText === "danger"
+        ? colors.Salmon
+        : variant === "link"
+        ? colors.BlueDress
         : colors.White,
 
     outline: 0,
   },
 
   "&:disabled": {
-    backgroundColor: variant === "Link" ? "none" : colors.FrenchGrey,
-    color: variant === "Link" ? colors.FrenchGrey : colors.White,
+    backgroundColor: variant === "link" ? "none" : colors.FrenchGrey,
+    color: variant === "link" ? colors.FrenchGrey : colors.White,
   },
 }));
 
