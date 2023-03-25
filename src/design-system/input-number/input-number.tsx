@@ -7,29 +7,22 @@ import { Alert } from "grommet-icons";
 type Props = {
   label: string;
   name: string;
-  value?: string | number;
+  min?: number;
+  max?: number;
+  minLength?: number;
+  maxLength?: number;
+  step?: number;
+  value?: number;
   errors?: string;
-  type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;
   onChange: (value: string) => void;
 };
 
-const Input = React.forwardRef<HTMLInputElement, Props>(
+const InputNumber = React.forwardRef<HTMLInputElement, Props>(
   (
-    {
-      label,
-      name,
-      value,
-      errors = "",
-      type = "text",
-      placeholder = "Type here",
-      onChange,
-      ...props
-    },
+    { label, name, placeholder = "Type here", errors = "", onChange, ...props },
     ref
   ) => {
-    const hasDate = value !== "";
-
     return (
       <Container>
         <FormGroup>
@@ -38,11 +31,9 @@ const Input = React.forwardRef<HTMLInputElement, Props>(
             id={name}
             name={name}
             placeholder={placeholder}
-            type={type}
+            type="number"
             ref={ref}
-            onChange={(e) => onChange(e.currentTarget.value)}
-            value={value}
-            hasDate={hasDate}
+            onChange={(e) => onChange(e.target.value)}
             {...props}
           />
         </FormGroup>
@@ -69,11 +60,7 @@ const Label = styled.label({
   marginBottom: "0.2rem",
 });
 
-type FormGroupProps = {
-  hasDate: boolean;
-};
-
-const InputBase = styled.input<FormGroupProps>(({ hasDate }) => ({
+const InputBase = styled.input({
   border: `1px solid ${colors.Black}`,
   borderRadius: 0,
   fontSize: "1.2em",
@@ -82,7 +69,6 @@ const InputBase = styled.input<FormGroupProps>(({ hasDate }) => ({
   lineHeight: "1.5rem",
   width: "100%",
   fontWeight: fontWeight.regular,
-  color: hasDate ? colors.Black : colors.FrenchGrey,
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,
@@ -92,7 +78,7 @@ const InputBase = styled.input<FormGroupProps>(({ hasDate }) => ({
     color: colors.FrenchGrey,
     opacity: 1,
   },
-}));
+});
 
 const Error = styled.small({
   color: colors.PersianRed,
@@ -106,4 +92,4 @@ const Error = styled.small({
   },
 });
 
-export default Input;
+export default InputNumber;
