@@ -37,7 +37,7 @@ Default.decorators = [
 ];
 
 Default.args = {
-  label: "Gender",
+  label: "Country",
   options: options,
   onChange: () => {},
 };
