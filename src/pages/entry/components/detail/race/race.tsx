@@ -44,7 +44,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             render={({ field, formState: { errors } }) => (
               <Input
                 label={t("entry:labels.name")}
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.name?.message}
                 {...field}
               />
             )}
@@ -56,7 +56,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="Distance"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.distance?.message}
                 min={0}
                 step={1}
                 {...field}
@@ -70,7 +70,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             render={({ field, formState: { errors } }) => (
               <Input
                 label="Time"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.time?.message}
                 type="time"
                 {...field}
               />
@@ -84,7 +84,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
               <Dropdown
                 label="Surface"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.surface?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />
@@ -98,7 +98,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
               <Dropdown
                 label="Condition"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.condition?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />

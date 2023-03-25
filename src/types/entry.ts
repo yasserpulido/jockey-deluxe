@@ -4,6 +4,7 @@ export type Entry = {
   id: string;
   name: string;
   date: string;
-  place: string;
+  country: string;
+  track: string;
   races: Array<Race>;
 };

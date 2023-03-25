@@ -45,7 +45,7 @@ const Competitor = ({
               <Dropdown
                 label="Jockey"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.jockey?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />
@@ -59,7 +59,7 @@ const Competitor = ({
               <Dropdown
                 label="Horse"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.horse?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />
@@ -72,7 +72,7 @@ const Competitor = ({
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="Number"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.number?.message}
                 min={0}
                 step={1}
                 {...field}
@@ -86,7 +86,7 @@ const Competitor = ({
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="Position"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.position?.message}
                 min={0}
                 step={1}
                 {...field}
@@ -101,7 +101,7 @@ const Competitor = ({
               <Dropdown
                 label="Stud"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.stud?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />
@@ -115,7 +115,7 @@ const Competitor = ({
               <Dropdown
                 label="Trainer"
                 options={[]}
-                errors={errors.place?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.trainer?.message}
                 placeholder={t("form:placeholders.general_dropdown") as string}
                 {...field}
               />
@@ -128,7 +128,7 @@ const Competitor = ({
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="J. Weight"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.jockeyWeight?.message}
                 min={0}
                 step={1}
                 {...field}
@@ -142,7 +142,7 @@ const Competitor = ({
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="H. Weight"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.horseWeight?.message}
                 min={0}
                 step={1}
                 {...field}
@@ -156,7 +156,7 @@ const Competitor = ({
             render={({ field, formState: { errors } }) => (
               <InputNumber
                 label="Odds"
-                errors={errors.name?.message}
+                errors={errors.races?.[raceIndex]?.competitors?.[competitorIndex]?.odds?.message}
                 min={0}
                 step={0.01}
                 {...field}

@@ -28,7 +28,8 @@ const Entry = types.model({
   id: types.identifier,
   name: types.string,
   date: types.string,
-  place: types.string,
+  country: types.string,
+  track: types.string,
   races: types.array(Race),
 });
 

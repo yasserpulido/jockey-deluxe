@@ -142,13 +142,29 @@ const Detail = observer(() => {
             />
             <Controller
               control={control}
-              name="place"
+              name="country"
               defaultValue=""
               render={({ field, formState: { errors } }) => (
                 <Dropdown
-                  label={t("entry:labels.place")}
-                  options={common.gender.data}
-                  errors={errors.place?.message}
+                  label={t("entry:labels.country")}
+                  options={[]}
+                  errors={errors.country?.message}
+                  placeholder={
+                    t("form:placeholders.general_dropdown") as string
+                  }
+                  {...field}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="track"
+              defaultValue=""
+              render={({ field, formState: { errors } }) => (
+                <Dropdown
+                  label={t("entry:labels.track")}
+                  options={[]}
+                  errors={errors.track?.message}
                   placeholder={
                     t("form:placeholders.general_dropdown") as string
                   }

@@ -2,7 +2,8 @@
   "labels": {
     "form_title": "Entry's Form",
     "name": "Name",
-    "place": "Place",
+    "country": "Country",
+    "track": "Track",
     "date": "Date"
   },
   "errors": {
