@@ -166,13 +166,13 @@ export const Table = <T extends Human | Breed>({
         <Navigation>
           <Button
             text={t("labels.previous")}
-            variant="Primary"
+            variant="primary"
             onClick={prevPage}
             disabled={page === 1}
           />
           <Button
             text={t("labels.next")}
-            variant="Primary"
+            variant="primary"
             onClick={nextPage}
             disabled={page === totalPage}
           />

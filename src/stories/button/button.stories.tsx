@@ -30,6 +30,6 @@ Default.decorators = [
 
 Default.args = {
   text: "Primary",
-  variant: "Primary",
+  variant: "primary",
   disabled: false,
 };

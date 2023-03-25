@@ -81,9 +81,10 @@ const Detail = () => {
           <Legend>{t("track:labels.form_title")}</Legend>
           <Header>
             <Button
-              variant="Link"
+              variant="link"
               text={t("form:inputs.reset")}
               onClick={resetHandler}
+              colorText="danger"
             />
           </Header>
           <InputsContainer>
@@ -136,7 +137,7 @@ const Detail = () => {
           <Footer>
             <Button
               text={t("form:inputs.delete")}
-              variant="Danger"
+              variant="danger"
               type="button"
               disabled={!!!context.track?.id}
               onClick={() => {
@@ -152,7 +153,7 @@ const Detail = () => {
             />
             <Button
               text={t("form:inputs.save")}
-              variant="Success"
+              variant="success"
               type="submit"
             />
           </Footer>
@@ -163,13 +164,13 @@ const Detail = () => {
           <Button
             text="Cancel"
             onClick={() => setShowModal(false)}
-            variant="Danger"
+            variant="danger"
             type="button"
           />
           <Button
             text="Ok"
             onClick={() => modalFooter.onClick()}
-            variant="Success"
+            variant="success"
             type="button"
           />
         </Modal>

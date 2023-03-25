@@ -3,7 +3,8 @@ import { colors } from "../theme/colors";
 
 type Props = {
   text: string;
-  variant: "Primary" | "Danger" | "Warning" | "Success" | "Link";
+  variant: "primary" | "danger" | "warning" | "success" | "link";
+  colorText?: "white" | "danger" | "black";
   disabled?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
   onClick?: () => void;
@@ -12,6 +13,7 @@ type Props = {
 const Button = ({
   text,
   variant,
+  colorText = "white",
   disabled = false,
   type = "button",
   onClick,
@@ -19,6 +21,7 @@ const Button = ({
   return (
     <BaseButton
       variant={variant}
+      colorText={colorText}
       disabled={disabled}
       type={type}
       onClick={onClick}
@@ -30,33 +33,36 @@ const Button = ({
 
 type BaseButtonProps = {
   variant: string;
+  colorText: string;
 };
 
-const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
+const BaseButton = styled.button<BaseButtonProps>(({ variant, colorText }) => ({
   backgroundColor:
-    variant === "Primary"
+    variant === "primary"
       ? colors.BlueDress
-      : variant === "Danger"
+      : variant === "danger"
       ? colors.PersianRed
-      : variant === "Warning"
+      : variant === "warning"
       ? colors.ArylideYellow
-      : variant === "Success"
+      : variant === "success"
       ? colors.GreenBlue
       : "transparent",
   border: "none",
   color:
-    variant === "Warning"
+    variant === "warning"
       ? colors.Black
-      : variant === "Link"
+      : variant === "link" && colorText === "danger"
+      ? colors.PersianRed
+      : variant === "link"
       ? colors.BlueDress
       : colors.White,
   cursor: "pointer",
   display: "inline-block",
   fontFamily: "inherit",
   fontSize: "1.2em",
-  padding: variant === "Link" ? 0 : "0.2rem 0.6rem",
-  minWidth: variant === "Link" ? 0 : "6rem",
-  textDecoration: variant === "Link" ? "underline" : "none",
+  padding: variant === "link" ? 0 : "0.2rem 0.6rem",
+  minWidth: variant === "link" ? 0 : "6rem",
+  textDecoration: variant === "link" ? "underline" : "none",
 
   ":focus": {
     outline: `2px solid ${colors.DenimBlue}`,
@@ -64,28 +70,30 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant }) => ({
 
   "&:active": {
     backgroundColor:
-      variant === "Primary"
+      variant === "primary"
         ? colors.DenimBlue
-        : variant === "Danger"
+        : variant === "danger"
         ? colors.Salmon
-        : variant === "Warning"
+        : variant === "warning"
         ? colors.LightTan
-        : variant === "Link"
+        : variant === "link"
         ? "none"
         : colors.LightGreenishBlue,
     color:
-      variant === "Warning"
+      variant === "warning"
         ? colors.Black
-        : variant === "Link"
-        ? colors.DenimBlue
+        : variant === "link" && colorText === "danger"
+        ? colors.Salmon
+        : variant === "link"
+        ? colors.BlueDress
         : colors.White,
 
     outline: 0,
   },
 
   "&:disabled": {
-    backgroundColor: variant === "Link" ? "none" : colors.FrenchGrey,
-    color: variant === "Link" ? colors.FrenchGrey : colors.White,
+    backgroundColor: variant === "link" ? "none" : colors.FrenchGrey,
+    color: variant === "link" ? colors.FrenchGrey : colors.White,
   },
 }));
 
