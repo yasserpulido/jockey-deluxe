@@ -5,6 +5,7 @@ import {
   Button,
   Dropdown,
   Input,
+  InputNumber,
   Panel,
 } from "../../../../../../design-system";
 import { Entry } from "../../../../../../types";
@@ -69,10 +70,11 @@ const Competitor = ({
             name={`races.${raceIndex}.competitors.${competitorIndex}.number`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="Number"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={1}
                 {...field}
               />
             )}
@@ -82,10 +84,11 @@ const Competitor = ({
             name={`races.${raceIndex}.competitors.${competitorIndex}.position`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="Position"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={1}
                 {...field}
               />
             )}
@@ -123,10 +126,11 @@ const Competitor = ({
             name={`races.${raceIndex}.competitors.${competitorIndex}.jockeyWeight`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="J. Weight"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={1}
                 {...field}
               />
             )}
@@ -136,10 +140,11 @@ const Competitor = ({
             name={`races.${raceIndex}.competitors.${competitorIndex}.horseWeight`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="H. Weight"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={1}
                 {...field}
               />
             )}
@@ -149,10 +154,11 @@ const Competitor = ({
             name={`races.${raceIndex}.competitors.${competitorIndex}.odds`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="Odds"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={0.01}
                 {...field}
               />
             )}

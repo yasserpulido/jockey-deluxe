@@ -1,7 +1,13 @@
 import styled from "@emotion/styled";
 import { t } from "i18next";
 import { Control, Controller, useFieldArray } from "react-hook-form";
-import { Button, Dropdown, Input, Panel } from "../../../../../design-system";
+import {
+  Button,
+  Dropdown,
+  Input,
+  InputNumber,
+  Panel,
+} from "../../../../../design-system";
 import { Entry } from "../../../../../types";
 import { Competitor } from "./competitor";
 
@@ -48,10 +54,11 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             name={`races.${raceIndex}.distance`}
             defaultValue={0}
             render={({ field, formState: { errors } }) => (
-              <Input
+              <InputNumber
                 label="Distance"
                 errors={errors.name?.message}
-                type="number"
+                min={0}
+                step={1}
                 {...field}
               />
             )}
