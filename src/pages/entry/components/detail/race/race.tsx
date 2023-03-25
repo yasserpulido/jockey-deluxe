@@ -100,7 +100,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
         </InputsContainer>
         <PanelButtonsContainer>
           <Button
-            text={"Add Competitors"}
+            text={"Add Competitor"}
             variant="primary"
             type="button"
             size="large"
