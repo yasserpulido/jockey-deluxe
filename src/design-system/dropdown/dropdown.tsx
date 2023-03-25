@@ -36,7 +36,7 @@ const Dropdown = React.forwardRef(
     const [inputText, setInputText] = useState<string>("");
     const optionBoxRef = useRef<HTMLUListElement>(null);
     const optionSelectedRef = useRef<Array<HTMLLIElement>>([]);
-    const inpuRef = useRef<HTMLInputElement>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       setOptionsList(options);
@@ -174,10 +174,13 @@ const Dropdown = React.forwardRef(
             }}
             onFocus={() => setIsListOpen(true)}
             value={inputText}
-            ref={inpuRef}
+            ref={inputRef}
           />
-
-          <IconContainer onMouseDown={() => setIsListOpen(!isListOpen)}>
+          <IconContainer
+            onClick={() => {
+              inputRef.current?.focus();
+            }}
+          >
             <FormDown />
           </IconContainer>
         </FormGroup>
@@ -262,6 +265,8 @@ const IconContainer = styled.div({
   top: "70%",
   transform: "translateY(-50%)",
   right: 0,
+  cursor: "pointer",
+  zIndex: 1,
 });
 
 type OptionsListProps = {
