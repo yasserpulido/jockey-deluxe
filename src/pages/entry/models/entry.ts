@@ -5,6 +5,13 @@ const Competitor = types.model({
   id: types.identifier,
   horse: types.string,
   jockey: types.string,
+  number: types.number,
+  position: types.number,
+  stud: types.string,
+  trainer: types.string,
+  jockeyWeight: types.number,
+  horseWeight: types.number,
+  odds: types.number,
 });
 
 const Race = types.model({

@@ -34,7 +34,6 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             control={control}
             name={`races.${raceIndex}.name`}
             defaultValue=""
-           
             render={({ field, formState: { errors } }) => (
               <Input
                 label={t("entry:labels.name")}
@@ -47,7 +46,6 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             control={control}
             name={`races.${raceIndex}.distance`}
             defaultValue={0}
-            
             render={({ field, formState: { errors } }) => (
               <Input
                 label="Distance"
@@ -61,7 +59,6 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
             control={control}
             name={`races.${raceIndex}.time`}
             defaultValue=""
-           
             render={({ field, formState: { errors } }) => (
               <Input
                 label="Time"
@@ -111,6 +108,13 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
                 id: fields.length.toString(),
                 horse: "",
                 jockey: "",
+                number: 0,
+                position: 0,
+                stud: "",
+                trainer: "",
+                jockeyWeight: 0,
+                horseWeight: 0,
+                odds: 0,
               });
             }}
           />
@@ -118,6 +122,7 @@ const Race = ({ raceIndex, control, raceRemove }: Props) => {
         {fields.map((item, index) => (
           <Competitor
             key={index}
+            raceIndex={raceIndex}
             competitorIndex={index}
             competitorRemove={remove}
             {...{ control }}
