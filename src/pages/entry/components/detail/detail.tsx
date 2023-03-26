@@ -9,15 +9,10 @@ import {
   useForm,
 } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import {
-  Button,
-  colors,
-  Dropdown,
-  Input,
-  Panel,
-} from "../../../../design-system";
+import { Button, colors, Dropdown, Input } from "../../../../design-system";
 import { CommonProvider } from "../../../../providers";
 import { Entry, ModalFooter } from "../../../../types";
+import { useTrackByCountry } from "../../hooks/useTrackByCountry";
 import { StoreType } from "../../models";
 import { EntryProvider } from "../../providers";
 import { Race } from "./race";
@@ -43,13 +38,19 @@ const Detail = observer(() => {
   });
   const common = useContext(CommonProvider.Context);
   const context = useContext(EntryProvider.Context) as StoreType;
-  const { control, handleSubmit, reset, getValues } = useForm<Entry>({
+  const { control, handleSubmit, reset, setValue, getValues } = useForm<Entry>({
     defaultValues: context.entry,
   });
   const { fields, append, remove } = useFieldArray({
     control,
     name: "races",
   });
+  const [countrySelected, setCountrySelected] = useState<string>("");
+  const tracksByCountry = useTrackByCountry(
+    common.track.data,
+    countrySelected,
+    setValue
+  );
 
   useEffect(() => {
     reset(context.entry);
@@ -83,6 +84,8 @@ const Detail = observer(() => {
     //   context.reset();
     // }
   };
+
+  console.log(tracksByCountry);
 
   return (
     <React.Fragment>
@@ -144,14 +147,21 @@ const Detail = observer(() => {
               control={control}
               name="country"
               defaultValue=""
-              render={({ field, formState: { errors } }) => (
+              render={({
+                field: { onChange, ...field },
+                formState: { errors },
+              }) => (
                 <Dropdown
                   label={t("entry:labels.country")}
-                  options={[]}
+                  options={common.country.data}
                   errors={errors.country?.message}
                   placeholder={
                     t("form:placeholders.general_dropdown") as string
                   }
+                  onChange={(e) => {
+                    setCountrySelected(e);
+                    setValue("country", e);
+                  }}
                   {...field}
                 />
               )}
@@ -163,7 +173,7 @@ const Detail = observer(() => {
               render={({ field, formState: { errors } }) => (
                 <Dropdown
                   label={t("entry:labels.track")}
-                  options={[]}
+                  options={tracksByCountry}
                   errors={errors.track?.message}
                   placeholder={
                     t("form:placeholders.general_dropdown") as string

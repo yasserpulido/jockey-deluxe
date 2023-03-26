@@ -1,7 +1,8 @@
 import { Track } from "../../types";
 
 export const getTracks = async () => {
-  const response = await fetch("http://localhost:3001/api/track");
+  //const response = await fetch("http://localhost:3001/api/track");
+  const response = await fetch("http://localhost:3002/tracks");
   return response.json();
 };
 

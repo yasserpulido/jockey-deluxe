@@ -27,7 +27,7 @@ const Dropdown = React.forwardRef(
     }: Props<Option>,
     ref
   ) => {
-    const [optionIndex, setOptionIndex] = useState<string | undefined>(value);
+    const [optionIndex, setOptionIndex] = useState<string | undefined>("");
     const [option, setOption] = useState<Option | null>(null);
     const [optionList, setOptionsList] = useState<Array<Option>>(options);
     const [isListOpen, setIsListOpen] = useState<boolean>(false);
@@ -40,9 +40,11 @@ const Dropdown = React.forwardRef(
 
     useEffect(() => {
       setOptionsList(options);
-    }, [options]);
+      setOptionIndex(value);
+    }, [options, value]);
 
-    // If the list is opened and there is no option selected, the first option of the list is selected.
+    // Si la lista esta abierta, la lista tiene opciones y no hay opcion seleccionada, se selecciona la primera opcion de la lista...
+    // ... y se actualiza option, cursorList (que valor se enfoca en la lista) y hasOptionList (La lista tiene valores).
     useEffect(() => {
       if (isListOpen && optionList.length > 0 && option === null) {
         setOption(optionList[0]);
@@ -51,22 +53,30 @@ const Dropdown = React.forwardRef(
       }
     }, [isListOpen, optionList, option]);
 
+    // Si tiene optionIndex (index de dato) y la lista de opciones no está vacía, se busca la opción seleccionada...
+    // ... y se actualiza option, cursorList (que valor se enfoca en la lista) y hasOptionList (La lista tiene valores)...
+    // ... si no tiene optionIndex (index de dato) se limpian los valores.
     useEffect(() => {
-      if (optionIndex !== "" && optionList.length > 0) {
-        optionList.forEach((o, index) => {
-          if (o.id === optionIndex) {
-            setOption(o);
-            setCursorList(index);
-            setHasOptionList(true);
-          }
-        });
-      } else {
+      if (optionIndex === "" && optionList.length === 0) {
+        setInputText("");
         setOption(null);
         setCursorList(null);
         setHasOptionList(false);
+        return;
       }
+
+      optionList.forEach((o, index) => {
+        if (o.id === optionIndex) {
+          setInputText(o.name);
+          setOption(o);
+          setCursorList(index);
+          setHasOptionList(true);
+        }
+      });
     }, [optionIndex, optionList]);
 
+    // Si cursorList (que valor se enfoca en la lista) no es null, o sea, si hay un valor seleccionado, se actualiza option...
+    // ... y se actualiza hasOptionList (La lista tiene valores).
     useEffect(() => {
       if (cursorList !== null) {
         setOption(optionList[cursorList]);
