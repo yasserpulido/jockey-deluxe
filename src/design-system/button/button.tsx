@@ -7,6 +7,7 @@ type Props = {
   colorText?: "white" | "danger" | "black";
   disabled?: boolean;
   type?: React.ButtonHTMLAttributes<HTMLButtonElement>["type"];
+  size?: "medium" | "large";
   onClick?: () => void;
 };
 
@@ -16,6 +17,7 @@ const Button = ({
   colorText = "white",
   disabled = false,
   type = "button",
+  size = "medium",
   onClick,
 }: Props) => {
   return (
@@ -24,6 +26,7 @@ const Button = ({
       colorText={colorText}
       disabled={disabled}
       type={type}
+      size={size}
       onClick={onClick}
     >
       {text}
@@ -33,10 +36,11 @@ const Button = ({
 
 type BaseButtonProps = {
   variant: string;
+  size: string;
   colorText: string;
 };
 
-const BaseButton = styled.button<BaseButtonProps>(({ variant, colorText }) => ({
+const BaseButton = styled.button<BaseButtonProps>(({ variant, size, colorText }) => ({
   backgroundColor:
     variant === "primary"
       ? colors.BlueDress
@@ -62,6 +66,7 @@ const BaseButton = styled.button<BaseButtonProps>(({ variant, colorText }) => ({
   fontSize: "1.2em",
   padding: variant === "link" ? 0 : "0.2rem 0.6rem",
   minWidth: variant === "link" ? 0 : "6rem",
+  width: size === "large" ? "100%" : "auto",
   textDecoration: variant === "link" ? "underline" : "none",
 
   ":focus": {

@@ -7,7 +7,7 @@ import { Alert } from "grommet-icons";
 type Props = {
   label: string;
   name: string;
-  value?: string;
+  value?: string | number;
   errors?: string;
   type?: React.InputHTMLAttributes<HTMLButtonElement>["type"];
   placeholder?: string;

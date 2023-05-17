@@ -6,5 +6,7 @@
   "/api/track": "/tracks",
   "/api/track/:id": "/tracks/:id",
   "/api/category": "/categories",
-  "/api/category/:id": "/categories/:id"
+  "/api/category/:id": "/categories/:id",
+  "/api/entry": "/entries",
+  "/api/entry/:id": "/entries/:id"
 }

@@ -1,0 +1,32 @@
+{
+  "conditions": [
+    {
+      "id": "1",
+      "name": "Fast"
+    },
+    {
+      "id": "2",
+      "name": "Slow"
+    },
+    {
+      "id": "3",
+      "name": "Wet"
+    },
+    {
+      "id": "4",
+      "name": "Muddy"
+    },
+    {
+      "id": "5",
+      "name": "Sloppy"
+    },
+    {
+      "id": "6",
+      "name": "Slow"
+    },
+    {
+      "id": "7",
+      "name": "Heavy"
+    }
+  ]
+}

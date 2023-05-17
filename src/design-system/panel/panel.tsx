@@ -43,7 +43,7 @@ const Title = styled.span({
 const Content = styled.div({
   border: `1px solid ${colors.DoveGrey}`,
   borderTop: "none",
-  padding: "0.5rem 1rem",
+  padding: "1rem",
 });
 
 export default Panel;
